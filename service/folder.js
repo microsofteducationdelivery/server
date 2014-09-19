@@ -61,25 +61,43 @@ module.exports = {
       path: path
     };
   },
-  /*
-   add: function* (data, author) {
-   if (!this.isPermitted(C.CREATE, data, author)) {
-   throw new errors.AccessDeniedError('Access denied');
-   }
 
-   try {
-   data.CompanyId = author.CompanyId;
-   yield table.create(data);
-   } catch (e) {
-   if (e.code === 'ER_DUP_ENTRY') {
-   throw new errors.DuplicateError('Duplicate entry');
-   } else {
-   throw new errors.ValidationError('Validation failed', { errors: e });
-   }
-   }
+  add: function* (data, author) {
+    if (!this.isPermitted(C.CREATE, data, author)) {
+      throw new errors.AccessDeniedError('Access denied');
+    }
 
-   },
-   */
+    try {
+      var library;
+      if (data.parentId.substr(0,7) === 'library') {
+        library = yield db.Library.find(data.parentId.substr(7));
+        data.parentId = null;
+      } else {
+        var folder = yield db.Folder.find(data.parentId);
+        library = yield folder.getLibrary();
+      }
+      var newFolder = yield table.create(data);
+      library.addFolder(newFolder);
+    } catch (e) {
+
+      if (e.code === 'ER_DUP_ENTRY') {
+        throw new errors.DuplicateError('Duplicate entry');
+      } else {
+        throw new errors.ValidationError('Validation failed', { errors: e });
+      }
+    }
+  },
+
+  update: function* (id, data, author) {
+    if (!this.isPermitted(C.UPDATE, {}, author)) {
+      throw new errors.AccessDeniedError('Access denied');
+    }
+
+    var folder = yield table.find(id);
+    yield folder.updateAttributes({
+      name: data.name
+    });
+  },
 
   list: function* (author) {
     if (!this.isPermitted(C.RETRIEVE, {}, author)) {

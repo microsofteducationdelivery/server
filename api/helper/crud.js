@@ -30,6 +30,11 @@ module.exports = function (name, service) {
       }
     },
 
+    update: function* (id) {
+      yield service.update(id, yield parse(this), this.user);
+      this.status = 204;
+    },
+
     destroyMultiple: function* () {
       yield service.removeMultiple(yield parse(this), this.user);
       this.status = 204;
@@ -38,6 +43,7 @@ module.exports = function (name, service) {
 
   app.use(route.get('/', actions.index));
   app.use(route.get('/:id', actions.show));
+  app.use(route.put('/:id', actions.update));
   app.use(route.post('/', actions.create));
   app.use(route.delete('/', actions.destroyMultiple));
 
