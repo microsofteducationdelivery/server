@@ -63,7 +63,7 @@
                 }
                 window.showPopup('/resources/pages/popups/delete-confirm.html', {callback: function () {
                     window.authXHR({
-                        url: '/contentActions/delete',
+                        url: '/api/contentActions/delete',
                         type: 'POST',
                         data: JSON.stringify(buffer.data)
                     }).done(function (result) {
@@ -82,7 +82,7 @@
                 }
                 var data = {destination: currentId, content: buffer.data};
                 window.authXHR({
-                    url: '/contentActions/move',
+                    url: '/api/contentActions/move',
                     type: 'POST',
                     data: JSON.stringify(data)
                 }).done(
