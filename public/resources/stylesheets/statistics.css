@@ -19,6 +19,7 @@ h4 {
     background-color: #f6f6f6;
 }
 .b_content--result--toolbar__btn {
+    display: none;
     float: right;
     margin-right: 5px;
     background-color: #64af3e;
@@ -49,6 +50,7 @@ h4 {
 
 /* statistic filters */
 .b_filter {
+    display: none;
     width: 90%;
     margin: 1.25%;
     margin-left: 5%;

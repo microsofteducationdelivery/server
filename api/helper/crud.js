@@ -4,9 +4,10 @@ var
   route = require('koa-route'),
   _ = require('lodash');
 
-module.exports = function (service) {
+module.exports = function (service, customActions) {
+  customActions = customActions || {}
   var app = koa();
-  var actions = {
+  var actions = _.assign({
     index: function* () {
       this.body = yield service.list(this.user);
     },
@@ -39,7 +40,7 @@ module.exports = function (service) {
       yield service.removeMultiple(yield parse(this), this.user);
       this.status = 204;
     }
-  };
+  }, customActions);
 
   app.use(route.get('/', actions.index));
   app.use(route.get('/:id', actions.show));

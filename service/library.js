@@ -77,6 +77,8 @@ module.exports = {
   },
 
   removeMultiple: function (ids, author) {
+    //strip "library" part from id
+    ids = ids.map(function (id) { return id.substr(7)});
     return table.destroy({ id: ids, CompanyId: author.CompanyId });
   }
 };
