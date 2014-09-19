@@ -26,7 +26,7 @@
             deleteBtn.listen('click', function () {
                 if (selectedItems.length === 0) return false;
                 window.showPopup('/resources/pages/popups/delete-confirm.html', {callback: function () {
-                    WinJS.xhr({
+                    window.authXHR({
                         url: '/api/users',
                         type: 'DELETE',
                         data: JSON.stringify(selectedItems)
@@ -35,7 +35,7 @@
                             return result;
                         },
                         function (err) {
-                            if (err.status === 409) {
+                            if (err.status === 403) {
                                 window.showPopup('/resources/pages/popups/alert.html', {
                                     msg: 'Own account can not be deleted.'
                                 });

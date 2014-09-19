@@ -83,28 +83,34 @@ module.exports = {
       where: { CompanyId: author.CompanyId },
       attributes: ['id', 'login', 'type', 'name']
     });
-  }
-/*
-  update: function (data, author) {
-    data = _.pick(data, FIELDS);
+  },
 
+  update: function* (id, data, author) {
     if (!this.isPermitted(C.UPDATE, data, author)) {
       throw new errors.AccessDeniedError('Access denied');
     }
 
+
+    var user = yield db.Users.find({ where: { id: id, CompanyId: author.CompanyId }});
     if (data.password) {
-      data.password = bcrypt.hashSync(data.password);
+      user.password = bcrypt.hashSync(data.password);
     }
 
-    return collection.updateById(data._id, data);
+    _.forIn(data, function(value, key) {
+      user[value] = key;
+    });
+    user.email = data.email;
+    user.phone = data.phone;
+
+    yield user.save();
   },
 
-  remove: function (criteria, author) {
-    if (!this.isPermitted(C.DELETE, criteria, author)) {
+  removeMultiple: function (ids, author) {
+    console.log(ids);
+    console.log(author.id);
+    if (ids.indexOf(author.id.toString()) !== -1) {
       throw new errors.AccessDeniedError('Access denied');
     }
-
-    criteria.owner = author._id;
-    return collection.remove(criteria);
-  }*/
+    return table.destroy({ id: ids, CompanyId: author.CompanyId });
+  }
 };

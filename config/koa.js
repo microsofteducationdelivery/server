@@ -5,6 +5,7 @@ var fs = require('fs'),
   config = require('../config'),
   mount = require('koa-mount'),
 
+  errors = require('../helper/errors'),
   userService = require('../service/user')
   ;
 
@@ -23,6 +24,18 @@ module.exports = function (app) {
       }
       //HTML5 push state support
       yield send(this, '/index.html', sendOpts);
+    }
+  });
+
+  app.use(function* (next) {
+    try {
+      yield next;
+    } catch (e) {
+      if (e instanceof errors.AccessDeniedError) {
+        this.status = 403;
+      } else {
+        throw e;
+      }
     }
   });
 

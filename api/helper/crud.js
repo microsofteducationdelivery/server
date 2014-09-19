@@ -19,7 +19,6 @@ module.exports = function (service, customActions) {
 
     show: function* (id) {
       try {
-        console.log('id', id);
         var doc = yield service.findById(id, this.user);
         if (!doc) {
           this.status = 404;
