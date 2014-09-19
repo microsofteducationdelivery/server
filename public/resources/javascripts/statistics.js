@@ -19,7 +19,7 @@
       console.log("Error obtaining feed. XHR status code: " + status);
     }
   };
-  
+
   WinJS.UI.Pages.define("/resources/pages/statistics.html", {
     ready: function () {
       var pickers =  $(".b_filter--date-picker--input__picker" );

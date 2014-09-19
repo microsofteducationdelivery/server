@@ -24,7 +24,7 @@ function* top5Views () {
   var items = yield service.getTop5Views();
   this.body = items.map(function (item) {
     return {
-      number: item.downloads,
+      number: item.views,
       text: item.name,
       picture: item.picture,
       folder: item.FolderId || 'library' + item.LibraryId
