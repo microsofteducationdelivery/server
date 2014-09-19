@@ -66,7 +66,7 @@
             if (type.search('jpg') !== -1) {
                 return true;
             }
-            if (type.search('avi') !== -1 || type.search('x-msvideo')) {
+            if (type.search('avi') !== -1 || type.search('x-msvideo') !== -1) {
                 return true;
             }
             if (type.search('mp4') !== -1) {
