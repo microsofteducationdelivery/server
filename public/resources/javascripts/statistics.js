@@ -119,7 +119,7 @@
     WinJS.Namespace.define('WinJS.statistics', {
         getSrc: WinJS.Binding.converter(function (src) {
             if (src === null) {
-                return '/resources/images/stub.jpg';
+                return '/resources/images/stub.png';
             }
             return src;
         })

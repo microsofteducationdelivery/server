@@ -62,6 +62,7 @@
           }).done(function (result) {
             getLibraries().then(function (libraries) {
                 tableControl.setData(libraries);
+                tableControl.deselectAll();
             });
           });
         }});

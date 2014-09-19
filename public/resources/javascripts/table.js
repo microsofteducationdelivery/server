@@ -266,6 +266,11 @@
             },
             deselectAll: function () {
                 var box = WinJS.Utilities.query('input.row-box[type=checkbox]:checked');
+                var mainBox = WinJS.Utilities.query('input.main-box[type=checkbox]:checked');
+
+                for (var i = 0; i < mainBox.length; i ++) {
+                    mainBox[i].checked = false;
+                }
                 for (var i = 0; i < box.length; i ++) {
                     box[i].checked = false;
                 }

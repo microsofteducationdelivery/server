@@ -67,9 +67,7 @@
                         type: 'POST',
                         data: JSON.stringify(buffer.data)
                     }).done(function (result) {
-                        if (result.status === 200) {
                             me.getFolderData({id: currentId});
-                        }
                     });
                 }});
 
@@ -407,7 +405,7 @@
         }),
         getSrc: WinJS.Binding.converter(function (src) {
             if (src === null) {
-                return '/resources/images/stub.jpg'
+                return '/resources/images/stub.png'
             }
             return src;
         }),
