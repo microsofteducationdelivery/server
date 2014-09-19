@@ -1,4 +1,7 @@
 .b-search {
+    /* hide while not working */
+    display: none;
+
     box-sizing: border-box;
     position: absolute;
     left: auto;
