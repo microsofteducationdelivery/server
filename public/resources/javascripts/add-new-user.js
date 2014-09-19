@@ -3,6 +3,9 @@
     WinJS.UI.Pages.define('/resources/pages/add-new-user.html', {
 
         ready: function (element) {
+            var checkEmail = WinJS.Utilities.query('input[name=send_email]'),
+                checkPhone =  WinJS.Utilities.query('input[name=send_sms]')
+            ;
 
             function showError(el, msg) {
                 var errmsg = '✗ Error: ' + msg,
@@ -10,7 +13,8 @@
                     prstErrs = WinJS.Utilities.query('.b-edit-user__error', el);
                 var isPrst = WinJS.Utilities.query('.b-edit-user__error', el).some(function (err) {
                     return err.innerHTML == errmsg;
-                })
+                });
+
                 if (isPrst) return;
                 WinJS.Utilities.insertAdjacentHTML(el, 'beforeend', errdiv);
             }
@@ -111,10 +115,10 @@
                         password: form.password.value
                     };
 
-                    if (form.phone.value) {
+                    if (form.phone.value && checkPhone[0].checked) {
                         values.phone = form.phone.value;
                     }
-                    if (form.email.value) {
+                    if (form.email.value && checkEmail[0].checked) {
                         values.email = form.email.value;
                     }
                     for (var key in values) {

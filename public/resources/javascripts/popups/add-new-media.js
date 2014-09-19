@@ -13,6 +13,12 @@
                 okBtn = WinJS.Utilities.query('button[class=b-button-ok]')[0]
             ;
 
+            form.name.oninput = function (element) {
+                if (form.file.files[0]) {
+                    okBtn.disabled = !(me.isValidType(form.file.files[0].type) && form.name.value);
+                }
+
+            };
             form.file.onchange = function (element) {
                 if(element.target.files.length > 0) {
                     fileNameField.innerHTML = element.target.files[0].name;
@@ -20,7 +26,9 @@
                     if (type) {
                         form.type.value = type.text;
                         icon.className = 'fa ' + type.icon;
-                        okBtn.disabled = !me.isValidType(element.target.files[0].type);
+                        okBtn.disabled = !(me.isValidType(element.target.files[0].type) && form.name.value);
+                    } else {
+                        okBtn.disabled = true;
                     }
                 }
             };
@@ -33,19 +41,12 @@
                 window.hidePopup();
             });
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
-                var data = {
-                        type: form.type.value,
-                        name: form.name.value,
-                        file: form.file.value,
-                        links: form.link.value,
-                        folderId: options.libraryId
-                    };
-                debugger;
                 form.submit();
 
             });
         },
-        isValidType: function (type) {
+        isValidType: function (fileType) {
+            var type = fileType.toLowerCase();
             if (type.search('png') !== -1 ) {
                 return true;
             }

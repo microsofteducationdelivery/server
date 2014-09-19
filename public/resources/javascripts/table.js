@@ -258,7 +258,9 @@
                 data.forEach(function (item) {
                     list.push(item);
                 });
-                new WinJS.UI.Repeater(this.element.querySelector('tbody'), {data: this.list});
+                if (!this.repeater) {
+                    this.repeater = new WinJS.UI.Repeater(this.element.querySelector('tbody'), {data: this.list});
+                }
                 this.setEvents(noCheck);
 
             },

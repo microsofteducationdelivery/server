@@ -3,7 +3,10 @@
     WinJS.UI.Pages.define('/resources/pages/edit-user.html', {
 
         ready: function (element, options) {
-            var tplTarget = document.querySelector(".b-edit-user__wrapper");
+            var tplTarget = document.querySelector(".b-edit-user__wrapper"),
+                checkEmail = WinJS.Utilities.query('input[name=send_email]'),
+                checkPhone =  WinJS.Utilities.query('input[name=send_sms]')
+            ;
             WinJS.UI.Fragments.renderCopy("/resources/pages/templates/edit-user-tpl.html", tplTarget).done(function () {
                 WinJS.UI.processAll(element);
                 getUserCreds(options.id, function (response, status) {
@@ -18,11 +21,21 @@
                     form.login.value = data.login;
                     form.password.value = data.password;
                     form.type.value = data.type;
+                    if (data.email) {
+                        form.email.value = data.email;
+                        checkEmail[0].checked = true;
+                        WinJS.Utilities.query('input[name=email]')[0].disabled = false;
+                    }
+                    if (data.phone) {
+                        form.phone.value = data.phone;
+                        checkPhone[0].checked = true;
+                        WinJS.Utilities.query('input[name=phone]')[0].disabled = false;
+                    }
 
                 });
 
                 WinJS.Utilities.query('form').listen('change', function (e) {
-                    if (e.target.type == "checkbox") {
+                    if (e.target.type === "checkbox") {
                         if (e.target.checked) {
                             WinJS.Utilities.query('input[type=text]', e.target.parentNode.parentNode)[0].disabled = false;
                         } else {
@@ -50,7 +63,10 @@
                         password: form.password.value
                     };
 
-                    if (form.email.value) {
+                    if(form.phone.value && checkPhone[0].checked) {
+                        values.phone = form.phone.value;
+                    }
+                    if (form.email.value && checkEmail[0].checked) {
                         values.email = form.email.value;
                     }
 
@@ -58,7 +74,7 @@
                         url: '/api/users',
                         type: 'PUT',
                         data: JSON.stringify(values)
-                    }).done(function () { alert('saved'); });
+                    }).done(function () { });
                 });
 
             });

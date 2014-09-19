@@ -15,7 +15,7 @@
   WinJS.UI.Pages.define('/resources/pages/libraries.html', {
     init: function () {
       var me = this;
-      return getLibraries().then(function (libraries) { me._data = libraries; });
+      return getLibraries().then( function (libraries) {me._data = libraries; });
     },
 
     ready: function (element, options) {
@@ -50,6 +50,7 @@
       tableControl.setData(this._data);
 
       deleteBtn.listen('click', function () {
+          selectedItems = tableControl.getSelection();
         if (selectedItems.length === 0) {
           return false;
         }
@@ -59,9 +60,10 @@
             type: 'DELETE',
             data: JSON.stringify(selectedItems)
           }).done(function (result) {
-            getLibraries().then(function (libraries) { tableControl.setData(libraries)});
+            getLibraries().then(function (libraries) {
+                tableControl.setData(libraries);
+            });
           });
-          tableControl.deselectAll();
         }});
 
       });
