@@ -3,8 +3,8 @@
     WinJS.UI.Pages.define('/resources/pages/add-new-user.html', {
 
         ready: function (element) {
-            var checkEmail = WinJS.Utilities.query('input[name=send_email]'),
-                checkPhone =  WinJS.Utilities.query('input[name=send_sms]')
+            var checkEmail,
+                checkPhone
             ;
 
             function showError(el, msg) {
@@ -84,6 +84,9 @@
             var basicFragmentLoadDiv = document.querySelector(".b-edit-user__wrapper");
             WinJS.UI.Fragments.renderCopy("/resources/pages/templates/edit-user-tpl.html", basicFragmentLoadDiv).done(function () {
                 WinJS.UI.processAll(element);
+                checkEmail = WinJS.Utilities.query('input[name=send_email]');
+                checkPhone =  WinJS.Utilities.query('input[name=send_sms]');
+                
                 WinJS.Utilities.query('.b-button-cancel').listen('click', function () {
                     WinJS.Navigation.back();
                 });
