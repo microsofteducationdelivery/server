@@ -28,9 +28,13 @@
                 });
             });
             WinJS.Utilities.query('button[class=b-library-new-media-btn]').listen('click', function () {
-                window.showPopup('/resources/pages/popups/add-new-media.html', {libraryId: options.id});
+                window.showPopup('/resources/pages/popups/add-new-media.html', {
+                    libraryId: currentId,
+                    callback: function () {
+                        me.getFolderData({id: currentId});
+                    }
+                })
             });
-
             WinJS.Utilities.query('button[class=b-libraries__cut-button]', element).listen('click', function () {
                 buffer.data = getSelection();
                 if (buffer.data.length === 0) {
@@ -265,7 +269,9 @@
             if (data.type) {
                 icon.innerHTML = getType(data.type).icon;
             }
-
+            if (!data.convertedFile) {
+                WinJS.Utilities.query('span.b_converted').removeClass('hidden');
+            }
             form.link.value = data.links;
             form.name.value = data.name;
             form.setAttribute('data-id', data.id);

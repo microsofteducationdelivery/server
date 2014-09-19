@@ -19,6 +19,8 @@
                 }
 
             };
+            form.action += '?token=' + localStorage.getItem('token');
+
             form.file.onchange = function (element) {
                 if(element.target.files.length > 0) {
                     fileNameField.innerHTML = element.target.files[0].name;
@@ -33,16 +35,28 @@
                 }
             };
 
-            $('#mediaForm').ajaxForm(function() {
-                window.hidePopup();
-            });
 
             WinJS.Utilities.query('button.b-button-cancel', element).listen('click', function () {
                 window.hidePopup();
             });
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
-                form.submit();
-
+                $(form).ajaxSubmit({
+                    success: function () {
+                        debugger;
+                        if (options.callback && typeof(options.callback) === 'function') {
+                            options.callback();
+                        }
+                        window.hidePopup();
+                    },
+                    error: function () {
+                        debugger;
+                        window.hidePopup();
+                    }
+                });
+                WinJS.Utilities.query('button.b-button-cancel', element)[0].setAttribute('style', 'display: none');
+                WinJS.Utilities.query('button.b-button-ok', element)[0].disabled = true;
+                WinJS.Utilities.query('button.b-button-ok', element)[0].innerHTML = 'Uploading ...';
+                WinJS.Utilities.query('.b_upload-field__container', element)[0].setAttribute('style', 'display: none');
             });
         },
         isValidType: function (fileType) {

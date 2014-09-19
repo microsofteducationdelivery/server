@@ -13,19 +13,19 @@ module.exports = require('../helper/crud')(require('../../service/media'),{
 
     // create a temporary folder to store files
     var tmpdir = path.join(os.tmpdir(), 'med-temp');
-    yield fs.mkdir(tmpdir);
+    try {
+      yield fs.mkdir(tmpdir);
+    } catch(e) {
+      if ( e.code !== 'EEXIST' ) { throw e; }
+    }
+
 
     // list of all the files
-    var file;
-
     // yield each part as a stream
-    var part;
-    while (part = yield parts) {
-      // filename for this part
-      files.push(file = path.join(tmpdir, Math.random().toString() + part.filename));
-      // save the file
-      yield saveTo(part, file);
-    }
+    var part = yield parts;
+    var file = path.join(tmpdir, Math.random().toString() + part.filename);
+    yield saveTo(part, file);
+    console.log(file, parts.fields);
 
   }
 });
