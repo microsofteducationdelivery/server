@@ -86,7 +86,7 @@
                 WinJS.UI.processAll(element);
                 checkEmail = WinJS.Utilities.query('input[name=send_email]');
                 checkPhone =  WinJS.Utilities.query('input[name=send_sms]');
-                
+
                 WinJS.Utilities.query('.b-button-cancel').listen('click', function () {
                     WinJS.Navigation.back();
                 });

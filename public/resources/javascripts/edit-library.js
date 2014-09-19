@@ -405,6 +405,12 @@
         getDisplay: WinJS.Binding.converter(function (type) {
             return type === 'media' ? 'block' : 'none';
         }),
+        getSrc: WinJS.Binding.converter(function (src) {
+            if (src === null) {
+                return '/resources/images/stub.jpg'
+            }
+            return src;
+        }),
         getPadding: WinJS.Binding.converter(function (type) {
             return type === 'media' ? '25px' : '0';
         }),

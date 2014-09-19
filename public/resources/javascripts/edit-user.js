@@ -23,7 +23,7 @@
 
                     form.name.value = data.name;
                     form.login.value = data.login;
-                    form.password.value = data.password;
+                    form.password.value = '';
                     form.type.value = data.type;
                     if (data.email) {
                         form.email.value = data.email;
