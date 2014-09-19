@@ -1,116 +1,120 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    var mostDownloadList = new WinJS.Binding.List(),
-        mostViewedList = new WinJS.Binding.List()
+  var mostDownloadList = new WinJS.Binding.List(),
+    mostViewedList = new WinJS.Binding.List()
     ;
 
-    var callback = function (responseText, status, list) {
-        if (status === 200) {
-            var feed = JSON.parse(responseText),
-                length = list.length
-                ;
+  var callback = function (response, status, list) {
+    if (status === 200) {
+      var feed = response,
+        length = list.length
+        ;
 
-            list.splice(0, length - 1);
-            feed.forEach(function (item) {
-                list.push(item);
-            });
-        } else {
-            console.log("Error obtaining feed. XHR status code: " + status);
+      list.splice(0, length - 1);
+      feed.forEach(function (item) {
+        list.push(item);
+      });
+    } else {
+      console.log("Error obtaining feed. XHR status code: " + status);
+    }
+  };
+  
+  WinJS.UI.Pages.define("/resources/pages/statistics.html", {
+    ready: function () {
+      var pickers =  $(".b_filter--date-picker--input__picker" );
+
+      pickers.datepicker({ dateFormat: "M d, yy" });
+      pickers.on('change', function (el) {
+        var from = $('#from'),
+          to = $('#to'),
+          dateFrom = from.datepicker('getDate'),
+          targetedValue = $('#' + el.target.id).datepicker('getDate'),
+          dateTo = to.datepicker('getDate')
+          ;
+
+        if (!dateFrom || !dateTo) {
+          return;
         }
-    };
-    WinJS.UI.Pages.define("/resources/pages/statistics.html", {
-       ready: function () {
-           var pickers =  $(".b_filter--date-picker--input__picker" );
 
-           pickers.datepicker({ dateFormat: "M d, yy" });
-           pickers.on('change', function (el) {
-               var from = $('#from'),
-                   to = $('#to'),
-                   dateFrom = from.datepicker('getDate'),
-                   targetedValue = $('#' + el.target.id).datepicker('getDate'),
-                   dateTo = to.datepicker('getDate')
-               ;
+        if (dateFrom > dateTo) {
+          from.datepicker("setDate", targetedValue);
+          to.datepicker("setDate", targetedValue);
+        }
 
-               if (!dateFrom || !dateTo) {
-                   return;
-               }
+      });
+      var periodRadio = WinJS.Utilities.query('input[type=radio][value=period]')[0],
+        allRadio = WinJS.Utilities.query('input[type=radio][value=all]')[0],
+        datePickerField = WinJS.Utilities.query('div[class=b_filter--date-picker]')[0],
+        isPeriod = periodRadio.checked,
+        downloadAll = WinJS.Utilities.query('button[class=b_filter--btn__download]')[0],
+        downloadMostDownloaded = WinJS.Utilities.query('div[id=downloaded]>button[class=b_content--result--toolbar__btn]')[0],
+        downloadMostViewed = WinJS.Utilities.query('div[id=viewed]>button[class=b_content--result--toolbar__btn]')[0]
+        ;
 
-               if (dateFrom > dateTo) {
-                   from.datepicker("setDate", targetedValue);
-                   to.datepicker("setDate", targetedValue);
-               }
+      if (!isPeriod) {
+        datePickerField.classList.add('hidden');
+      }
+      periodRadio.onchange = function () {
+        datePickerField.classList.remove('hidden');
+      };
+      allRadio.onchange = function () {
+        datePickerField.classList.add('hidden');
+      };
 
-           });
-           var periodRadio = WinJS.Utilities.query('input[type=radio][value=period]')[0],
-               allRadio = WinJS.Utilities.query('input[type=radio][value=all]')[0],
-               datePickerField = WinJS.Utilities.query('div[class=b_filter--date-picker]')[0],
-               isPeriod = periodRadio.checked,
-               downloadAll = WinJS.Utilities.query('button[class=b_filter--btn__download]')[0],
-               downloadMostDownloaded = WinJS.Utilities.query('div[id=downloaded]>button[class=b_content--result--toolbar__btn]')[0],
-               downloadMostViewed = WinJS.Utilities.query('div[id=viewed]>button[class=b_content--result--toolbar__btn]')[0]
-           ;
+      downloadAll.onclick = function () {
+        if (isPeriod) {
+          var dateFrom = $('#from').datepicker('getDate'),
+            dateTo = $('#to').datepicker('getDate')
+            ;
+        }
+        console.log('download all');
+      };
+      downloadMostDownloaded.onclick = function () {
 
-           if (!isPeriod) {
-               datePickerField.classList.add('hidden');
-           }
-           periodRadio.onchange = function () {
-               datePickerField.classList.remove('hidden');
-           };
-           allRadio.onchange = function () {
-               datePickerField.classList.add('hidden');
-           };
+        console.log('download most downloaded');
+      };
+      downloadMostViewed.onclick = function () {
 
-           downloadAll.onclick = function () {
-               if (isPeriod) {
-                   var dateFrom = $('#from').datepicker('getDate'),
-                       dateTo = $('#to').datepicker('getDate')
-                   ;
-               }
-               console.log('download all');
-           };
-           downloadMostDownloaded.onclick = function () {
+        console.log('download most viewed');
+      };
 
-               console.log('download most downloaded');
-           };
-           downloadMostViewed.onclick = function () {
-
-               console.log('download most viewed');
-           };
-       }
-    });
-
-
-    WinJS.xhr({
-        url: '/listData/mostViewed.json',
+      window.authXHR({
+        url: '/api/stats/top5Views',
         type: 'GET'
-    }).done(
+      }).done(
         function (result) {
-            callback(result.responseText, result.status, mostViewedList);
+          callback(result.response, result.status, mostViewedList);
         },
         function (result) {
-            callback(null, result.status);
+          callback(null, result.status);
         }
-    );
+      );
 
-    WinJS.xhr({
-        url: '/listData/mostDownloaded.json',
+      window.authXHR({
+        url: '/api/stats/top5Downloads',
         type: 'GET'
-    }).done(
+      }).done(
         function (result) {
-            callback(result.responseText, result.status, mostDownloadList);
+          callback(result.response, result.status, mostDownloadList);
         },
         function (result) {
-            callback(null, result.status);
+          callback(null, result.status);
         }
-    );
+      );
 
-    WinJS.Namespace.define('MostDownloaded.ListView', {
-        data: mostDownloadList
-    });
-    WinJS.Namespace.define('MostViewed.ListView', {
-        data: mostViewedList
-    });
-    WinJS.UI.processAll();
+    }
+
+  });
+
+
+
+  WinJS.Namespace.define('MostDownloaded.ListView', {
+    data: mostDownloadList
+  });
+  WinJS.Namespace.define('MostViewed.ListView', {
+    data: mostViewedList
+  });
+  WinJS.UI.processAll();
 
 })();

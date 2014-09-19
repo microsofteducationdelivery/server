@@ -3,20 +3,33 @@ var
   koa = require('koa'),
   route = require('koa-route'),
 
-  service = require('../../service/motd')
+  service = require('../../service/stats')
   ;
 
 var app = koa();
 
 function* top5Downloads () {
-  var motd = yield service.get(this.user);
-  this.body = {text: motd || ''};
+  var items = yield service.getTop5Downloads();
+  this.body = items.map(function (item) {
+    return {
+      number: item.downloads,
+      text: item.name,
+      picture: item.picture,
+      folder: item.FolderId || 'library' + item.LibraryId
+    };
+  });
 }
 
 function* top5Views () {
-  var data = yield parse(this);
-  yield service.set(data, this.user);
-  this.status = 204;
+  var items = yield service.getTop5Views();
+  this.body = items.map(function (item) {
+    return {
+      number: item.downloads,
+      text: item.name,
+      picture: item.picture,
+      folder: item.FolderId || 'library' + item.LibraryId
+    };
+  });
 }
 
 

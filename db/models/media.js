@@ -6,12 +6,18 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: true
       }
     },
-    views: DataTypes.INTEGER,
-    downloads: DataTypes.INTEGER,
+    views: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    downloads: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     description: DataTypes.TEXT,
     links: DataTypes.TEXT,
     file: DataTypes.STRING,
-    type: {
+    ty2pe: {
       type: DataTypes.ENUM('video', 'image', 'text'),
       allowNull: false
     }
