@@ -19,6 +19,7 @@
                 }
 
             };
+            form.FolderId.value = options.libraryId;
             form.action += '?token=' + localStorage.getItem('token');
 
             form.file.onchange = function (element) {
@@ -42,14 +43,12 @@
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
                 $(form).ajaxSubmit({
                     success: function () {
-                        debugger;
                         if (options.callback && typeof(options.callback) === 'function') {
                             options.callback();
                         }
                         window.hidePopup();
                     },
                     error: function () {
-                        debugger;
                         window.hidePopup();
                     }
                 });
