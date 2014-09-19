@@ -83,8 +83,9 @@
                     url: '/contentActions/move',
                     type: 'POST',
                     data: JSON.stringify(data)
-                }).done(function (result) {
-                    if (result.status === 200) {
+                }).done(
+                    function (result) {
+
                         me.getFolderData({id: currentId});
                         var boxes = WinJS.Utilities.query('input[type=checkbox]');
                         boxes.forEach(function (item) {
@@ -92,9 +93,16 @@
                             WinJS.Utilities.query('button[class=b-libraries__paste-button]', element)[0].disabled = true;
 
                         });
+                    },
+                    function (err) {
+                        console.log(err);
+                        if (err.statusCode === 409) {
+                            window.showPopup('/resources/pages/popups/alert.html', {
+                                msg: 'The paste operation can not be used. Please choose another folder to paste items.'
+                            });
+                        }
                     }
-
-                });
+                );
             });
 
             WinJS.Utilities.query('button[class=b-libraries__save-button]', element).listen('click', function () {

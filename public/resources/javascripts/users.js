@@ -27,15 +27,19 @@
                 if (selectedItems.length === 0) return false;
                 window.showPopup('/resources/pages/popups/delete-confirm.html', {callback: function () {
                     WinJS.xhr({
-                        url: '/users',
+                        url: '/api/users',
                         type: 'DELETE',
-                        data: selectedItems
+                        data: JSON.stringify(selectedItems)
                     }).done(
                         function (result) {
-                            return
+                            return result
                         },
-                        function (result) {
-                            return result.status;
+                        function (err) {
+                            if (err.status === 409) {
+                                window.showPopup('/resources/pages/popups/alert.html', {
+                                    msg: 'Own account can not be deleted.'
+                                });
+                            }
                         }
                     );
                     tableControl.deselectAll();

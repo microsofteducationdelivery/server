@@ -25,6 +25,10 @@
                 }
             };
 
+            $('#mediaForm').ajaxForm(function() {
+                window.hidePopup();
+            });
+
             WinJS.Utilities.query('button.b-button-cancel', element).listen('click', function () {
                 window.hidePopup();
             });
@@ -36,20 +40,9 @@
                         links: form.link.value,
                         folderId: options.libraryId
                     };
-                window.authXHR({
-                    url: '/api/media/',
-                    type: 'POST',
-                    data: JSON.stringify(data)
-                }).done(
-                    function (result) {
+                debugger;
+                form.submit();
 
-                        window.hidePopup();
-                    },
-                    function (err) {
-                        console.log(err);
-                        window.hidePopup();
-                    }
-                );
             });
         },
         isValidType: function (type) {

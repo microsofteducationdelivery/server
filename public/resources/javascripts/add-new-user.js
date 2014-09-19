@@ -100,7 +100,7 @@
                     } else {
                         validate(e.target)
                     }
-                })
+                });
                 WinJS.Utilities.query('.b-button-ok').listen('click', function (e) {
                     e.preventDefault();
                     var form = element.querySelector('form');

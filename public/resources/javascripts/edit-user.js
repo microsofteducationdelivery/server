@@ -20,6 +20,22 @@
                     form.type.value = data.type;
 
                 });
+
+                WinJS.Utilities.query('form').listen('change', function (e) {
+                    if (e.target.type == "checkbox") {
+                        if (e.target.checked) {
+                            WinJS.Utilities.query('input[type=text]', e.target.parentNode.parentNode)[0].disabled = false;
+                        } else {
+                            var textFeild = WinJS.Utilities.query('input[type=text]', e.target.parentNode.parentNode)[0],
+                                errMes = WinJS.Utilities.query('.b-edit-user__error', e.target.parentNode.parentNode)[0];
+                            textFeild.disabled = true;
+                            textFeild.value = '';
+                            if(errMes) {
+                                textFeild.parentNode.removeChild(errMes);
+                            }
+                        }
+                    }
+                });
                 WinJS.Utilities.query('.b-button-cancel').listen('click', function () {
                     WinJS.Navigation.back();
                 });
