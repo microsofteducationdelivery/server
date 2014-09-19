@@ -1,8 +1,9 @@
 function initialize() {
   var user = JSON.parse(localStorage.getItem('user'));
-  /*if (!user) {
+
+  if ((!user || !user.token ) && window.location.pathname !== '/index.html') {
     window.location = '/index.html';
-  }*/
+  }
 
   WinJS.Application.sessionState.user = user;
   WinJS.Application.sessionState.token = localStorage.getItem('token');
