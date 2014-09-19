@@ -3,8 +3,9 @@ var path = require('path');
 var fs = require('co-fs');
 var parse = require('co-busboy');
 var saveTo = require('save-to');
+var service = require('../../service/media');
 
-module.exports = require('../helper/crud')(require('../../service/media'),{
+module.exports = require('../helper/crud')(service, {
   create: function* () {
     console.log('overridden');
     var parts = parse(this, {
@@ -25,7 +26,14 @@ module.exports = require('../helper/crud')(require('../../service/media'),{
     var part = yield parts;
     var file = path.join(tmpdir, Math.random().toString() + part.filename);
     yield saveTo(part, file);
-    console.log(file, parts.fields);
+    var data = { file: file };
+    parts.fields.forEach(function (field) {
+      data[field[0]] = field[1];
+    });
+    console.log(data);
+    yield service.add(data);
+    this.status = 201;
+
 
   }
 });

@@ -30,5 +30,19 @@ module.exports = {
     var folder = yield table.find(id);
     var attributes = ['name', 'description', 'links'];
     yield folder.updateAttributes(_.pick(data, attributes), attributes);
+  },
+
+  add: function* (data, author) {
+    var library, folder;
+    if (data.FolderId.substr(0, 7) === 'library') {
+      library = yield db.Library.find(data.FolderId.substr(7));
+      data.FolderId = null;
+    } else {
+      folder = yield db.Folder.find(data.FolderId);
+      library = yield folder.getLibrary();
+    }
+
+    var media = yield db.Media.create(data);
+    library.addMedium(media);
   }
 };
