@@ -6,11 +6,11 @@
             var tplTarget = document.querySelector(".b-edit-user__wrapper");
             WinJS.UI.Fragments.renderCopy("/resources/pages/templates/edit-user-tpl.html", tplTarget).done(function () {
                 WinJS.UI.processAll(element);
-                getUserCreds(options.id, function (responseText, status) {
+                getUserCreds(options.id, function (response, status) {
                     if (status !== 200) {
                         return null;
                     }
-                    var data = JSON.parse(responseText),
+                    var data = response,
                         form = element.querySelector('form')
                     ;
 
@@ -66,12 +66,12 @@
         }
     });
     function getUserCreds (id, callback) {
-        WinJS.xhr({
-            url: '/listData/user_' + id +'.json',
+        window.authXHR({
+            url: '/api/users/' + id,
             type: 'GET'
         }).done(
             function (result) {
-                callback(result.responseText, result.status);
+                callback(result.response, result.status);
             },
             function (result) {
                 callback(null, result.status);

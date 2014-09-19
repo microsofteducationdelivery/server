@@ -27,8 +27,16 @@ module.exports = {
     return true;
   },
 
-  findById: function (data) {
-    return table.find(data.id);
+  findById: function (id, author) {
+    var where = {id: id};
+    if (author) {
+      where.CompanyId = author.CompanyId;
+    }
+
+    return table.find({
+      where: where,
+      attributes: [ 'id', 'name', 'login', 'email', 'type', 'CompanyId', 'phone']
+    });
   },
 
   findByCredentials: function* (credentials) {
@@ -68,6 +76,13 @@ module.exports = {
         throw new errors.ValidationError('Validation failed', { errors: e });
       }
     }
+  },
+
+  list: function* (author) {
+    return yield table.findAll({
+      where: { CompanyId: author.CompanyId },
+      attributes: ['id', 'login', 'type', 'name']
+    });
   }
 /*
   update: function (data, author) {

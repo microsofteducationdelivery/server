@@ -9,9 +9,9 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     associate: function(models) {
       Folder.belongsTo(models.Library);
-      Folder.hasMany(Folder, { as: 'children', foreignKey: 'parentId', useJunctionTable: false });
+      Folder.hasMany(Folder, { onDelete: 'cascade', as: 'children', foreignKey: 'parentId', useJunctionTable: false });
       Folder.belongsTo(Folder, { as: 'parent', foreignKey: 'parentId' });
-      Folder.hasMany(models.Media);
+      Folder.hasMany(models.Media,  { onDelete: 'cascade' });
     }
   });
 

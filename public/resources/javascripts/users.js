@@ -47,12 +47,12 @@
 
             });
 
-            WinJS.xhr({
-                url: '/listData/user.json',
+            window.authXHR({
+                url: '/api/users',
                 type: 'GET'
             }).done(
                 function (result) {
-                    var data = JSON.parse(result.responseText);
+                    var data = result.response;
 
                     tableControl.setData(data);
                 },

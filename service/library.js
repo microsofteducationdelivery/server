@@ -52,9 +52,6 @@ module.exports = {
       lookupTable[record.LibraryId] = record.dataValues.count;
     });
 
-    console.log(lookupTable);
-
-
     return (yield table.findAll({
         where: {CompanyId: author.CompanyId},
         attributes: [

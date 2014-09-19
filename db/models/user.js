@@ -21,6 +21,9 @@ module.exports = function (sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING
     },
+    phone: {
+      type: DataTypes.STRING
+    },
     type: {
       type: DataTypes.ENUM('owner', 'admin', 'operator', 'mobile'),
       allowNull: false

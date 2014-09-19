@@ -35,9 +35,9 @@ module.exports = function (app) {
 
 
   // middleware below this line is only reached if jwt token is valid
-  app.use(jwt({secret: config.app.secret}));
+  app.use(jwt({secret: config.app.secret, passthrough: true}));
   app.use(function* (next) {
-    this.user = yield userService.findById(this.user);
+    this.user = yield userService.findById(this.user.id);
     if (!this.user) {
       this.status = 403;
       return;
