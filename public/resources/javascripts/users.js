@@ -32,7 +32,7 @@
                         data: JSON.stringify(selectedItems)
                     }).done(
                         function (result) {
-                            return result
+                            return result;
                         },
                         function (err) {
                             if (err.status === 409) {

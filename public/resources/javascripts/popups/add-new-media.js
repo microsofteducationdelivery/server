@@ -13,6 +13,9 @@
                 okBtn = WinJS.Utilities.query('button[class=b-button-ok]')[0]
             ;
 
+            debugger;
+            form.action += '?token=' + localStorage.getItem('token');
+
             form.file.onchange = function (element) {
                 if(element.target.files.length > 0) {
                     fileNameField.innerHTML = element.target.files[0].name;
@@ -41,7 +44,7 @@
                         folderId: options.libraryId
                     };
                 debugger;
-                form.submit();
+                $(form).ajaxSubmit();
 
             });
         },

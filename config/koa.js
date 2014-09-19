@@ -6,7 +6,7 @@ var fs = require('fs'),
   mount = require('koa-mount'),
 
   userService = require('../service/user')
-;
+  ;
 
 module.exports = function (app) {
   if (config.app.env !== 'test') {
@@ -37,12 +37,15 @@ module.exports = function (app) {
   // middleware below this line is only reached if jwt token is valid
   app.use(jwt({secret: config.app.secret, passthrough: true}));
   app.use(function* (next) {
+    console.log(this.request.type);
+    if (this.request.type === 'multipart/form-data') {
+      this.user = yield jwt.verify(this.query.token, config.app.secret);
+    }
     this.user = yield userService.findById(this.user.id);
     if (!this.user) {
       this.status = 403;
       return;
     }
-
     yield next;
   });
 
