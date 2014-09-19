@@ -50,7 +50,7 @@ module.exports = {
         return { id: folder.id, name: folder.name, type: 'folder'};
       }),
       media.map(function (media) {
-        return { id: media.id, name: media.name, type: 'media' };
+        return { id: media.id, name: media.name, type: 'media', picture: media.picture };
       })
     );
 
