@@ -12,7 +12,7 @@
                     <input type="file" name="file" class="b-library-edit--form__fileupload" />
                     <div type="button" class="b_upload-field__container">Upload</div>
                 </label>
-                <span class="b-library-edit--form__filename"> test</span>
+                <span class="b-library-edit--form__filename"></span>
             </div>
 
             <div class="b-library-edit--form__field-wrapper">
@@ -22,9 +22,10 @@
 
             <div class="b-library-edit--form__field-wrapper" style="padding-top: 56px;">
                 <label class="b-library-edit--form__label">Type:</label>
-                <div class="b-library-edit--form__icon">&#xf03d</div>
+                <div class="b-library-edit--form__icon"><i> </i></div>
 
                 <select name="type" class="b-edit-user__type" disabled="disable">
+                    <option value="empty"></option>
                     <option value="video">Video</option>
                     <option value="image">Image</option>
                     <option value="text">Text</option>
@@ -40,7 +41,7 @@
     </div>
     <footer class="b-add-media__footer">
         <div class="b-footer__wrapper">
-            <button class="b-button-ok">OK</button>
+            <button class="b-button-ok" disabled="disabled">OK</button>
             <button class="b-button-cancel">Cancel</button>
         </div>
 

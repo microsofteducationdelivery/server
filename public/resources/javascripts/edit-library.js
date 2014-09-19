@@ -36,6 +36,8 @@
                 if (buffer.data.length === 0) {
                     return false;
                 }
+                WinJS.Utilities.query('button[class=b-libraries__paste-button]', element)[0].disabled = false;
+
                 var boxes = WinJS.Utilities.query('input[type=checkbox]');
                 boxes.forEach(function (item) {
                     item.parentNode.parentNode.parentElement.setAttribute('class', 'b_media-list-tpl--item');
@@ -44,7 +46,8 @@
                 boxes = WinJS.Utilities.query('input[type=checkbox]:checked');
 
                 boxes.forEach(function (item) {
-                    item.parentNode.parentNode.parentElement.setAttribute('class', 'b_media-list-tpl--item-cut');
+                    item.parentNode.parentNode.parentElement.setAttribute('class', 'b_media-list-tpl--item' +
+                        ' b_media-list-tpl--item-cut');
                 });
                 buffer.type = 'move';
             });
@@ -86,6 +89,8 @@
                         var boxes = WinJS.Utilities.query('input[type=checkbox]');
                         boxes.forEach(function (item) {
                             item.parentNode.parentNode.setAttribute('class', 'b_media-list-tpl--item');
+                            WinJS.Utilities.query('button[class=b-libraries__paste-button]', element)[0].disabled = true;
+
                         });
                     }
 
@@ -344,7 +349,6 @@
         WinJS.Utilities.query('button[class=b-libraries__cut-button]')[0].disabled = disabled;
         WinJS.Utilities.query('button[class=b-libraries__delete-button]')[0].disabled = disabled;
         WinJS.Utilities.query('button[class=b-libraries__copy-button]')[0].disabled = disabled;
-        WinJS.Utilities.query('button[class=b-libraries__paste-button]')[0].disabled = disabled;
     }
     function setLibTitle (title) {
         WinJS.Utilities.query('h1[class=b-library-name]')[0].textContent = title;

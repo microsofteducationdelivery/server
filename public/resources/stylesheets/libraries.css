@@ -7,7 +7,9 @@
     border-top: solid #6ab01c 5px;
 }
 .b_libraries {
+    padding-top: 35px;
     overflow: auto;
+    overflow-x: hidden;
     max-height: calc(100% - 215px);
 }
 .b-add-library-popup.form-library {

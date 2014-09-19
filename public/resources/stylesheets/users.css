@@ -5,7 +5,9 @@
     margin-left: 5%;
 }
 .b_users {
+    padding-top: 35px;
     overflow: auto;
+    overflow-x: hidden;
     max-height: calc(100% - 215px);
 }
 .b_users__table {
