@@ -68,6 +68,7 @@
                         data: JSON.stringify(buffer.data)
                     }).done(function (result) {
                             me.getFolderData({id: currentId});
+
                     });
                 }});
 

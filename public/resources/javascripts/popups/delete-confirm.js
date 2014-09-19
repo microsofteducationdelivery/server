@@ -10,6 +10,7 @@
                 window.hidePopup();
             });
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
+                debugger;
                 options.callback();
                 window.hidePopup();
             });

@@ -1,5 +1,14 @@
 (function () {
     'use strict';
+    function getUsers () {
+        return window.authXHR({
+            url: '/api/users',
+            type: 'GET'
+        }).then(function (result) {
+            return result.response;
+        });
+    }
+
     WinJS.UI.Pages.define('/resources/pages/users.html', {
         ready: function (element, options) {
             WinJS.UI.processAll(element);
@@ -32,14 +41,22 @@
                         data: JSON.stringify(selectedItems)
                     }).done(
                         function (result) {
+                            getUsers().then(function (users) {
+
+                                tableControl.setData(users);
+                                tableControl.deselectAll();
+                            });
                             return result;
+
                         },
                         function (err) {
                             if (err.status === 403) {
+
                                 window.showPopup('/resources/pages/popups/alert.html', {
                                     msg: 'Own account can not be deleted.'
                                 });
                             }
+
                         }
                     );
                     tableControl.deselectAll();

@@ -12,7 +12,7 @@
 
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
                 if (options.callback && typeof(callback) === 'function') {
-                    options.callback.call();
+                    options.callback();
                 }
                 window.hidePopup();
             });
