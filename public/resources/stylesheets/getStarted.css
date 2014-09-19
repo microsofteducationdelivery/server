@@ -1,0 +1,78 @@
+.b_source_content__img {
+    margin-top: 30px;
+}
+.b_source_content__img--left {
+    float: left;
+    color: white;
+    margin-top: 60px;
+    font-size: 11pt;
+    width: 34%;
+    margin-left: calc(6% + 51px);
+    margin-right: 3%;
+}
+.b-main__link-active {
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+#log-reg-butt .b-main__link-active:before {
+    display: none !important;
+}
+.b-main__link-active:before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 18px;
+    right: -48%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid #287074;
+}
+.b_source_content__img--left div {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14pt;
+}
+.download-btn {
+    width: 271px;
+    float: right;
+    height: 67px;
+    background-image:  url(/resources/images/download.png);
+}
+.b_step-box {
+    margin-left: 6%;
+}
+#step1 {
+    background-image:  url(/resources/images/step1.png);
+}
+#step2 {
+    background-image:  url(/resources/images/step2.png);
+}
+#step3 {
+    background-image:  url(/resources/images/step3.png);
+}
+#step4 {
+    background-image:  url(/resources/images/step4.png);
+}
+.b_img-box {
+    width: 228px;
+    background-color: green;
+    margin-right: 13px;
+    height: 250px;
+    display: inline-block;
+}
+.b_source_content__img--right {
+    margin-top: 60px;
+    width: 34%;
+    margin-right: 5%;
+    float: right;
+    color: white;
+    font-size: 11pt;
+}
+.b_source_content__img--right div {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14pt;
+}

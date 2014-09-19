@@ -1,0 +1,22 @@
+{
+  "name": "ned",
+  "version": "0.0.0",
+  "authors": [
+    "Illya Klymov <xanf@wookieelabs.com>"
+  ],
+  "description": "Animal disease notification system",
+  "main": "app.js",
+  "keywords": [
+    "adnis"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.0.3"
+  }
+}

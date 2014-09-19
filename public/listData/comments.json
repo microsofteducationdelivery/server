@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1",
+        "text": "some test comment",
+        "lvl": "0",
+        "userName": "Qwerty1"
+    },
+    {
+        "id": "2",
+        "text": "some answer to first comment",
+        "lvl": "1",
+        "userName": "Qwerty2"
+    },
+    {
+        "id": "3",
+        "text": "2nd test comment",
+        "lvl": "0",
+        "userName": "my"
+    },
+    {
+        "id": "4",
+        "text": "answer to 2nd test comment",
+        "lvl": "1",
+        "userName": "Qwerty3"
+    },
+    {
+        "id": "5",
+        "text": "answer to answer to 2nd test comment",
+        "lvl": "2",
+        "userName": "my"
+    },
+    {
+        "id": "6",
+        "text": "2nd answer to 2nd test comment",
+        "lvl": "1",
+        "userName": "Qwerty1"
+    }
+]

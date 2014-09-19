@@ -1,0 +1,73 @@
+.b-edit-user__wrapper {
+    background-color: #f6f6f6;
+    width: 80%;
+    padding-top: 10px;
+    margin-left: 5%;
+}
+.b_users {
+    overflow: auto;
+    max-height: calc(100% - 215px);
+}
+.b_users__table {
+    margin-left: 5%;
+    width: 92%;
+}
+.b-edit-user__field-wrapper {
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+
+.b-edit-user__label {
+    float: left;
+    padding-top: 5px;
+    width: 300px;
+    text-align: right;
+    color: grey;
+    margin-right: 20px;
+}
+
+.b-edit-user__type {
+    width: 280px;
+}
+
+.b-edit-user__error {
+    color: darkred;
+    display: inline;
+}
+
+.b-edit-user__credentials {
+    background-color: #e2eed8;
+}
+
+.b-edit-user__buttons {
+    height: 100px;
+
+
+    display:-ms-flexbox;
+    -ms-flex-pack:center;
+    -ms-flex-align:center;
+
+    /* Firefox */
+    display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+
+    /* Safari, Opera, and Chrome */
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+
+    /* W3C */
+    display:box;
+    box-pack:center;
+    box-align:center;
+}
+
+.b-edit-user__buttons button {
+    margin-left: 5px;
+    margin-right: 5px;
+    min-width: 120px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

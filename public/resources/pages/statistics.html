@@ -1,0 +1,85 @@
+<h1>Statistics</h1>
+
+<div class="b_list-tpl" data-win-control="WinJS.Binding.Template" style="display: none">
+    <div class="b_list-tpl--item">
+        <div class="b_list-tpl--item__number">
+            <h4 data-win-bind="textContent:  number"></h4>
+        </div>
+        <img src="#" class="b_list-tpl--item__image" data-win-bind="src: picture" />
+        <div class="b_list-tpl--item__text">
+            <h6 data-win-bind="textContent: text"></h6>
+        </div>
+    </div>
+</div>
+
+<div class="b_filter">
+    <div class="b_filter--checkbox">
+        <div class="b_filter--checkbox__radio">
+            <label class="b_radio-field">
+                <input type="radio" name="radiofilter" value="all" checked="true">
+                <div class="b_radio"></div>
+                <div class="text"> Download All</div>
+            </label>
+
+        </div>
+        <div class="b_filter--checkbox__radio">
+            <label class="b_radio-field">
+                <input type="radio" name="radiofilter" value="period">
+                <div class="b_radio"></div>
+                <div class="text">Download from selected period:</div>
+            </label>
+        </div>
+    </div>
+    <div class="b_filter--btn">
+        <button  class="b_filter--btn__download">download</button>
+    </div>
+    <div class="b_filter--date-picker">
+        <div class="b_filter--date-picker--input">
+            From: <input type="text" class="b_filter--date-picker--input__picker" id="from">
+            <div class="b_filter--date-picker--input__calendar"></div>
+        </div>
+        <div class="b_filter--date-picker--input">
+            To: <input type="text" class="b_filter--date-picker--input__picker" id="to">
+            <div class="b_filter--date-picker--input__calendar"></div>
+        </div>
+    </div>
+</div>
+<div class="b_content">
+    <div class="b_content--result" style="margin-left: 5%">
+        <div class="b_content--result--toolbar" id="downloaded">
+            <span class="b_content--result--toolbar__title">most downloaded media</span>
+            <button class="b_content--result--toolbar__btn">download</button>
+        </div>
+        <div class="b_content--result__downloaded"
+             id="mostDownloaded"
+             data-win-control="WinJS.UI.ListView"
+             data-win-options="{
+                    itemDataSource: MostDownloaded.ListView.data.dataSource,
+                    itemTemplate: select('.b_list-tpl'),
+                    selectionMode: 'none',
+                    tapBehavior: 'none',
+                    swipeBehavior: 'none',
+                    layout: { type: WinJS.UI.ListLayout }
+                }">
+
+        </div>
+    </div>
+    <div class="b_content--result">
+        <div class="b_content--result--toolbar" id="viewed">
+            <span class="b_content--result--toolbar__title">most viewed media</span>
+            <button class="b_content--result--toolbar__btn">download</button>
+        </div>
+        <div class="b_content--result__downloaded"
+             data-win-control="WinJS.UI.ListView"
+             id="mostViewed"
+             data-win-options="{
+                    itemDataSource: MostViewed.ListView.data.dataSource,
+                    itemTemplate: select('.b_list-tpl'),
+                    selectionMode: 'none',
+                    tapBehavior: 'none',
+                    swipeBehavior: 'none',
+                    layout: { type: WinJS.UI.ListLayout }
+                }">
+        </div>
+    </div>
+</div>

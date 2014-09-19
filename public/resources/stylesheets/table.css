@@ -1,0 +1,122 @@
+.table .b_head-box {
+    border: 3px solid #593c56;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+}
+.table tr {
+    height: 50px;
+}
+.b-popup-holder .b_body-box:after, .b-popup-holder .b_head-box:after {
+    top: -3px !important;
+}
+.table td {
+    padding-left: 8px
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header .check-td {
+    min-width: 1px;
+    width: 30px;
+}
+.table-body tr:hover {
+    border-left: 3px solid #583c58;
+    background-color: #e2dce1 !important;
+}
+.table-body tr:hover > td:first-of-type {
+    padding-left: 6px;
+}
+.table-body tr {
+    padding-left: 3px;
+}
+.table-header td {
+    min-width: 120px;
+}
+.table-body > tr.table-body-row:nth-of-type(odd)  {
+    background-color: #f6f6f6;
+    color:black;
+}
+.table-header {
+    font-family: "FontAwesome";
+    color: #583c58;
+}
+*:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.check-td {
+    position: relative;
+    display: inline-block;
+    height: 25px;
+}
+.column-0 {
+    width: 80%;
+}
+
+.table i {
+    height: 23px;
+}
+.table i:hover {
+    width: 20px;
+    top: 13px;
+    position: relative;
+}
+.table .b_table-button {
+    display: none;
+}
+.table-body tr:hover .b_table-button {
+    width: 40px;
+    display: block;
+    border: 0;
+    min-width: 40px;
+    color: #583c58;
+    height: 40px;
+    background-color: inherit;
+    padding: 0;
+}
+.b_table-button:hover {
+    width: 40px;
+    display: block;
+    min-width: 40px;
+    height: 40px;
+    background-color: #583c58;
+    padding: 0;
+}
+.b_table-button:hover i {
+    top: 0;
+    color: white;
+}
+.table i:hover .label-rect {
+    position: relative;
+    top: -68px;
+    -webkit-transform: translateX(-46%);
+    width: 100px;
+    right: -3px;
+    height: 20px;
+    display: inline-block;
+    padding-top: 10px;
+    color: white;
+    background-color: #583c58;
+    font-size: 10pt;
+    text-align: center;
+}
+i .label-rect {
+    display: none;
+}
+.label-arrow {
+    width: 16px;
+    background-color: white;
+    height: 16px;
+    box-sizing: border-box;
+    border: 9px solid transparent;
+    border-top-color: #583c58;
+    position: relative;
+    bottom: -6px;
+    right: 43px;
+    left: 43px
+
+}

@@ -1,0 +1,84 @@
+.b-add-library-popup {
+    position: relative;
+    background-color: white;
+    max-width: 80%;
+    width: 530px;
+    height: 250px;
+    border-top: solid #6ab01c 5px;
+}
+.b_libraries {
+    overflow: auto;
+    max-height: calc(100% - 215px);
+}
+.b-add-library-popup.form-library {
+    height: 410px;
+    width: 65%;
+}
+.form-library .b-library-edit {
+    background-color: inherit;
+    margin: 0;
+    width: 100%;
+    columns: 2;
+    -moz-columns: 2;
+    -webkit-columns: 2;
+}
+
+.form-library .b-library-edit input {
+    width: 67%;
+}
+.b-invite-library-popup {
+    height: 400px;
+    position: relative;
+    background-color: white;
+    max-width: 80%;
+    width: 530px;
+    border-top: solid #6ab01c 5px;
+}
+.form-library .b-library-edit textarea {
+    overflow: auto;
+    width: 65.5%;
+}
+
+.form-library.b-add-library-popup label {
+    width: 20%;
+    padding-left: 0;
+}
+
+.form-library .b-library-edit {
+    height: auto;
+}
+
+.form-library .b-library-edit .b-library-edit--form__icon {
+  background-color: inherit;
+}
+
+.b_libraries__table {
+    margin-left: 5%;
+    width: 90%;
+}
+
+.b-add-library-popup label {
+    display: inline-block;
+    box-sizing: border-box;
+    padding-left: 50px;
+    width: 100%;
+}
+
+.b-add-library-popup input {
+    width: auto;
+}
+
+
+.b-add-library__footer {
+    height: 65px;
+    background-color: #e0e2e2;
+}
+
+.b-add-library__footer button {
+    width: 100px;
+}
+
+.b_invite_users__table {
+    overflow: auto;
+    height: 290px;
+}

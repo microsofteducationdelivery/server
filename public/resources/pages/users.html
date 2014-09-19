@@ -1,0 +1,26 @@
+<h1>Users <button class="b-user-add-button">+</button></h1>
+
+<footer>
+    <div class="b-footer__wrapper">
+        <button class="b-users__remove-button" data-win-bind="disabled: disabled"><i class="fa fa-trash-o"></i> Delete</button>
+    </div>
+</footer>
+<div class="b_users">
+    <div data-win-control="Table.UI.Table"
+         class="b_users__table"
+         data-win-options="{
+            columns: [{
+                key: 'name',
+                icon: '',
+                text: '',
+                type: 'text'
+            },
+            {
+                key: 'type',
+                icon: 'fa fa-user',
+                text: 'User Type',
+                type: 'text'
+            }]
+            }">
+    </div>
+</div>

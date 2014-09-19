@@ -1,0 +1,45 @@
+<div class="b_media-comments-list-tpl" data-win-control="WinJS.Binding.Template" style="display: none">
+    <div class="b_media-comments-list-tpl--item">
+        <div class="b_media-comments-list-tpl--item__checkbox">
+            <label>
+                <input type="checkbox" name="#" data-win-bind="name: id"/>
+                <div class="b_body-box"></div>
+            </label>
+        </div>
+        <div class="b_media-comments-list-tpl--item__text"
+             data-win-bind="style.marginLeft: lvl NED.mediaComments.getMargin">
+            <h3 data-win-bind="textContent: userName"> </h3>
+            <h6 data-win-bind="textContent: text"></h6>
+        </div>
+        <button data-win-bind="textContent: replay" class="b_media-comments-list-tpl__replay"></button>
+    </div>
+</div>
+
+<h1 class="b_media-comments-title">
+    <button data-win-control="WinJS.UI.BackButton"></button>
+</h1>
+
+<div class="b_media-comments-content">
+
+    <div class="b_media-comments-content--toolbar">
+        <span class="b_media-comments-content--toolbar__title">Commentaries</span>
+        <button class="b_media-comments-content--toolbar__btn">Reply All</button>
+    </div>
+    <div class="b_media-comments-content__list"
+         data-win-control="WinJS.UI.ListView"
+         data-win-options="{
+                    itemDataSource: MediaComments.ListView.data.dataSource,
+                    selectionMode: 'none',
+                    tapBehavior: 'none',
+                    swipeBehavior: 'none',
+                    itemTemplate: select('.b_media-comments-list-tpl'),
+                    layout: { type: WinJS.UI.ListLayout }
+                }">
+    </div>
+    <div class="b_media-comments--bottombar">
+        <div class="b-footer__wrapper">
+            <button class="b_media-comments__delete-button" disabled="disabled"><i class="fa fa-trash-o"></i> Delete</button>
+        </div>
+    </div>
+</div>
+

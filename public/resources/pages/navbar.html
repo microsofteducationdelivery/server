@@ -1,0 +1,18 @@
+<div class="b-logo">
+    <img class="b-logo__image" src="/resources/images/logo.png" />
+</div>
+
+<div class="b-navigation" data-win-control="WinJS.UI.Repeater" data-win-options="{ data: NavBar.links}">
+    <a class="b-navigation__link" data-win-bind="textContent: title; href: page"></a>
+</div>
+
+<div class="b-navigation-footer">
+    <div class="b-navigation-footer__wrapper">
+        <div class="b-navigation-footer--label">
+            <i class="fa fa-user b-navigation-footer__icon"></i>
+            <span data-win-bind="textContent: user.name"></span>
+        </div>
+        <button class="b-navigation-footer__logout">&#xf011;</button>
+    </div>
+</div>
+

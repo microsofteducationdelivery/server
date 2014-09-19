@@ -1,0 +1,228 @@
+.b-library-new-media-btn, .b-library-new-folder-btn {
+    font-family: "FontAwesome";
+    color: #ffffff;
+    background-color: #78c623;
+    min-width: 45px;
+    position: relative;
+    margin-left: 8px;
+    bottom: 18px;
+    width: 45px;
+    height: 45px;
+}
+
+.b-library-edit--form__icon {
+    font-family: "FontAwesome";
+    color: black;
+    display: inline-block;
+    position: relative;
+    background-color: #f6f6f6;
+}
+.b-library-edit--form__holder {
+    width: 50px;
+    height: 26px;
+    display: inline-block;
+    position: relative;
+    background-color: #f6f6f6;
+    top: 6px;
+    left: -25px;
+}
+.b-library-edit--form__field-wrapper {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    line-height: 40px;
+
+}
+.b-library-edit--form__field-wrapper input {
+    width: 57%;
+}
+.b-library-edit--form__field-wrapper select {
+    width: 50px;
+}
+.b-library-edit--form__field-wrapper select:disabled {
+    border-color: transparent;
+    background-color: inherit;
+    color: #000000;
+}
+.b-library-edit--form__fileupload {
+    width: 115px !important;
+}
+.b-library-edit--form__field-wrapper textarea {
+    width: 55%;
+}
+.b-library-edit--form__label {
+    float: left;
+    width: 30%;
+    text-align: right;
+    color: grey;
+    margin-right: 20px;
+}
+.b-library-edit--form__filename {
+    width: 30%;
+    font-size: 10pt;
+    color: grey;
+}
+.b-library-edit--form__type {
+    width: 57%;
+}
+.b-library-edit, .b-library-content {
+    display: inline-block;
+    width: 42%;
+    height: calc(100% - 201px);
+    margin-top: 1.25%;
+    margin-bottom: 1.25%;
+    margin-left: 5%;
+    background-color: #f6f6f6;
+}
+.b_current-media {
+    background-color: #9370DB !important;
+}
+.b-library-content__list {
+    height: calc(100% - 60px);
+}
+.b-library-edit--form__fileupload {
+    margin-bottom: 0 !important;
+    position: relative;
+    top: -2px;
+}
+.b-library-content--toolbar, .b-library-edit--toolbar {
+    padding: 5px;
+    height: 36px;
+    background-color: #e0e2e2;
+}
+.b_media-list-tpl--item__edit {
+    display: none;
+}
+.b_media-list-tpl--item:hover .b_media-list-tpl--item__edit {
+    width: 25px;
+    float: right;
+    right: 15px;
+    top: -5px;
+    position: relative;
+    height: 20px;
+    display: block;
+    color: #5d415e;
+}
+.b_media-list-tpl--item:hover .b_media-list-tpl--item__edit:hover {
+    font-size: 13pt;
+}
+.b-library-content--toolbar__title, .b-library-edit--toolbar__title {
+    color: #2c6a6c;
+    margin-left: 10px;
+    font-size: 16pt;
+    text-transform: uppercase;
+}
+.b-library--bottombar {
+    position: relative;
+    bottom: -10px;
+    width: 100%;
+    height: 50px;
+    background-color: #e0e2e2;
+    text-align: center;
+
+    display:-ms-flexbox;
+    -ms-flex-pack:center;
+    -ms-flex-align:center;
+
+    /* Firefox */
+    display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+
+    /* Safari, Opera, and Chrome */
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+
+    /* W3C */
+    display:box;
+    box-pack:center;
+    box-align:center;
+}
+
+.b-library-path {
+    color: grey;
+    height: 25px;
+    margin-left: 5%;
+}
+.b-library-path a {
+    color: grey;
+}
+/* listView templates  */
+.b_media-list-tpl--item, .b_media-list-tpl--item-cut {
+    width: 100%;
+    background-color: #f6f6f6;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.b_media-list-tpl--item-cut {
+    background-color: lightgreen;
+}
+
+.b_media-list-tpl--item:hover, .b_media-list-tpl--item-cut:hover {
+    background-color: #e2dce1;
+}
+.b_media-list-tpl--item__checkbox {
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+}
+.b-library-content .win-container {
+    height: auto;
+}
+.b-library-content .win-container {
+    height: auto !important;
+    margin-right: 0 !important;
+}
+.b-library-content .win-listview > .win-vertical .win-item {
+    width: 100%;
+    height: auto;
+}
+img.b_media-list-tpl--item__image {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    float: left;
+    margin-right: 20px;
+}
+
+.b_media-list-tpl--item__text {
+    float: left;
+
+}
+
+.listLayoutTopHeaderTemplateRoot, .gridLayoutLeftHeaderTemplateRoot {
+    font-size: larger;
+    margin-left: 16px;
+}
+
+.b-library-content .win-listview .win-container:hover {
+    outline: #e2dce1 solid 6px;
+}
+.b-library-edit.hidden {
+    display: none;
+}
+.b-libraries__back-button {
+    margin: 0;
+    padding: 0;
+    background-color: inherit;
+    border: 0;
+    min-width: 35px;
+    color: #2c6a6c;
+    font-size: 20pt;
+}
+.b-libraries__back-button i {
+    font-weight: bold;
+}
+
+.b-libraries__back-button--hidden {
+    display: none;
+}
+
+.b-libraries__back-button:hover {
+    background-color: inherit !important;
+    border: 0 !important;
+    min-width: 35px !important;
+    color: #2c6a6c !important;
+    font-size: 20pt !important;
+}

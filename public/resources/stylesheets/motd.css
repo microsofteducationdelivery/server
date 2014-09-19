@@ -1,0 +1,51 @@
+.b-motd__wrapper {
+    background-color: #f6f6f6;
+    width: 96%;
+    margin-left: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.b-motd__label {
+    float: left;
+    width: 150px;
+    text-align: right;
+    color: grey;
+}
+
+.b-motd__current-value, .b-motd__new-value {
+    margin-left: 160px;
+    max-width: 800px;
+}
+
+.b-motd__new-value {
+    display: block;
+    width: 100%;
+    min-height: 60px;
+    resize: vertical;
+}
+
+.b-motd__button {
+    margin-left: 160px;
+    width: 120px;
+}
+
+.b-motd__field-wrapper {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.b-motd__error {
+    margin-left: 160px;
+    color: darkred;
+    font-weight: bold;
+}
+
+@-webkit-keyframes yellow-fade {
+    0% {background: yellow;}
+    100% {background: none;}
+}
+@keyframes yellow-fade {
+    0% {background: yellow;}
+    100% {background: none;}
+}

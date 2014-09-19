@@ -1,0 +1,17 @@
+[
+    {
+        "name": "qwerty",
+        "type": "Operator",
+        "id": "qa"
+    },
+    {
+        "name": "ytrewq",
+        "type": "Mobile only",
+        "id": "az"
+    },
+    {
+        "name": "qazxsw",
+        "id": "zx",
+        "type": "Super admin"
+    }
+]

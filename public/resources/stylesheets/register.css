@@ -1,0 +1,228 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #696969;
+}
+#header {
+    min-height: 85px;
+}
+
+a {
+    font-family: Arial, Verdana, sans-serif;
+    text-decoration: none;
+}
+
+#container {
+    overflow-x: hidden;
+    height: 100%;
+    background-image: url(/resources/images/background.png);
+    background-size: cover;
+    position: relative; 
+}
+
+header {
+    height: 75px;
+    width: 100%;
+}
+
+header nav {
+    background-color: #fff;
+}
+
+.b-navigation {
+    list-style-type: none;
+    height: 75px;
+    width: 49em;
+    margin-left: 340px;
+    position: relative;
+    top: -67px;
+
+}
+
+.main-navigation-link {
+    float: left;
+    color: #a2ce7d;
+    background-color: transparent;
+    border-right: 2px solid #a2ce7d;
+    font-weight: 100;
+    text-align: center;
+    padding: 15px 35px 15px 35px;
+    font-size: 13pt;
+}
+.b_error_msg {
+    background-color: #ff0000;
+    border-radius: 8px;
+    width: 371px;
+    padding: 10px;
+    margin: auto;
+
+}
+#login_err {
+    position: relative;
+    right: 54px;
+}
+.b_error_msg span {
+    color: white;
+    font-size: 9pt;
+}
+.b-navigation__link-active {
+    color: #a2ce7d;
+    background-color: #fff;
+}
+.b_error_msg.hidden {
+    display: none;
+}
+section#contenthost {
+    position: relative;
+    font-size: 14pt;
+    height: 100%;
+    z-index: 1;
+    padding-left: 250px;
+    top:
+    5px;
+    width: 100%;
+}
+
+#mainLogo {
+    position: relative;
+    top: 11px;
+    left: 20px;
+}
+
+#log-reg-butt {
+    position: relative;
+    height: 85px;
+    float: right;
+    background-color: #6ab01c;
+    width: 140px;
+}
+
+#log-reg-butt a {
+    position: absolute;
+    top: 35px;
+    left: 17px;
+    font-style: italic;
+    font-weight: 700;
+    color: #fff;
+    background-color: transparent;
+}
+
+footer#main {
+    position: absolute;
+    color: #fff;
+    bottom: 25px;
+    left: 370px;
+    left: 0;
+    background-color: transparent;
+    font-weight: 500;
+}
+
+input[type="submit"], a {
+    cursor: pointer;
+}
+
+.box {
+    position: absolute;
+    width: 50%;
+    height: 80%;
+}
+
+#login-box {
+    float: left;
+}
+
+#register-box {
+    float: right;
+    right: 0px;
+}
+
+#login-form {
+    border-right: 3px solid #6ab01c;
+}
+
+.side-form .control {
+    text-align: center;
+}
+
+.box#register-box h1 {
+    padding-left: 0;
+}
+
+.box#login-box h1 {
+    position: relative;
+    right: 58px;
+    padding-left: 0;
+}
+
+.box h1 {
+    color: #fff;
+    display: block;
+}
+
+.side-form .control input{
+    border: 2px solid #fff;
+    width: 347px;
+    height: 40px;
+    background-color: #fff;
+    line-height: 40px;
+    outline: 0 none;
+    padding: 0 10px;
+    margin: 0 58px 14px 0;
+}
+.side-form .control input:focus {
+    border-color: #6ab01c;
+}
+
+.side-form .control input[type="submit"],
+.side-form .control input[type="submit"]:focus {
+    border: 0 none;
+    width: 214px;
+    height: 51px;
+    background-color: #6ab01c;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 21px;
+}
+
+form.side-form {
+    height: 465px;
+    margin: 38px 0px 0 58px;
+    padding: 0;
+}
+
+form.side-form.ng-pristine.ng-valid {
+    top: 130px;
+    position: relative;
+}
+
+form#register-form input {
+    margin-left: 49px;
+}
+
+form#login-form input {
+    margin-right: 110px;
+}
+
+form#login-form a {
+    color: #fff;
+}
+
+#forgot-pass {
+
+    font-size: 10pt;
+    font-weight: 700;
+    position: relative;
+    right: 50px;
+}
+
+.err-message {
+    color: red;
+    background-color: white;
+    border: 2px solid red;
+    padding: 4px 40px;
+    position: relative;
+    bottom: 196px;
+    left: 651px;
+    width: 151px;
+}

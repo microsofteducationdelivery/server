@@ -1,0 +1,81 @@
+nav {
+    position: fixed;
+    float: left;
+    display: inline;
+    width: 240px;
+    height: 100%;
+    background-color: #226266;
+    border-right: solid #eaeaea 10px;
+}
+
+.b-logo {
+    padding-top: 60px;
+    padding-bottom: 45px;
+    border-bottom: solid #3f824f 1px;
+    width: 100%;
+}
+
+.b-logo__image {
+    width: 200px;
+    margin: auto;
+    display: block;
+}
+
+.b-navigation__link {
+    cursor: pointer;
+    color: grey;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 45px;
+    height: 45px;
+    font-size: 16pt;
+    padding-left: 16px;
+}
+
+.b-navigation__link:hover {
+    color: white;
+}
+
+
+
+.b-navigation__link-active {
+    color: white;
+    font-weight: bold;
+    background-color: #287074;
+    border-left: solid #6ab01c 4px;
+
+}
+
+.b-navigation-footer {
+    position: absolute;
+    background-color: #145054;
+    bottom: 0;
+    width: 100%;
+    height: 90px;
+    color: #5c7e82;
+    border-top: solid #6ab01c 2px;
+    text-align: center;
+    font-size: 14pt;
+}
+.b-navigation-footer--label {
+    float: left;
+    margin-left: 16px;
+    margin-top: 9px;
+}
+
+.b-navigation-footer__wrapper {
+    padding-top: 25px;
+}
+
+.b-navigation-footer__logout {
+    font-family: "FontAwesome";
+    color: inherit;
+    border-width: 0;
+    float: right;
+    margin-right: 17px;
+    background-color: #39696d;
+    min-width: 45px;
+    width: 45px;
+    height: 45px;
+}

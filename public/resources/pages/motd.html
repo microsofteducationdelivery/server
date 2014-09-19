@@ -1,0 +1,15 @@
+<h1>MOTD</h1>
+<div class="b-motd__wrapper">
+    <div class="b-motd__field-wrapper">
+        <label class="b-motd__label">Current:</label>
+        <div class="b-motd__current-value" data-win-bind="textContent: motd"><i class="fa fa-spinner"></i> Loading</div>
+    </div>
+    <div class="b-motd__field-wrapper">
+        <label class="b-motd__label">New:</label>
+        <textarea placeholder="max. 230 characters" class="b-motd__new-value"></textarea>
+        <div class="b-motd__error" style="display: none;">&#x2717; Error: max length 230</div>
+    </div>
+    <div class="b-motd__field-wrapper">
+        <button class="b-motd__button">UPDATE</button>
+    </div>
+</div>

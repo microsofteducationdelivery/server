@@ -1,0 +1,32 @@
+{
+    "name": "test Name",
+    "data": [
+        {
+            "id": "folder-4",
+            "name": "folder-1_video",
+            "type": "folder"
+        },
+        {
+            "id": "folder-5",
+            "name": "folder-1_audio",
+            "type": "folder"
+        },
+        {
+            "id": "folder-6",
+            "name": "folder-1_text",
+            "type": "folder"
+        },
+        {
+            "id": "media-1",
+            "picture": "/resources/images/8.jpeg",
+            "name": "folder-1 test media",
+            "type": "media"
+        }
+    ],
+    "path": [
+        {
+            "title": "root folder",
+            "id": "qw"
+        }
+    ]
+}

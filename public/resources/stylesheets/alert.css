@@ -1,0 +1,17 @@
+.b_alert__content {
+    margin-left: 18px;
+    margin-top: 24px;
+    margin-right: 18px;
+}
+.b_password-recovery {
+    height: 350px;
+}
+.b_password-recovery .b_alert__title {
+    padding-left: 50px;
+}
+.b_password-recovery .b_alert__content {
+    margin-left: 50px;
+}
+.b_password-recovery label {
+     margin-top: 50px;
+ }

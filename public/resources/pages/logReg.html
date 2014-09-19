@@ -1,0 +1,41 @@
+<div id="login-box" class="box">
+    <form id="login-form" class="side-form" name="login" method="post" >
+        <div class="control">
+            <h1>Login</h1>
+            <input type="text" name="login"  placeholder="Email" required autocomplete="on"/>
+        </div>
+        <div class="control">
+            <input type="password" name="loginPass" placeholder="Password"  required/>
+            <div class="b_error_msg hidden" id="login_err">
+                <span>Login/password combination is incorrect.</span>
+            </div>
+        </div>
+
+        <div class="control">
+            <input type="submit" value="LOG IN"  class="b_login-btn">
+        </div>
+        <div class="control">
+            <a id="forgot-pass" href="forgotPassword">FORGOT PASSWORD</a>
+        </div>
+
+    </form>
+</div>
+
+<div id="register-box" class="box" >
+    <form id="register-form" class="side-form" name="register" method="post" >
+        <div class="control">
+            <h1>Register</h1>
+            <input type="text"  name="name" placeholder="Name"  required autocomplete="on"/>
+        </div>
+        <div class="control">
+            <input type="email" name="email" placeholder="Email" required autocomplete="on"/>
+            <div class="b_error_msg hidden" id="reg_err">
+                <span>The email address is already taken. Please choose another one in order to sign up new account.</span>
+            </div>
+        </div>
+
+        <div class="control">
+            <input type="submit" value="CONTINUE" class="b_reg-btn">
+        </div>
+    </form>
+</div>

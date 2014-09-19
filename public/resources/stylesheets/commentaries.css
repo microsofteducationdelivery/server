@@ -1,0 +1,8 @@
+.b_commentaries__table {
+    margin-left: 5%;
+    width: 92%;
+}
+.b_commentaries {
+    overflow: auto;
+    max-height: calc(100% - 160px);
+}

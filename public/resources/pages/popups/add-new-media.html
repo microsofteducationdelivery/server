@@ -1,0 +1,48 @@
+<div class="b-add-library-popup form-library">
+    <h2>New Media</h2>
+    <div class="b-library-edit">
+        <form class="b-library-edit--form">
+            <div class="b-library-edit--form__field-wrapper">
+                <label class="b-library-edit--form__label">Name:</label>
+                <input type="text" name="name" placeholder="Name" />
+            </div>
+            <div class="b-library-edit--form__field-wrapper">
+                <label class="b-library-edit--form__label">File:</label>
+                <label class="b_upload-field">
+                    <input type="file" name="file" class="b-library-edit--form__fileupload" />
+                    <div type="button" class="b_upload-field__container">Upload</div>
+                </label>
+                <span class="b-library-edit--form__filename"> test</span>
+            </div>
+
+            <div class="b-library-edit--form__field-wrapper">
+                <label class="b-library-edit--form__label">Description:</label>
+                <textarea name="description" rows="4" placeholder="i.e. Loren Ipsun"></textarea>
+            </div>
+
+            <div class="b-library-edit--form__field-wrapper" style="padding-top: 56px;">
+                <label class="b-library-edit--form__label">Type:</label>
+                <div class="b-library-edit--form__icon">&#xf03d</div>
+
+                <select name="type" class="b-edit-user__type" disabled="disable">
+                    <option value="video">Video</option>
+                    <option value="image">Image</option>
+                    <option value="text">Text</option>
+                </select>
+                <div class="b-library-edit--form__holder" style="background-color: white !important;"></div>
+            </div>
+            <div class="b-library-edit--form__field-wrapper">
+                <label class="b-library-edit--form__label">External Links:</label>
+                <textarea name="link" rows="4" placeholder="http://"></textarea>
+            </div>
+
+        </form>
+    </div>
+    <footer class="b-add-media__footer">
+        <div class="b-footer__wrapper">
+            <button class="b-button-ok">OK</button>
+            <button class="b-button-cancel">Cancel</button>
+        </div>
+
+    </footer>
+</div>

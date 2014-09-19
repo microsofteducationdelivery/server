@@ -1,0 +1,28 @@
+
+{
+    "name": "testName",
+    "data": [
+        {
+            "id": "folder-1",
+            "name": "media",
+            "type": "folder"
+        },
+        {
+            "id": "folder-2",
+            "name": "audio",
+            "type": "folder"
+        },
+        {
+            "id": "folder-3",
+            "name": "text",
+            "type": "folder"
+        },
+        {
+            "id": "media-1",
+            "picture": "/resources/images/9.jpeg",
+            "name": "test media",
+            "type": "media"
+        }
+    ],
+    "path": [ ]
+}
