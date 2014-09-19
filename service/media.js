@@ -1,5 +1,5 @@
 var
-  _ = require('lodash');
+  _ = require('lodash'),
   db = require('../db'),
   table = db.Media,
 

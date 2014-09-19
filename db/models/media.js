@@ -26,6 +26,7 @@ module.exports = function (sequelize, DataTypes) {
     associate: function(models) {
       Media.belongsTo(models.Library);
       Media.belongsTo(models.Folder);
+      Media.hasMany(models.Comment);
     }
   });
 
