@@ -1,4 +1,50 @@
 <h1><button data-win-control="WinJS.UI.BackButton"></button> Edit user</h1>
 <div class="b-edit-user__wrapper">
+    <form class="b_edit-user-tpl">
+        <div class="b-edit-user__field-wrapper">
+            <label class="b-edit-user__label">User Name:</label>
+            <input type="text" name="name" placeholder="i.e. John Doe" />
+        </div>
+        <div class="b-edit-user__field-wrapper">
+            <label class="b-edit-user__label">Login:</label>
+            <input type="text" name="login" placeholder="i.e. johndoe" />
+        </div>
+        <div class="b-edit-user__field-wrapper">
+            <label class="b-edit-user__label">Type:</label>
+            <select name="type" class="b-edit-user__type">
+                <option value="admin">Admin</option>
+                <option value="operator">Operator</option>
+                <option value="mobile">Mobile Only</option>
+                <option value="owner">Owner (Super Admin)</option>
+            </select>
+        </div>
+        <div class="b-edit-user__field-wrapper">
+            <label class="b-edit-user__label">Password:</label>
+            <input type="password" name="password" placeholder="i.e. johndoe" />
+        </div>
+        <div class="b-edit-user__field-wrapper b-edit-user__credentials">
 
+            <label class="b-edit-user__label">
+                <input type="checkbox" name="send_sms"/>
+                <div class="b_body-box" style="top: 5px; position: relative;"></div>
+                Send credentials in SMS:
+            </label>
+            <input type="text" name="phone" placeholder="XX XXXX-XXXX" disabled="disabled" />
+        </div>
+        <div class="b-edit-user__field-wrapper b-edit-user__credentials">
+
+            <label class="b-edit-user__label">
+                <input type="checkbox" name="send_email"/>
+                <div class="b_body-box" style="top: 5px; position: relative;"></div>
+                Send credentials in emails:
+            </label>
+            <input type="text" name="email" placeholder="email@email.com" disabled="disabled" />
+        </div>
+        <div class="b-edit-user__buttons">
+            <div class="b-edit-user__buttons-wrapper">
+                <button class="b-button-ok">OK</button>
+                <button class="b-button-cancel" type="button">Cancel</button>
+            </div>
+        </div>
+    </form>
 </div>

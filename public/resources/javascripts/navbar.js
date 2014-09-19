@@ -3,6 +3,7 @@
 
   var PageConstructor = WinJS.UI.Pages.define("/resources/pages/navbar.html", {
     ready: function (element, options) {
+
       var libHref = WinJS.Utilities.query('a[href="/resources/pages/libraries.html"]', element)
       WinJS.Navigation.navigate(libHref[0].href);
       libHref.addClass('b-navigation__link-active');
@@ -31,14 +32,24 @@
       });
     }
   });
+    var links;
+    var user = JSON.parse(localStorage.user);
+    if (user.type !== 'owner') {
+        links = [
+            { page: '/resources/pages/libraries.html', title: 'Libraries' },
+            { page: '/resources/pages/commentaries.html', title: 'Commentaries' },
+            { page: '/resources/pages/statistics.html', title: 'Statistics'}
+        ];
+    } else {
+        links = [
+            { page: '/resources/pages/libraries.html', title: 'Libraries' },
+            { page: '/resources/pages/users.html', title: 'Users' },
+            { page: '/resources/pages/commentaries.html', title: 'Commentaries' },
+            { page: '/resources/pages/motd.html', title: 'Message of the Day'},
+            { page: '/resources/pages/statistics.html', title: 'Statistics'}
+        ];
+    }
 
-  var links = [
-    { page: '/resources/pages/libraries.html', title: 'Libraries' },
-    { page: '/resources/pages/users.html', title: 'Users' },
-    { page: '/resources/pages/commentaries.html', title: 'Commentaries' },
-    { page: '/resources/pages/motd.html', title: 'Message of the Day'},
-    { page: '/resources/pages/statistics.html', title: 'Statistics'}
-  ];
 
   var NavLink = WinJS.Class.define(function (params) {
     this.page = params.page;
