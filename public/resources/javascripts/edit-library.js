@@ -126,9 +126,7 @@
                     me.setForm(data);
                 });
             });
-            WinJS.Utilities.query('button[class=b-libraries__cancel-button]', element).listen('click', function () {
-                me.setMediaForm(element.querySelector('form').id);
-            });
+
             listView.listen('click', function (event) {
                 event.stopPropagation();
                 var currTarget = event.target,
