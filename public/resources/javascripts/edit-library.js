@@ -270,7 +270,7 @@
                 icon.innerHTML = getType(data.type).icon;
             }
             if (!data.convertedFile) {
-                WinJS.Utilities.query('span.b_converted')[0].removeClass('hidden');
+                WinJS.Utilities.query('span.b_converted').removeClass('hidden');
             }
             form.link.value = data.links;
             form.name.value = data.name;

@@ -7,6 +7,7 @@
                 checkEmail = WinJS.Utilities.query('input[name=send_email]'),
                 checkPhone =  WinJS.Utilities.query('input[name=send_sms]')
             ;
+            debugger;
             WinJS.UI.Fragments.renderCopy("/resources/pages/templates/edit-user-tpl.html", tplTarget).done(function () {
                 WinJS.UI.processAll(element);
                 getUserCreds(options.id, function (response, status) {
