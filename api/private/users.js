@@ -1,1 +1,1 @@
-module.exports = require('../helper/crud')('users', require('../../service/user'));
+module.exports = require('../helper/crud')(require('../../service/user'));

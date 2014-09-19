@@ -17,7 +17,7 @@ module.exports = function (sequelize, DataTypes) {
     description: DataTypes.TEXT,
     links: DataTypes.TEXT,
     file: DataTypes.STRING,
-    ty2pe: {
+    type: {
       type: DataTypes.ENUM('video', 'image', 'text'),
       allowNull: false
     }

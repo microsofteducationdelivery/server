@@ -38,8 +38,8 @@ module.exports = co(function* () {
   yield library1.addFolder(folder11);
   yield folder1.addChildren(folder11);
 
-  var media1 = yield db.Media.create({name: 'Media1', views: 10});
-  var media2 = yield db.Media.create({name: 'Media2', views: 17});
+  var media1 = yield db.Media.create({name: 'Media1', views: 10, description: 'Example Media1', links: 'fooo'});
+  var media2 = yield db.Media.create({name: 'Media2', views: 17, description: 'Example Media2', links: 'bar'});
   var media3 = yield db.Media.create({name: 'Media3', views: 17});
 
   yield library1.addMedium(media1);

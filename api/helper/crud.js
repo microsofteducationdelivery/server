@@ -4,7 +4,7 @@ var
   route = require('koa-route'),
   _ = require('lodash');
 
-module.exports = function (name, service) {
+module.exports = function (service) {
   var app = koa();
   var actions = {
     index: function* () {
