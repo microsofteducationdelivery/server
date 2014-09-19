@@ -3,11 +3,13 @@ function initialize() {
       token = localStorage.getItem('token');
 
   if ((!user || !token ) && window.location.pathname !== '/index.html') {
-    window.location = '/index.html';
+      window.location = '/index.html';
   }
   if (user && token && window.location.pathname === '/index.html') {
       window.location = '/admin.html';
   }
+
+
 
   WinJS.Application.sessionState.user = user;
   WinJS.Application.sessionState.token = localStorage.getItem('token');
@@ -22,7 +24,7 @@ function initialize() {
     return WinJS.xhr(options);
   };
 
-  WinJS.UI.processAll();
+   WinJS.UI.processAll();
 }
 
 document.addEventListener('DOMContentLoaded', initialize(), false);

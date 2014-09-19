@@ -19,15 +19,17 @@
                 if (newPass.value === confirmPass.value) {
 
                     errorMsg.addClass('hidden');
-                    WinJS.xhr({
+                    window.authXHR({
                         type: 'PUT',
                         url: '/api/auth/passwordRecovery',
                         responseType: 'json',
+
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
-                        data: me._getParam({
-                            newPass: newPass
+                        data: JSON.stringify({
+                            newPass: newPass.value,
+                            token: options.token
                         })
                     }).done(
                         function completed (req) {

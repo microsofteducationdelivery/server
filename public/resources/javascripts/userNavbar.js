@@ -4,7 +4,11 @@
     var PageConstructor = WinJS.UI.Pages.define("/resources/pages/userNavbar.html", {
         ready: function (element, options) {
             // Data bind to the child tree to set the control text
-            WinJS.Navigation.navigate('/resources/pages/getStarted.html');
+            if (location.hash.search('#token') !== -1 ) {
+                WinJS.Navigation.navigate('resources/pages/password-recovery.html', {token: location.hash});
+            } else {
+                WinJS.Navigation.navigate('/resources/pages/getStarted.html');
+            }
             WinJS.Utilities.query('a[href="/resources/pages/getStarted.html"]', element).addClass('b-main__link-active');
             WinJS.Binding.processAll(element, {
                 user: WinJS.Application.sessionState.user
