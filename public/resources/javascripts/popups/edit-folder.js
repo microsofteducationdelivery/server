@@ -16,13 +16,25 @@
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
                 var name = WinJS.Utilities.query('input[type=text]', element)[0].value;
 
-                WinJS.xhr({
-                    url: '/Folder',
+                window.authXHR({
+                    url: '/api/folders/' + options.id,
                     type: 'PUT',
-                    data: name
-                }).done(function (result) {
-                    window.hidePopup();
-                });
+                    data: JSON.stringify({name: name})
+                }).done(
+                    function (result) {
+                        if (options.success && typeof(options.success) === 'function') {
+                            options.success(result);
+                        }
+                        window.hidePopup();
+                    },
+                    function (err) {
+                        console.log(err);
+                        if (options.error && typeof(options.error) === 'function') {
+                            options.error(err);
+                        }
+                        window.hidePopup();
+                    }
+                );
 
 
             });

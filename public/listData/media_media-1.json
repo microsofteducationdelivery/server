@@ -3,6 +3,6 @@
     "file": "sometest.mp4",
     "type": "video",
     "description": "some test media.",
-    "link": "http://www.wikipedia.org",
+    "links": "http://www.wikipedia.org",
     "id": "qw"
 }

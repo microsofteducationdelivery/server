@@ -20,10 +20,10 @@
                         id: options.libraryId
                     };
 
-                WinJS.xhr({
-                    url: '/newMedia/' + data.id,
+                window.authXHR({
+                    url: '/api/media/' + data.id,
                     type: 'PUT',
-                    data: data
+                    data: JSON.stringify(data)
                 }).done(function (result) {
                     if (result.status !== 200) {
                         return null;

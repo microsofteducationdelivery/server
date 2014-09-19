@@ -29,6 +29,6 @@ module.exports = {
     //FIXME: Security exploit here
     var folder = yield table.find(id);
     var attributes = ['name', 'description', 'links'];
-    yield folder.updateAttributes(_.pick(data), attributes);
+    yield folder.updateAttributes(_.pick(data, attributes), attributes);
   }
 };

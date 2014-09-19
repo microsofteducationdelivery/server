@@ -1,8 +1,8 @@
 <div class="b_media-list-tpl" data-win-control="WinJS.Binding.Template" style="display: none">
-    <div class="b_media-list-tpl--item" >
+    <div class="b_media-list-tpl--item">
         <div class="b_media-list-tpl--item__checkbox" data-win-bind="style.paddingTop: type NED.media.getPadding">
             <label>
-                <input type="checkbox" name="#" data-win-bind="name: id"/>
+                <input type="checkbox" name="#" data-win-bind="name: id; this['data-type']: type WinJS.Binding.setAttribute"/>
                 <div class="b_body-box"></div>
             </label>
         </div>
@@ -45,7 +45,7 @@
         <div class="b-footer__wrapper">
             <button class="b-libraries__cut-button" disabled="disabled"><i class="fa fa-cut"></i> Cut</button>
             <button class="b-libraries__delete-button" disabled="disabled"><i class="fa fa-trash-o"></i> Delete</button>
-            <button class="b-libraries__copy-button" disabled="disabled"><i class="fa fa-copy"></i> Copy</button>
+            <button class="b-libraries__copy-button" style="display:none !important" disabled="disabled"><i class="fa fa-copy"></i> Copy</button>
             <button class="b-libraries__paste-button" disabled="disabled"><i class="fa fa-paste"></i> Paste</button>
         </div>
     </div>
@@ -59,20 +59,12 @@
             <label class="b-library-edit--form__label">Name:</label>
             <input type="text" name="name" placeholder="Name" />
         </div>
-        <div class="b-library-edit--form__field-wrapper">
-            <label class="b-library-edit--form__label">File:</label>
-            <label class="b_upload-field">
-                <input type="file" name="file" class="b-library-edit--form__fileupload" />
-                <div type="button" class="b_upload-field__container">Upload</div>
-            </label>
-            <span class="b-library-edit--form__filename"> test</span>
-        </div>
+
         <div class="b-library-edit--form__field-wrapper">
             <label class="b-library-edit--form__label">Type:</label>
             <div class="b-library-edit--form__icon">&#xf03d</div>
 
-            <select name="type" class="
-            " disabled="disable">
+            <select name="type" class="" disabled="disabled">
                 <option value="video">Video</option>
                 <option value="image">Image</option>
                 <option value="text">Text</option>

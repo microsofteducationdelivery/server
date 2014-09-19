@@ -9,9 +9,9 @@
     if (status === 200) {
       var feed = response,
         length = list.length
-        ;
+      ;
 
-      list.splice(0, length - 1);
+      list.splice(0, length);
       feed.forEach(function (item) {
         list.push(item);
       });
@@ -21,7 +21,7 @@
   };
 
   WinJS.UI.Pages.define("/resources/pages/statistics.html", {
-    ready: function () {
+    ready: function (element, options) {
       var pickers =  $(".b_filter--date-picker--input__picker" );
 
       pickers.datepicker({ dateFormat: "M d, yy" });
@@ -49,8 +49,13 @@
         isPeriod = periodRadio.checked,
         downloadAll = WinJS.Utilities.query('button[class=b_filter--btn__download]')[0],
         downloadMostDownloaded = WinJS.Utilities.query('div[id=downloaded]>button[class=b_content--result--toolbar__btn]')[0],
-        downloadMostViewed = WinJS.Utilities.query('div[id=viewed]>button[class=b_content--result--toolbar__btn]')[0]
+        downloadMostViewed = WinJS.Utilities.query('div[id=viewed]>button[class=b_content--result--toolbar__btn]')[0],
+        lists = WinJS.Utilities.query('div[data-win-control="WinJS.UI.ListView"]', element)
         ;
+
+        lists[0].winControl.oniteminvoked = this.onMediaSelect;
+        lists[1].winControl.oniteminvoked = this.onMediaSelect;
+
 
       if (!isPeriod) {
         datePickerField.classList.add('hidden');
@@ -103,13 +108,15 @@
         }
       );
 
+    },
+    onMediaSelect: function (e) {
+        var dataset = e.target.querySelector('div[class=b_list-tpl--item]').dataset
+        WinJS.Navigation.navigate('/resources/pages/edit-library.html', {id: dataset.id, type: 'media', folder: dataset.folder});
     }
 
   });
 
-
-
-  WinJS.Namespace.define('MostDownloaded.ListView', {
+    WinJS.Namespace.define('MostDownloaded.ListView', {
     data: mostDownloadList
   });
   WinJS.Namespace.define('MostViewed.ListView', {

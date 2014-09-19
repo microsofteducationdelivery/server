@@ -1,7 +1,7 @@
 <h1>Statistics</h1>
 
 <div class="b_list-tpl" data-win-control="WinJS.Binding.Template" style="display: none">
-    <div class="b_list-tpl--item">
+    <div class="b_list-tpl--item" data-win-bind="this['data-id']: id WinJS.Binding.setAttribute; this['data-folder']: folder WinJS.Binding.setAttribute">
         <div class="b_list-tpl--item__number">
             <h4 data-win-bind="textContent:  number"></h4>
         </div>
@@ -56,8 +56,6 @@
              data-win-options="{
                     itemDataSource: MostDownloaded.ListView.data.dataSource,
                     itemTemplate: select('.b_list-tpl'),
-                    selectionMode: 'none',
-                    tapBehavior: 'none',
                     swipeBehavior: 'none',
                     layout: { type: WinJS.UI.ListLayout }
                 }">
@@ -75,8 +73,6 @@
              data-win-options="{
                     itemDataSource: MostViewed.ListView.data.dataSource,
                     itemTemplate: select('.b_list-tpl'),
-                    selectionMode: 'none',
-                    tapBehavior: 'none',
                     swipeBehavior: 'none',
                     layout: { type: WinJS.UI.ListLayout }
                 }">

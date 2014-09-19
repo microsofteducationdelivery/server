@@ -12,6 +12,7 @@ function* top5Downloads () {
   var items = yield service.getTop5Downloads();
   this.body = items.map(function (item) {
     return {
+      id: item.id,
       number: item.downloads,
       text: item.name,
       picture: item.picture,
@@ -24,6 +25,7 @@ function* top5Views () {
   var items = yield service.getTop5Views();
   this.body = items.map(function (item) {
     return {
+      id: item.id,
       number: item.views,
       text: item.name,
       picture: item.picture,

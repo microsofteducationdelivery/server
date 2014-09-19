@@ -7,16 +7,27 @@
                 window.hidePopup();
             });
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
-                var name = WinJS.Utilities.query('input[type=text]')[0].value;
+                var name = WinJS.Utilities.query('input[type=text]', element)[0].value;
 
-                WinJS.xhr({
-                    url: '/Folder',
+                window.authXHR({
+                    url: '/api/folders',
                     type: 'POST',
-                    data: name
-                }).done(function (result) {
-                    options.callback();
-                    window.hidePopup();
-                });
+                    data: JSON.stringify({parentId: options.parentId, name: name})
+                }).done(
+                    function (result) {
+                        if (options.success && typeof(options.success) === 'function') {
+                            options.success(result);
+                        }
+                        window.hidePopup();
+                    },
+                    function (err) {
+                        console.log(err);
+                        if (options.error && typeof(options.error) === 'function') {
+                            options.error(err);
+                        }
+                        window.hidePopup();
+                    }
+                );
 
 
             });
