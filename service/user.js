@@ -7,6 +7,7 @@ var
   table = db.User,
 
   errors = require('../helper/errors'),
+  mail = require('./mail'),
   C = require('../helper/constants')
 ;
 
@@ -63,13 +64,18 @@ module.exports = {
     if (!this.isPermitted(C.CREATE, data, author)) {
       throw new errors.AccessDeniedError('Access denied');
     }
-    var user;
+    console.log(data);
+    var user, clearPassword = data.password;
     try {
       data.password = bcrypt.hashSync(data.password);
       user = yield table.create(data);
+      if (data.email) {
+        console.log('mail sent');
+        mail.sendWelcomeEmail(data.login, clearPassword, data.email);
+      }
+      company.addUser(user);
     } catch (e) {
       yield company.destroy();
-      console.log(e);
       if (e.code === 'ER_DUP_ENTRY') {
         throw new errors.DuplicateError('Duplicate entry');
       } else {

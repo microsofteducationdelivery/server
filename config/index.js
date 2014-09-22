@@ -2,6 +2,23 @@ var path = require('path'),
     _ = require('lodash');
 
 var baseConfig = {
+  mail: {
+    key: 'pPSw8KIDRM86OYtpe6ABIQ',
+    from: 'noreply@microsofteducationdelivery.net',
+    welcomeSubject: 'Welcome to Microsoft Education Delivery',
+    welcomeText: [
+      'Hi',
+      '',
+      'Welcome to Microsoft Education Delivery.',
+      'Microsoft Education Delivery carries high quality educational material to mobile devices. This makes access to education possible for anyone, anytime!',
+      '',
+      'Your user name and password are:',
+      '',
+      '<user> <password>',
+      '',
+      'Regards'
+    ].join('\n')
+  },
   app: {
     root: path.normalize(__dirname + '/../..'),
     port: process.env.PORT || 3000,

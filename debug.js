@@ -5,6 +5,9 @@ var
 ;
 
 module.exports = co(function* () {
+  if (!process.env.DEBUG) {
+    return;
+  }
   yield db.client.query('SET FOREIGN_KEY_CHECKS = 0');
   yield db.client.sync({ force: true });
   yield db.client.query('SET FOREIGN_KEY_CHECKS = 1');
