@@ -116,7 +116,7 @@
                             WinJS.Navigation.navigate('resources/pages/getStarted.html');
                         },
                         msg: 'Your account has been successfully created. ' +
-                            'An email has been sent to you with activation link.' +
+                            'An email has been sent to you with your credentials.' +
                             ' If you have not received an email please check your Spam folder.'
                     });
                 },
