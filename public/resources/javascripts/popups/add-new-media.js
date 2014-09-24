@@ -49,6 +49,9 @@
                         window.hidePopup();
                     },
                     error: function () {
+                        if (options.error && typeof(options.error) === 'function') {
+                            options.error();
+                        }
                         window.hidePopup();
                     }
                 });
@@ -59,20 +62,15 @@
             });
         },
         isValidType: function (fileType) {
+            debugger;
             var type = fileType.toLowerCase();
-            if (type.search('png') !== -1 ) {
+            if (type.search('image') !== -1 ) {
                 return true;
             }
-            if (type.search('jpg') !== -1) {
+            if (type.search('video') !== -1) {
                 return true;
             }
-            if (type.search('avi') !== -1 || type.search('x-msvideo') !== -1) {
-                return true;
-            }
-            if (type.search('mp4') !== -1) {
-                return true;
-            }
-            if (type.search('txt') !== -1) {
+            if (type.search('text/plain') !== -1) {
                 return true;
             }
 

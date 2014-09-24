@@ -31,7 +31,15 @@
                 window.showPopup('/resources/pages/popups/add-new-media.html', {
                     libraryId: currentId,
                     callback: function () {
-                        me.getFolderData({id: currentId});
+                        setTimeout(function () {
+                            me.getFolderData({id: currentId});
+                        }, 500);
+
+                    },
+                    error: function () {
+                        window.showPopup('/resources/pages/popups/alert.html', {
+                            msg: 'Failed to upload. Check your file or data connection'
+                        });
                     }
                 })
             });
@@ -266,6 +274,7 @@
 
             if (data.type) {
                 icon.innerHTML = getType(data.type).icon;
+                form.type.value = data.type;
             }
             if (!data.convertedFile) {
                 converedMsg.removeClass('hidden');
@@ -372,7 +381,7 @@
             return {text: 'video', icon: '&#xf03d'};
         }
         if (type.search('image') !== -1) {
-            return {text: 'audio', icon: '&#xf1c7'};
+            return {text: 'image', icon: '&#xf1c7'};
         }
         if (type.search('text') !== -1) {
             return {text: 'text', icon: '&#xf15c'};
