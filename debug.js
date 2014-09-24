@@ -71,15 +71,16 @@ module.exports = co(function* () {
     views: 10,
     description: 'Example Media1',
     links: 'fooo',
-    picture: '/resources/preview/4002.png'
+    file: '/tmp/thai.mp4'
   });
+  /*
   var media2 = yield db.Media.create({name: 'Media2', views: 17, description: 'Example Media2', links: 'bar'});
   var media3 = yield db.Media.create({name: 'Media3', views: 17});
-
+  */
   yield library1.addMedium(media1);
-  yield library1.addMedium(media2);
+  /*yield library1.addMedium(media2);
   yield folder11.addMedium(media3);
-  yield library1.addMedium(media3);
+  yield library1.addMedium(media3);*/
 
   console.log('All debug done');
 

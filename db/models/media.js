@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
     links: DataTypes.TEXT,
     file: DataTypes.STRING,
     convertedFile: DataTypes.STRING,
-    picture: DataTypes.STRING,
+    status: DataTypes.STRING,
     type: {
       type: DataTypes.ENUM('video', 'image', 'text'),
       allowNull: false

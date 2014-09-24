@@ -41,7 +41,7 @@ function* getFolderContent (id, cache) {
   } else {
     root = yield db.Folder.find(id);
     folders = yield root.getChildren();
-    media = yield root.getMedia();
+    media = yield db.Media.findAll({where: {LibraryId: root.LibraryId, FolderId: id, status: 'converted' }});
   }
 
   var items = [];
@@ -63,7 +63,7 @@ function* getFolderContent (id, cache) {
         type: 'media',
         subtype: typeToExtension[media.type],
         title: media.name,
-        preview: media.picture ? datauri('public' + media.picture) : ''
+        preview: datauri('public/preview' + media.id + '.png')
       };
     })
   );

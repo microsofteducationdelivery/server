@@ -2,6 +2,7 @@ var
   db = require('../db'),
   libraryTable = db.Library,
   table = db.Folder,
+  config = require('../config'),
 
   errors = require('../helper/errors'),
   C = require('../helper/constants')
@@ -50,7 +51,11 @@ module.exports = {
         return { id: folder.id, name: folder.name, type: 'folder'};
       }),
       media.map(function (media) {
-        return { id: media.id, name: media.name, type: 'media', picture: media.picture };
+        return {
+          id: media.id,
+          name: media.name,
+          type: 'media',
+          picture: media.status === 'converted' ? '/preview/' + id + '.png' : null };
       })
     );
 
