@@ -62,7 +62,6 @@
             });
         },
         isValidType: function (fileType) {
-            debugger;
             var type = fileType.toLowerCase();
             if (type.search('image') !== -1 ) {
                 return true;
@@ -73,7 +72,6 @@
             if (type.search('text/plain') !== -1) {
                 return true;
             }
-
             return false;
         },
         getType: function (type) {
