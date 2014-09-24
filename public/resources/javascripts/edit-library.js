@@ -381,7 +381,7 @@
             return {text: 'video', icon: '&#xf03d'};
         }
         if (type.search('image') !== -1) {
-            return {text: 'image', icon: '&#xf1c7'};
+            return {text: 'image', icon: '&#xf03e'};
         }
         if (type.search('text') !== -1) {
             return {text: 'text', icon: '&#xf15c'};
