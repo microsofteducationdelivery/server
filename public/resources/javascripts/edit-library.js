@@ -260,14 +260,17 @@
         setForm: function (data) {
             var form = WinJS.Utilities.query('form')[0],
                 formContainer = WinJS.Utilities.query('.b-library-edit'),
-                icon = WinJS.Utilities.query('div[class=b-library-edit--form__icon]')[0]
+                icon = WinJS.Utilities.query('div[class=b-library-edit--form__icon]')[0],
+                converedMsg = WinJS.Utilities.query('div.b_converted')
             ;
 
             if (data.type) {
                 icon.innerHTML = getType(data.type).icon;
             }
             if (!data.convertedFile) {
-                WinJS.Utilities.query('span.b_converted').removeClass('hidden');
+                converedMsg.removeClass('hidden');
+            } else {
+                converedMsg.addClass('hidden');
             }
             form.link.value = data.links;
             form.name.value = data.name;

@@ -206,6 +206,9 @@ img.b_media-list-tpl--item__image {
 .b-library-edit.hidden {
     display: none;
 }
+.b_converted.hidden {
+    display: none;
+}
 .b-libraries__back-button {
     margin: 0;
     padding: 0;

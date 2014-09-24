@@ -163,6 +163,7 @@
             this.element.appendChild(table);
 
             this.list = new WinJS.Binding.List(options.data);
+            this.repeater = new WinJS.UI.Repeater(this.element.querySelector('tbody'), {data: this.list});
 
             WinJS.Namespace.define("Data", {
                 items: me.list
@@ -258,9 +259,7 @@
                 data.forEach(function (item) {
                     list.push(item);
                 });
-                if (!this.repeater) {
-                    this.repeater = new WinJS.UI.Repeater(this.element.querySelector('tbody'), {data: this.list});
-                }
+
                 this.setEvents(noCheck);
 
             },

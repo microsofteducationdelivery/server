@@ -10,7 +10,6 @@ function initialize() {
   }
 
 
-
   WinJS.Application.sessionState.user = user;
   WinJS.Application.sessionState.token = localStorage.getItem('token');
 
