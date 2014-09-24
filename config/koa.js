@@ -51,7 +51,7 @@ module.exports = function (app) {
   app.use(jwt({secret: config.app.secret, passthrough: true}));
   app.use(function* (next) {
     console.log(this.request.type);
-    if (this.request.type === 'multipart/form-data') {
+    if (this.request.type === 'multipart/form-data' && this.query.token) {
       this.user = yield jwt.verify(this.query.token, config.app.secret);
     }
     this.user = yield userService.findById(this.user.id);
