@@ -4,6 +4,7 @@ var fs = require('co-fs');
 var parse = require('co-busboy');
 var saveTo = require('save-to');
 var service = require('../../service/media');
+var mime = require('mime');
 
 module.exports = require('../helper/crud')(service, {
   create: function* () {
@@ -30,10 +31,22 @@ module.exports = require('../helper/crud')(service, {
     parts.fields.forEach(function (field) {
       data[field[0]] = field[1];
     });
-    console.log(data);
-    yield service.add(data);
-    this.status = 201;
-
-
+    var type = 'unknown';
+    var mimeType = mime.lookup(file);
+    if (mimeType.indexOf('image') !== -1) {
+      type = 'image';
+    } else if (mimeType.indexOf('video') !== -1) {
+      type = 'video';
+    } else if (mimeType === 'text/plain') {
+      type = 'text';
+    }
+    if (type !== 'unknown') {
+      data.type = type;
+      yield service.add(data);
+      this.status = 201;
+    } else {
+      yield(fs.unlink(path));
+      this.status = 400;
+    }
   }
 });
