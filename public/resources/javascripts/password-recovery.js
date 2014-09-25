@@ -19,7 +19,7 @@
                 if (newPass.value === confirmPass.value) {
 
                     errorMsg.addClass('hidden');
-                    window.authXHR({
+                    MED.Server.authXHR({
                         type: 'PUT',
                         url: '/api/auth/passwordRecovery',
                         responseType: 'json',

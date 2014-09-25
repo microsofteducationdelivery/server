@@ -2,7 +2,7 @@
   'use strict';
 
   function getMOTD() {
-    return window.authXHR({
+    return MED.Server.authXHR({
       url: '/api/motd'
 
     }).then(function (res) {
@@ -11,7 +11,7 @@
   }
 
   function setMOTD(text) {
-    return window.authXHR({
+    return MED.Server.authXHR({
       url: '/api/motd',
       type: 'POST',
       data: JSON.stringify({ text: text })

@@ -16,7 +16,24 @@ module.exports = {
 
     return true;
   },
+  getPath: function* (id) {
+    var root, path = [];
+    console.log('start path');
+    if (id.substr(0,7) === 'library') {
+      id = id.substr(7);
+      root = yield libraryTable.find(id);
 
+    } else {
+        console.log('media');
+      root = yield table.find(id);
+    }
+    var parent = yield root.getParent();
+    while (parent) {
+      path.unshift({id: parent.id, title: parent.name});
+      parent = yield parent.getParent();
+    }
+    return path;
+  },
   findById: function* (id, author) {
     var root, folders, media, path, items = [];
 
@@ -32,18 +49,7 @@ module.exports = {
       folders = yield root.getChildren();
       media = yield root.getMedia();
 
-      path = [];
-      var parent = yield root.getParent();
-      while (parent) {
-        path.unshift({id: parent.id, title: parent.name});
-        parent = yield parent.getParent();
-      }
-      var library = yield root.getLibrary();
-      path.unshift({
-        id: 'library' + library.id,
-        title: library.name
-      });
-
+      path = yield this.getPath(id);
     }
 
     items = items.concat(

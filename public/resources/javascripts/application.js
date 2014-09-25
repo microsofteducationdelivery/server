@@ -1,6 +1,15 @@
 function initialize() {
-  var user = JSON.parse(localStorage.getItem('user')),
+  var user = localStorage.getItem('user'),
       token = localStorage.getItem('token');
+
+  if (token === 'undefined') {
+      token = '';
+  }
+  if (user === 'undefined') {
+    user = '';
+  } else {
+    user = JSON.parse(user);
+  }
 
   if ((!user || !token ) && window.location.pathname !== '/index.html') {
       window.location = '/index.html';
@@ -43,15 +52,15 @@ function initialize() {
   WinJS.Application.sessionState.user = user;
   WinJS.Application.sessionState.token = localStorage.getItem('token');
 
-  window.authXHR = function (options) {
+  /*window.authXHR = function (options) {
     options.headers = options.headers || {};
-    options.responseType = options.responseType || 'json';
+    options.responseType = options.responseType || 'text';
     options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
     if (WinJS.Application.sessionState.token) {
       options.headers.Authorization = 'Bearer ' + WinJS.Application.sessionState.token;
     }
     return WinJS.xhr(options);
-  };
+  };*/
 
    WinJS.UI.processAll();
 }

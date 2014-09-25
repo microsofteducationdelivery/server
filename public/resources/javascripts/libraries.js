@@ -3,7 +3,7 @@
   var url = '/api/libraries'
 
   function getLibraries () {
-    return window.authXHR({
+    return MED.Server.authXHR({
       url: url,
       type: 'GET'
     }).then(function (result) {
@@ -55,7 +55,7 @@
           return false;
         }
         window.showPopup('/resources/pages/popups/delete-confirm.html', {callback: function () {
-          window.authXHR({
+          MED.Server.authXHR({
             url: url,
             type: 'DELETE',
             data: JSON.stringify(selectedItems)

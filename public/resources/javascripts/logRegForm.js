@@ -37,7 +37,7 @@
         login: function (creds) {
             var loginErr = WinJS.Utilities.query('#login_err');
 
-            WinJS.xhr({
+            MED.Server.xhr({
                 type: 'POST',
                 url: '/api/auth/login',
                 responseType: 'json',
@@ -51,8 +51,10 @@
             }).done(
                 function completed (req) {
                     console.log('login success' + req);
-                    localStorage.setItem('token', req.response.token);
-                    localStorage.setItem('user', JSON.stringify(req.response.user));
+                    var response = req.response;
+
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('user', JSON.stringify(response.user));
                     window.location = '/admin.html';
 
                 },
@@ -96,7 +98,7 @@
         register: function (creds) {
             var registerErr = WinJS.Utilities.query('#reg_err');
 
-            WinJS.xhr({
+            Med.Server.xhr({
                 type: 'POST',
                 url: '/api/auth/register',
                 responseType: 'json',

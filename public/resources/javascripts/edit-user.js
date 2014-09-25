@@ -76,7 +76,7 @@
                     values.email = form.email.value;
                 }
 
-                window.authXHR({
+                MED.Server.authXHR({
                     url: '/api/users',
                     type: 'PUT',
                     data: JSON.stringify(values)
@@ -87,7 +87,7 @@
         }
     });
     function getUserCreds (id, callback) {
-        window.authXHR({
+        MED.Server.authXHR({
             url: '/api/users/' + id,
             type: 'GET'
         }).done(

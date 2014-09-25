@@ -70,7 +70,7 @@
                     return false;
                 }
                 window.showPopup('/resources/pages/popups/delete-confirm.html', {callback: function () {
-                    window.authXHR({
+                    MED.Server.authXHR({
                         url: '/api/contentActions/delete',
                         type: 'POST',
                         data: JSON.stringify(buffer.data)
@@ -90,7 +90,7 @@
                     return false;
                 }
                 var data = {destination: currentId, content: buffer.data};
-                window.authXHR({
+                MED.Server.authXHR({
                     url: '/api/contentActions/move',
                     type: 'POST',
                     data: JSON.stringify(data)
@@ -124,7 +124,7 @@
                         description: form.description.value
                     };
 
-                window.authXHR({
+                MED.Server.authXHR({
                     url: '/api/media/' + form.dataset.id,
                     type: 'PUT',
                     data: JSON.stringify(data)
@@ -213,7 +213,7 @@
 
         },
         getMedia: function (config) {
-            window.authXHR({
+            MED.Server.authXHR({
                 url: '/api/media/' + config.id,
                 type: 'GET'
             }).done(
@@ -239,7 +239,7 @@
                 ;
 
             currentId = config.id;
-            window.authXHR({
+            MED.Server.authXHR({
                 url: '/api/folders/' + config.id,
                 type: 'GET'
             }).done(

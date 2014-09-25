@@ -73,11 +73,24 @@ module.exports = co(function* () {
     links: 'fooo',
     file: '/tmp/thai.mp4'
   });
+  var comment1 = yield db.Comment.create({
+    text: 'Test comment 1',
+    author: 'qwerty1',
+    date: '20.09.2014'
+  });
+  var comment2 = yield db.Comment.create({
+    text: 'Test comment 2',
+    author: 'qwerty2',
+    date: '22.09.2014'
+  });
+
   /*
   var media2 = yield db.Media.create({name: 'Media2', views: 17, description: 'Example Media2', links: 'bar'});
   var media3 = yield db.Media.create({name: 'Media3', views: 17});
   */
   yield library1.addMedium(media1);
+  yield media1.addComment(comment1);
+  yield media1.addComment(comment2);
   /*yield library1.addMedium(media2);
   yield folder11.addMedium(media3);
   yield library1.addMedium(media3);*/

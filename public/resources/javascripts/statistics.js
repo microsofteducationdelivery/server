@@ -84,7 +84,7 @@
         console.log('download most viewed');
       };
 
-      window.authXHR({
+      MED.Server.authXHR({
         url: '/api/stats/top5Views',
         type: 'GET'
       }).done(
@@ -96,7 +96,7 @@
         }
       );
 
-      window.authXHR({
+      MED.Server.authXHR({
         url: '/api/stats/top5Downloads',
         type: 'GET'
       }).done(

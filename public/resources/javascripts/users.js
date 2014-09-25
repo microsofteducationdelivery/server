@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     function getUsers () {
-        return window.authXHR({
+        return MED.Server.authXHR({
             url: '/api/users',
             type: 'GET'
         }).then(function (result) {
@@ -35,7 +35,7 @@
             deleteBtn.listen('click', function () {
                 if (selectedItems.length === 0) return false;
                 window.showPopup('/resources/pages/popups/delete-confirm.html', {callback: function () {
-                    window.authXHR({
+                    MED.Server.authXHR({
                         url: '/api/users',
                         type: 'DELETE',
                         data: JSON.stringify(selectedItems)
@@ -64,7 +64,7 @@
 
             });
 
-            window.authXHR({
+            MED.Server.authXHR({
                 url: '/api/users',
                 type: 'GET'
             }).done(

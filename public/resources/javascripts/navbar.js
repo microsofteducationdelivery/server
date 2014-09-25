@@ -33,7 +33,13 @@
     }
   });
     var links;
-    var user = JSON.parse(localStorage.user);
+
+    var user = localStorage.getItem('user');
+    if (user === 'undefined') {
+        user = {}
+    } else {
+        user = JSON.parse(user);
+    }
     if (user.type !== 'owner') {
         links = [
             { page: '/resources/pages/libraries.html', title: 'Libraries' },
@@ -43,10 +49,8 @@
     } else {
         links = [
             { page: '/resources/pages/libraries.html', title: 'Libraries' },
-            /*
             { page: '/resources/pages/users.html', title: 'Users' },
             { page: '/resources/pages/commentaries.html', title: 'Commentaries' },
-            */
             { page: '/resources/pages/motd.html', title: 'Message of the Day'},
             { page: '/resources/pages/statistics.html', title: 'Statistics'}
         ];

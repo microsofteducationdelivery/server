@@ -15,7 +15,17 @@ module.exports = {
 
     return true;
   },
-
+  list: function* (author) {
+    var mediaList = yield table.findAll({
+      where: { CompanyId: author.CompanyId },
+      attributes: ['name', 'views', 'type', 'id']
+    });
+    var id;
+    mediaList.forEach(function (item) {
+        console.log(item);
+        id = item.id
+    });
+  },
   findById: function* (id, author) {
     //FIXME: Security exploit here
     return yield table.find({ where: {id: id}});
