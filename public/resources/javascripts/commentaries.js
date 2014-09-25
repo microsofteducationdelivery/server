@@ -10,12 +10,13 @@
                 WinJS.Navigation.navigate('/resources/pages/media-comments.html', {id: id.detail});
             };
 
-            WinJS.xhr({
-                url: '/listData/commentaries.json',
+            MED.Server.authXHR({
+                url: '/api/media',
                 type: 'GET'
             }).done(
                 function (result) {
-                    var data = JSON.parse(result.responseText);
+                    var data = result.response;
+
                     tableControl.setData(data, true);
                     WinJS.Utilities.query('button[class=b_table-button]').listen('click', function (e) {
 
