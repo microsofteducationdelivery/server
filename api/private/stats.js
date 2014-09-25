@@ -15,7 +15,7 @@ function* top5Downloads () {
       id: item.id,
       number: item.downloads,
       text: item.name,
-      picture: item.picture,
+      picture: (item.status === 'converted') ? '/preview/' + item.id + '.png' : null,
       folder: item.FolderId || 'library' + item.LibraryId
     };
   });
@@ -28,7 +28,7 @@ function* top5Views () {
       id: item.id,
       number: item.views,
       text: item.name,
-      picture: item.picture,
+      picture: (item.status === 'converted') ? '/preview/' + item.id + '.png' : null,
       folder: item.FolderId || 'library' + item.LibraryId
     };
   });
