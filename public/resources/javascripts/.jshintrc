@@ -18,6 +18,7 @@
     "smarttabs": true,
     "white": true,
     "globals": {
-      "WinJS": true
+      "WinJS": true,
+      "MED": true
     }
 }

@@ -36,7 +36,7 @@
 
     var user = localStorage.getItem('user');
     if (user === 'undefined') {
-        user = {}
+        user = {};
     } else {
         user = JSON.parse(user);
     }
