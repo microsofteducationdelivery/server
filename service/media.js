@@ -2,11 +2,13 @@ var
   _ = require('lodash'),
   db = require('../db'),
   table = db.Media,
-
+  comment = db.Comment,
+  folder = db.Folder,
+  library = db.Library,
   errors = require('../helper/errors'),
   C = require('../helper/constants'),
   folders = require('../service/folder')
-;
+  ;
 
 module.exports = {
   isPermitted: function (action, data, author) {
@@ -18,18 +20,17 @@ module.exports = {
   },
   list: function* (author) {
     var mediaList = yield table.findAll({
-      attributes: ['name', 'views', 'type', 'id']
+      attributes: ['name', 'views', 'type', 'id'],
+      include: [{model: comment, required: true}, {model: folder, as: 'Folder'}, {model: library, as: 'Library'}]
     });
-    var id, path;
-    console.log(mediaList.length);
-    mediaList.forEach(function (item) {
-      console.log(item);
-        console.log('!!');
-      id = item.id;
-      path = folders.getPath(id);
-      item.path = path;
+    return mediaList.map(function (item) {
+      return _(item).pick(['id', 'name', 'type']).merge({
+        path: folders.getPath(item.folder ? item.folder.dataValues.id : item.library.dataValues.id),
+        amount: item.comments.length,
+        date: _.last(item.comments).createdAt
+
+      }).value();
     });
-    return mediaList;
   },
   findById: function* (id, author) {
     //FIXME: Security exploit here

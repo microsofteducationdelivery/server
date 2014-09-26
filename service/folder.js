@@ -19,7 +19,7 @@ module.exports = {
   getPath: function* (id) {
     var root, path = [];
 
-    root = yield table.find(id);
+    root = yield db.Folder.find(id);
     var parent = yield root.getParent();
     while (parent) {
       path.unshift({id: parent.id, title: parent.name});

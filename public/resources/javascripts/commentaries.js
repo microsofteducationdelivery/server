@@ -16,7 +16,7 @@
             }).done(
                 function (result) {
                     var data = result.response;
-
+                    debugger;
                     tableControl.setData(data, true);
                     WinJS.Utilities.query('button[class=b_table-button]').listen('click', function (e) {
 
