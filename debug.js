@@ -21,7 +21,7 @@ module.exports = co(function* () {
     login: 'demo',
     email: 'demo@demo.me',
     password: bcrypt.hashSync('demo'),
-    type: 'owner'
+    type: 'admin'
   });
 
   var user2 = db.User.build({

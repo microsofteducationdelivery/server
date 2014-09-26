@@ -40,7 +40,7 @@
     } else {
         user = JSON.parse(user);
     }
-    if (user.type !== 'owner') {
+    if (user.type !== 'admin') {
         links = [
             { page: '/resources/pages/libraries.html', title: 'Libraries' },
             { page: '/resources/pages/commentaries.html', title: 'Commentaries' },

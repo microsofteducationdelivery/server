@@ -13,11 +13,11 @@ var
 
 module.exports = {
   isPermitted: function (action, data, author) {
-    if (action === C.CREATE && !author && data.type === 'owner') {
+    if (action === C.CREATE && !author && data.type === 'admin') {
       return true;
     }
 
-    if (action === C.UPDATE && data.type === 'owner') {
+    if (data.type !== 'admin') {
       return false;
     }
 
@@ -97,13 +97,14 @@ module.exports = {
     }
 
 
-    var user = yield db.Users.find({ where: { id: id, CompanyId: author.CompanyId }});
+    var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
     if (data.password) {
       user.password = bcrypt.hashSync(data.password);
     }
 
+    console.log(data);
     _.forIn(data, function(value, key) {
-      user[value] = key;
+      user[key] = value;
     });
     user.email = data.email;
     user.phone = data.phone;

@@ -5,7 +5,7 @@ var
 
 module.exports = {
   isPermitted: function (action, data, author) {
-    return (author.type === 'owner' || author.type === 'admin');
+    return (author.type === 'admin');
   },
 
   get: function* (author) {
