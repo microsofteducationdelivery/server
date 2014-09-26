@@ -7,83 +7,12 @@
                 checkPhone
             ;
 
-            function showError(el, msg) {
-                var errmsg = '✗ Error: ' + msg,
-                    errdiv = '<div class="b-edit-user__error">' + errmsg + '</div>',
-                    prstErrs = WinJS.Utilities.query('.b-edit-user__error', el);
-                var isPrst = WinJS.Utilities.query('.b-edit-user__error', el).some(function (err) {
-                    return err.innerHTML == errmsg;
-                });
 
-                if (isPrst) return;
-                WinJS.Utilities.insertAdjacentHTML(el, 'beforeend', errdiv);
-            }
-            function isUnique(key, value, cb) {
-                WinJS.xhr({
-                    url: '/users/isunique',
-                    type: 'POST',
-                    data: {
-                      key: key,
-                      value: value
-                    }
-                }).done(cb);
-            }
-            function validate(feild) {
-                var errs = WinJS.Utilities.query('.b-edit-user__error', feild.parentNode);
-                errs.forEach(function (err) {
-                  feild.parentNode.removeChild(err);
-                });
-                if (feild.value == '') {
-                    return;
-                }
-                for (var key in params[feild.name]) {
-                    switch (key){
-                        case 're':
-                            if (!params[feild.name].re.test(feild.value)) {
-                                showError(feild.parentNode, errMsgs.format);
-                            }
-                            break
-                        case 'unique':
-                            if (params[feild.name].unique) {
-                                isUnique(feild.name, feild.value, function (res) {
-                                    if (!res.unique) {
-                                        showError(feild.parentNode, errMsgs.taken);
-                                    }
-                                })
-                            }
-                            break
-                    }
-                }
-            }
-            var params = {
-                    email: {
-                        re: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                        unique: true
-                    },
-                    name: {
-                        required: true,
-                        unique: true
-                    },
-                    login: {
-                        required: true,
-                        unique: true
-                    },
-                    password: {
-                        required: true
-                    },
-                    phone: {
-                        re: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/,
-                        unique: true
-                    }
-                },
-                errMsgs = {
-                  format : 'wrong format',
-                  required : 'required',
-                  taken : 'already taken'
-                };
             var basicFragmentLoadDiv = document.querySelector(".b-edit-user__wrapper");
             WinJS.UI.Fragments.renderCopy("/resources/pages/templates/edit-user-tpl.html", basicFragmentLoadDiv).done(function () {
                 WinJS.UI.processAll(element);
+                WinJS.Utilities.query('select[name=type]')[0].options.remove(3);
+
                 checkEmail = WinJS.Utilities.query('input[name=send_email]');
                 checkPhone =  WinJS.Utilities.query('input[name=send_sms]');
 
@@ -105,7 +34,7 @@
                             }
                         }
                     } else {
-                        validate(e.target)
+                        MED.Server.userValidation(e.target);
                     }
                 });
                 WinJS.Utilities.query('.b-button-ok').listen('click', function (e) {
@@ -131,7 +60,7 @@
                     }
 
                     if (WinJS.Utilities.query('.b-edit-user__error', form).length) return;
-                    WinJS.xhr({
+                    MED.Server.authXHR({
                         url: '/api/users',
                         type: 'POST',
                         data: JSON.stringify(values)

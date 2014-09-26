@@ -13,6 +13,7 @@
             <option value="admin">Admin</option>
             <option value="operator">Operator</option>
             <option value="mobile">Mobile Only</option>
+            <option value="owner">Owner (Super Admin)</option>
         </select>
     </div>
     <div class="b-edit-user__field-wrapper">
@@ -37,6 +38,9 @@
         </label>
         <input type="text" name="email" placeholder="email@email.com" disabled="disabled" />
     </div>
+
+    <input type="text" name="id" class="hidden"/>
+
     <div class="b-edit-user__buttons">
         <div class="b-edit-user__buttons-wrapper">
             <button class="b-button-ok">OK</button>
