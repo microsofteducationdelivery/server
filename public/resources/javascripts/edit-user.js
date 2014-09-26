@@ -78,7 +78,6 @@
                     var values = {
                         name: form.name.value,
                         login: form.login.value,
-                        id: form.id.value,
                         type: form.type.value,
                         password: form.password.value
                     };
@@ -91,7 +90,7 @@
                     }
 
                     MED.Server.authXHR({
-                        url: '/api/users',
+                        url: '/api/users/'+ form.id.value,
                         type: 'PUT',
                         data: JSON.stringify(values)
                     }).done(function () { });
