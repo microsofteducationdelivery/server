@@ -9,7 +9,7 @@ var
 var app = koa();
 
 function* top5Downloads () {
-  var items = yield service.getTop5Downloads();
+  var items = yield service.getTop5Downloads(this.user.CompanyId);
   this.body = items.map(function (item) {
     return {
       id: item.id,
@@ -22,7 +22,7 @@ function* top5Downloads () {
 }
 
 function* top5Views () {
-  var items = yield service.getTop5Views();
+  var items = yield service.getTop5Views(this.user.CompanyId);
   this.body = items.map(function (item) {
     return {
       id: item.id,
@@ -33,7 +33,6 @@ function* top5Views () {
     };
   });
 }
-
 
 app.use(route.get('/top5Downloads', top5Downloads));
 app.use(route.get('/top5Views', top5Views));
