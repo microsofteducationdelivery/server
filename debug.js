@@ -83,14 +83,33 @@ module.exports = co(function* () {
     author: 'qwerty2',
     date: '22.09.2014'
   });
+  var comment3 = yield db.Comment.create({
+    text: 'Test answer on comment 2',
+    author: 'qwerty2',
+    date: '22.09.2014'
+  });
+  var comment4 = yield db.Comment.create({
+    text: 'Test answer on comment 2',
+    author: 'Demo user',
+    date: '22.09.2014'
+  });
+  var comment5 = yield db.Comment.create({
+    text: 'Test comment 3',
+    author: 'qwerty2',
+    date: '22.09.2014'
+  });
 
-
+  yield comment2.addChildren(comment3);
+  yield comment2.addChildren(comment4);
   var media2 = yield db.Media.create({name: 'Media2', views: 17, description: 'Example Media2', links: 'bar'});
   var media3 = yield db.Media.create({name: 'Media3', views: 17});
 
   yield library1.addMedium(media1);
-  yield media1.addComment(comment1);
-  yield media1.addComment(comment2);
+  yield media2.addComment(comment1);
+  yield media3.addComment(comment2);
+  yield media3.addComment(comment3);
+  yield media3.addComment(comment4);
+  yield media3.addComment(comment5);
   yield library1.addMedium(media2);
   yield folder11.addMedium(media3);
   yield library1.addMedium(media3);

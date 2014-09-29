@@ -8,10 +8,11 @@
         </div>
         <div class="b_media-comments-list-tpl--item__text"
              data-win-bind="style.marginLeft: lvl NED.mediaComments.getMargin">
-            <h3 data-win-bind="textContent: userName"> </h3>
+            <h3 data-win-bind="textContent: author"> </h3>
             <h6 data-win-bind="textContent: text"></h6>
         </div>
-        <button data-win-bind="textContent: replay" class="b_media-comments-list-tpl__replay"></button>
+        <button data-win-bind="style.display: lvl NED.mediaComments.getDisplay" class="b_media-comments-list-tpl__replay">reply</button>
+        <button data-win-bind="style.display: author NED.mediaComments.getEditDisplay" class="b_media-comments-list-tpl__replay edit-btn">edit</button>
     </div>
 </div>
 

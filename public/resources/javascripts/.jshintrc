@@ -19,6 +19,7 @@
     "white": true,
     "globals": {
       "WinJS": true,
-      "MED": true
+      "MED": true,
+      "moment": true
     }
 }

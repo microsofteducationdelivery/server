@@ -18,14 +18,18 @@ module.exports = {
 
     return true;
   },
-  list: function* (author) {
+  list: function* () {
+
     var mediaList = yield table.findAll({
       attributes: ['name', 'views', 'type', 'id'],
       include: [{model: comment, required: true}, {model: folder, as: 'Folder'}, {model: library, as: 'Library'}]
     });
-    return mediaList.map(function (item) {
+    return yield mediaList.map(function* (item) {
+      var path;
+      path = item.folder ? yield folders.getPath(item.folder.dataValues.id ) : item.library.dataValues.name;
+
       return _(item).pick(['id', 'name', 'type']).merge({
-        path: folders.getPath(item.folder ? item.folder.dataValues.id : item.library.dataValues.id),
+        path: path,
         amount: item.comments.length,
         date: _.last(item.comments).createdAt
 

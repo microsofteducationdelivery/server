@@ -17,6 +17,8 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     associate: function(models) {
       Comment.belongsTo(models.Media);
+      Comment.hasMany(Comment, { onDelete: 'cascade', as: 'children', foreignKey: 'parentId', useJunctionTable: false });
+      Comment.belongsTo(Comment, { as: 'parent', foreignKey: 'parentId' });
     }
   });
 
