@@ -18,9 +18,43 @@ function *data() {
 }
 
 function *getComments(id) {
-  var media = yield mediaService.findById(id, this.user);
+  var media = yield mediaService.findById(id, this.user),
+    parentList = [],
+    parentId,
+    childList = [],
+    sortedList = [];
+
   yield media.increment('views', 1);
-  this.body = yield media.getComments();
+  var commentList = yield media.getComments();
+  commentList.sort(function (a, b) {
+      return new Date(a.dataValues.createdAt) > new Date(b.dataValues.createdAt) ? 1 : -1;
+  });
+  commentList.forEach(function (item) {
+    parentId = item.dataValues.parentId;
+    if (parentId) {
+      parentId = parentId.toString();
+
+      if (!childList[parentId]) {
+        childList[parentId] = [];
+      }
+      childList[parentId].push(item);
+    } else {
+      parentList.push(item);
+    }
+  });
+  parentList.forEach(function (parent) {
+    parentId = parent.dataValues.id.toString();
+    sortedList.push(parent);
+    if (childList[parentId]) {
+      childList[parentId].forEach(function (child) {
+        child.dataValues.isAnswer = true;
+        sortedList.push(child);
+      });
+    }
+  });
+
+  this.body = sortedList;
+  return sortedList;
 }
 
 
