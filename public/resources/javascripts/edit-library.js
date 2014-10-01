@@ -195,7 +195,7 @@
                         me.setMediaForm(itemId);
                     } else {
                         WinJS.Utilities.query('div[id=media_edit]')[0].className = 'b-library-edit hidden';
-                        me.getFolderData({id: itemId});
+                        WinJS.Navigation.navigate('/resources/pages/edit-library.html', {id: itemId});
                     }
                     event.preventDefault();
                 }
@@ -332,7 +332,7 @@
                 WinJS.Navigation.navigate("/resources/pages/libraries.html");
             });
             WinJS.Utilities.query('a[class=b_path-link]').listen('click', function (element) {
-                me.getFolderData({id: element.currentTarget.getAttribute('id')});
+                WinJS.Navigation.navigate('/resources/pages/edit-library.html', {id: element.currentTarget.getAttribute('id')});
             });
 
         },
