@@ -170,9 +170,12 @@
       });
     },
     {
-      getSelection: function () {
+      getSelection: function (isChecked) {
+        var checked = typeof(isChecked) === 'undefined' ? true : isChecked,
+          css = checked === false ? ':not(:checked)' : ':checked';
+
         var checkedArr = [],
-          checkList = WinJS.Utilities.query('input.row-box[type=checkbox]:checked', this.element)
+          checkList = WinJS.Utilities.query('input[class="row-box"][type=checkbox]'+ css, this.element)
           ;
 
         for (var i = 0; i < checkList.length; i ++) {
@@ -197,6 +200,8 @@
           });
           WinJS.Utilities.query('input.row-box[type=checkbox]').listen('click', function (e) {
             e.stopPropagation();
+
+            WinJS.Utilities.query('input.row-box[type=checkbox]', e.target.parentNode).removeClass('b_three-state--checked');
             me.dispatchEvent('selectionchange', me.getSelection());
             mainCheckBox.checked = false;
           });
@@ -275,9 +280,25 @@
         }
 
       },
+      getThreeStateSelection: function () {
+        var checkedArr = [],
+          checkList = WinJS.Utilities.query('input.b_three-state--checked[type=checkbox]', this.element)
+        ;
+
+        for (var i = 0; i < checkList.length; i ++) {
+          checkedArr.push(checkList[i].value);
+        }
+
+        return checkedArr;
+      },
+      setThreeStateSelection: function (selection) {
+        for (var i = 0; i < selection.length; i ++) {
+          WinJS.Utilities.query('input.row-box[value="' + selection[i] + '"]', this.element).addClass('b_three-state--checked');
+        }
+      },
       setSelection: function (selection) {
         for (var i = 0; i < selection.length; i ++) {
-          var box = WinJS.Utilities.query('input.row-box[value=' + selection[i] + ']');
+          var box = WinJS.Utilities.query('input.row-box[value="' + selection[i] + '"]', this.element);
           if (box[0]) {
             box[0].checked = true;
           }

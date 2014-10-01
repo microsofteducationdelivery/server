@@ -31,6 +31,7 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     associate: function(models) {
       User.belongsTo(models.Company);
+      User.hasMany(models.Library);
     }
   });
 

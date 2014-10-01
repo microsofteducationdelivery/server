@@ -70,7 +70,16 @@
       });
 
       invtBtn.listen('click', function () {
-        window.showPopup('/resources/pages/popups/library-invite-users.html', selectedItems);
+        MED.Server.authXHR({
+          url: '/api/contentActions/inviteUsers/' + selectedItems,
+          type: 'GET'
+        }).done(function (responce) {
+          window.showPopup('/resources/pages/popups/library-invite-users.html', {
+            libs: selectedItems,
+            users: responce.response
+          });
+        });
+
       });
 
 

@@ -307,7 +307,16 @@ label input[type="checkbox"]:checked + div:after {
     position: relative;
     font-size: 11pt;
 }
-
+label input[type="checkbox"].b_three-state--checked + div:after {
+    content: ' ';
+    background-color: #cccccc;
+    width: 13px;
+    display: block;
+    height: 13px;
+    top: 1px !important;
+    left: 1px;
+    position: relative;
+}
 .b_radio-field input {
     display: none;
 }

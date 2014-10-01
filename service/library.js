@@ -72,7 +72,6 @@ module.exports = {
       };
     });
   },
-
   removeMultiple: function (ids, author) {
     //strip "library" part from id
     ids = ids.map(function (id) { return id.substr(7)});

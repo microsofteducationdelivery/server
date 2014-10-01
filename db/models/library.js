@@ -18,6 +18,7 @@ module.exports = function (sequelize, DataTypes) {
       Library.belongsTo(models.Company);
       Library.hasMany(models.Folder, { onDelete: 'cascade' });
       Library.hasMany(models.Media, { onDelete: 'cascade' });
+      Library.hasMany(models.User);
     }
   });
 

@@ -90,7 +90,6 @@
 
   };
   var matchValidation = function (pass, confirmPass) {
-    debugger;
     if (pass.value !== confirmPass.value) {
       showError(confirmPass.parentNode, errMsgs.match);
     }

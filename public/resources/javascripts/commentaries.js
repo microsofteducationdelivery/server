@@ -32,7 +32,6 @@
             e.stopPropagation();
             e.preventDefault();
             var column = e.currentTarget.parentElement.parentElement.firstChild;
-            debugger;
             WinJS.Navigation.navigate('/resources/pages/edit-library.html', {id: column.title, type: 'media'});
           });
         },
