@@ -7,7 +7,7 @@
         checkPhone
         ;
 
-
+      MED.Validation.params.password.required = false;
       var basicFragmentLoadDiv = document.querySelector('.b-edit-user__wrapper');
 
       WinJS.UI.Fragments.renderCopy('/resources/pages/templates/edit-user-tpl.html', basicFragmentLoadDiv).done(function (element) {
@@ -97,10 +97,12 @@
             this.disabled = true;
           } else {
             MED.Server.authXHR({
-              url: '/api/users',
-              type: 'POST',
+              url: '/api/users/'+ form.id.value,
+              type: 'PUT',
               data: JSON.stringify(values)
-            }).done(function () { alert('saved'); });
+            }).done(function () {
+              WinJS.Navigation.navigate('/resources/pages/users.html');
+            });
           }
         });
         WinJS.UI.processAll(element);

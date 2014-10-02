@@ -96,15 +96,16 @@
   };
   var reqVal = function (form, values) {
     for (var key in values) {
-      if (values[key] === '' && MED.Validation.params[key].required) {
-        MED.Validation.showError(form[key].parentNode, MED.Validation.errMsgs.required);
+      if (values[key] === '' && params[key].required) {
+        showError(form[key].parentNode, errMsgs.required);
       }
     }
   };
   WinJS.Namespace.define('MED.Validation', {
     userValidation: userVal,
     matchValidation: matchValidation,
-    userRequiredValidation: reqVal
+    userRequiredValidation: reqVal,
+    params: params
   });
 
 })();
