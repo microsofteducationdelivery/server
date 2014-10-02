@@ -22,21 +22,21 @@ function* getInvited (ids) {
   var me = this,
     libIds = parseArr(ids),
     users = [],
-    finished,
+    selection = [],
+    length,
+    lengthArr = [],
+    uniqArr = [],
+    id,
+    threeStateSelection = [],
     libs = yield db.Library.findAll({
       where: {id: libIds.map(function (item) {
         return item.substr(7);
       })}
     });
-  console.log(libs.length);
-  finished = _.after(libs.length, function () {
-    var length = users.length,
-      lengthArr = [],
-      id,
-      uniqArr = [],
-      selection = [],
-      threeStateSelection = [];
 
+  libs.forEach(function* (lib) {
+    length = users.length;
+    users.push(yield lib.getUsers());
     users.forEach(function (item) {
       item.map(function (u) {
         return u.id;
@@ -59,17 +59,9 @@ function* getInvited (ids) {
         threeStateSelection.push(item);
       }
     });
-
-    me.status = 200;
-    me.body = {selection: selection, threeStateSelection: threeStateSelection};
   });
-
-  libs.forEach(function (lib) {
-    lib.getUsers().success(function (usr) {
-      users.push(usr);
-      finished();
-    });
-  });
+  me.status = 200;
+  me.body = {selection: selection, threeStateSelection: threeStateSelection};
 
 }
 function* inviteUsers () {
