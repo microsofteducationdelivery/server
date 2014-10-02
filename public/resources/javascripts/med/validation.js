@@ -14,11 +14,11 @@
 
   }
 
-  function isUnique(key, value) {
-    var data = [];
-    data[key] = value;
+  function isUnique(key, value, id) {
+    var data = {key: key, value: value, id: id};
+
     return MED.Server.authXHR({
-      url: '/api/users/isUnique',
+      url: '/api/userManagement/isUnique',
       type: 'POST',
       data: JSON.stringify(data)
     });
@@ -54,7 +54,7 @@
       taken : 'already taken'
     };
 
-  var userVal = function (field) {
+  var userVal = function (field, id) {
     return new WinJS.Promise(function (complete) {
       var errs = WinJS.Utilities.query('.b-edit-user__error', field.parentNode);
 
@@ -65,7 +65,7 @@
         complete();
       }
       function callback (res) {
-        if (!res.unique) {
+        if (!res.response.isUnique) {
           showError(field.parentNode, errMsgs.taken);
         }
         complete();
@@ -80,7 +80,7 @@
             break;
           case 'unique':
             if (params[field.name].unique) {
-              isUnique(field.name, field.value).then(callback);
+              isUnique(field.name, field.value, id).then(callback);
             }
             break;
         }

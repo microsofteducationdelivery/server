@@ -64,7 +64,7 @@
               }
             }
           } else {
-            MED.Validation.userValidation(e.target).then(function () {
+            MED.Validation.userValidation(e.target, form.id.value).then(function () {
               if (e.target.name === 'password' || e.target.name === 'confirm') {
                 MED.Validation.matchValidation(form.password, form.confirm);
               }

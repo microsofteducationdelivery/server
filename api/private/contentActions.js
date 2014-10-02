@@ -28,7 +28,7 @@ function* getInvited (ids) {
         return item.substr(7);
       })}
     });
-
+  console.log(libs.length);
   finished = _.after(libs.length, function () {
     var length = users.length,
       lengthArr = [],
