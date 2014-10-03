@@ -1,5 +1,7 @@
 (function () {
+
   'use strict';
+
   function getUsers () {
     return MED.Server.authXHR({
       url: '/api/users',

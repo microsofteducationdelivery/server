@@ -2,6 +2,8 @@ var app = require('koa')(),
   _ = require('lodash'),
   parse = require('co-body'),
   jwt = require('koa-jwt'),
+  db = require('../../db'),
+  mail = require('../../service/mail'),
   route = require('koa-route'),
   generatePassword = require('password-generator'),
 
@@ -45,7 +47,45 @@ function *register() {
 
   this.status = 201;
 }
+function* getRecover (email) {
+  var token = generatePassword(),
+    link = this.request.host + '/index.html',
+    user;
 
+  user = yield db.User.find({
+    where: {email: email}
+  });
+
+  if (!user || !user.email) {
+    this.status = 403;
+  } else {
+    yield user.updateAttributes({recoveryToken: token}, {fields: ['recoveryToken']});
+    link += '#' + token;
+    mail.sendRecoveryPasswordLink(user.name, link, email);
+    this.status = 200;
+  }
+
+
+}
+function* recoverPassword () {
+  var item = yield parse(this),
+    user;
+
+  user = yield db.User.find({
+      where: {recoveryToken: item.token}
+  });
+
+  if (user) {
+    yield user.updateAttributes({password: item.newPass},{fields: ['password']});
+    yield user.updateAttributes({recoveryToken: ''}, {fields: ['recoveryToken']});
+    this.status = 200;
+  } else {
+    this.status = 403;
+  }
+
+}
 app.use(route.post('/login', login));
 app.use(route.post('/register', register));
+app.use(route.post('/passwordRecovery/', recoverPassword));
+app.use(route.put('/passwordRecovery/:email', getRecover));
 module.exports = app;
