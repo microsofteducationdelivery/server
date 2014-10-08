@@ -55,7 +55,8 @@ function *getComments(id) {
 
   this.body = sortedList.map(function (item) {
     var date = item.createdAt;
-    item.date = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+
+    item.date = date.toISOString().slice(0, 10);
     return item;
   });
   return sortedList;
