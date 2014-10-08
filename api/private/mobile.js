@@ -54,7 +54,7 @@ function *getComments(id) {
   });
 
   this.body = sortedList.map(function (item) {
-    var date = item.createdAt.toDateString();
+    var date = item.createdAt;
     item.date = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
     return item;
   });
