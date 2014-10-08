@@ -47,13 +47,17 @@ function *getComments(id) {
     sortedList.push(parent);
     if (childList[parentId]) {
       childList[parentId].forEach(function (child) {
-        child.dataValues.isAnswer = true;
+        child.dataValues.reply = true;
         sortedList.push(child);
       });
     }
   });
 
-  this.body = sortedList;
+  this.body = sortedList.map(function (item) {
+    var date = item.createdAt.toDateString();
+    item.date = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+    return item;
+  });
   return sortedList;
 }
 
