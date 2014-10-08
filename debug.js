@@ -19,6 +19,7 @@ module.exports = co(function* () {
   var user = db.User.build({
     name: 'Demo user',
     login: 'demo',
+    token: '',
     email: 'demo@demo.me',
     password: bcrypt.hashSync('demo'),
     type: 'admin'
@@ -27,7 +28,8 @@ module.exports = co(function* () {
   var user2 = db.User.build({
     name: 'Demo user2',
     login: 'demo2',
-    email: 'demo2@demo.me',
+    token: '',
+    email: 'demo2@mailinator.com',
     password: bcrypt.hashSync('demo2'),
     type: 'operator'
   });
@@ -35,6 +37,7 @@ module.exports = co(function* () {
   var user3 = db.User.build({
     name: 'Demo user3',
     login: 'demo3',
+    token: '',
     phone: '+380504020799',
     password: bcrypt.hashSync('demo3'),
     type: 'mobile'

@@ -10,7 +10,6 @@ function initialize() {
   } else {
     user = JSON.parse(user);
   }
-
   if ((!user || !token ) && window.location.pathname !== '/index.html') {
       window.location = '/index.html';
   }

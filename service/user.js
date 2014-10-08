@@ -10,7 +10,6 @@ var
   mail = require('./mail'),
   C = require('../helper/constants')
 ;
-
 module.exports = {
   isPermitted: function (action, data, author) {
     if (action === C.CREATE && !author && data.type === 'admin') {
@@ -111,7 +110,6 @@ module.exports = {
 
     yield user.save();
   },
-
   removeMultiple: function (ids, author) {
     console.log(ids);
     console.log(author.id);
@@ -121,3 +119,4 @@ module.exports = {
     return table.destroy({ id: ids, CompanyId: author.CompanyId });
   }
 };
+

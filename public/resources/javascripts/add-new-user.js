@@ -7,7 +7,7 @@
         checkPhone
         ;
 
-
+      MED.Validation.params.password.required = true;
       var basicFragmentLoadDiv = document.querySelector('.b-edit-user__wrapper');
       WinJS.UI.Fragments.renderCopy('/resources/pages/templates/edit-user-tpl.html', basicFragmentLoadDiv).done(function () {
         WinJS.UI.processAll(element);
@@ -64,7 +64,9 @@
               url: '/api/users',
               type: 'POST',
               data: JSON.stringify(values)
-            }).done(function () { alert('saved'); });
+            }).done(function () {
+              WinJS.Navigation.navigate('/resources/pages/users.html');
+            });
           }
         });
 

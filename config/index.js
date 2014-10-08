@@ -5,6 +5,14 @@ var baseConfig = {
   mail: {
     key: 'pPSw8KIDRM86OYtpe6ABIQ',
     from: 'noreply@microsofteducationdelivery.net',
+    recoverySubject: 'Microsoft Education Delivery password recovery',
+    recoveryText: 'Hello' +
+      ' <username>' +
+      '! \n' +
+      '\n' +
+      'You are receiving this email because you, or someone else was using it for password recovery procedure. ' +
+      'Follow this <a href="<link>">link </a>' +
+      'to change your password. \n',
     welcomeSubject: 'Welcome to Microsoft Education Delivery',
     welcomeText: [
       'Hi',
@@ -43,7 +51,7 @@ var platformConfig = {
   test: {
     app: {
       port: 3001
-    },
+    }
   },
 
   production: {

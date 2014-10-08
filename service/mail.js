@@ -23,5 +23,22 @@ module.exports = {
       console.log(result);
     });
 
+  },
+  sendRecoveryPasswordLink: function (userName, link, email) {
+    var message = config.mail.recoveryText
+        .replace('<username>', userName)
+        .replace('<link>', link)
+      ;
+
+    mandrillClient.messages.send({
+      message: {
+        from_email: config.mail.from,
+        subject: config.mail.recoverySubject,
+        text: message,
+        to: [{email: email}]
+      }
+    }, function (result) {
+      console.log(result);
+    });
   }
 };

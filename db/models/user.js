@@ -18,6 +18,9 @@ module.exports = function (sequelize, DataTypes) {
         isEmail: true
       }
     },
+    recoveryToken: {
+      type: DataTypes.STRING
+    },
     password: {
       type: DataTypes.STRING
     },
