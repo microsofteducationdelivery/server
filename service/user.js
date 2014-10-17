@@ -91,14 +91,9 @@ module.exports = {
   },
 
   update: function* (id, data, author) {
-    if (!this.isPermitted(C.UPDATE, data, author)) {
-      throw new errors.AccessDeniedError('Access denied');
-    }
-
-
     var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
     if (data.password) {
-      user.password = bcrypt.hashSync(data.password);
+      data.password = bcrypt.hashSync(data.password);
     }
 
     console.log(data);
