@@ -63,6 +63,7 @@
             MED.Server.authXHR({
               url: '/api/users',
               type: 'POST',
+              responseType: 'text',
               data: JSON.stringify(values)
             }).done(function () {
               WinJS.Navigation.navigate('/resources/pages/users.html');
