@@ -77,16 +77,19 @@ function* getFolderContent (id, cache) {
 module.exports = {
   getContent: function* (user) {
     var sql = db.client;
+    var id = user.id;
     var company = yield user.getCompany();
     //FIXME: respect shares
+
+
     var libraries = yield db.Library.findAll({
-      where: {CompanyId: user.CompanyId},
+      where: [{CompanyId: user.CompanyId}, {'Users.id': id}],
       attributes: [
         'id',
         'name',
-        [sql.fn('COUNT', sql.col('Media.id')), 'mediaCount'],
+        [sql.fn('COUNT', sql.col('Media.id')), 'mediaCount']
       ],
-      include: [db.Media],
+      include: [db.Media, db.User],
       group: ['id']
     });
     var data = {

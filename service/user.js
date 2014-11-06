@@ -16,7 +16,7 @@ module.exports = {
       return true;
     }
 
-    if (data.type !== 'admin') {
+    if (author.type !== 'admin') {
       return false;
     }
 
