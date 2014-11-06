@@ -54,12 +54,22 @@ module.exports = function (app) {
     if (this.request.type === 'multipart/form-data' && this.query.token) {
       this.user = yield jwt.verify(this.query.token, config.app.secret);
     }
+
+    if (!this.user || !this.user.id) {
+      this.status = 403;
+      return;
+    }
+
     this.user = yield userService.findById(this.user.id);
+
     if (!this.user) {
       this.status = 403;
       return;
     }
     yield next;
+    if (this.request.type === 'application/json' && !this.body) {
+      this.body = { success: true };
+    }
   });
 
 
