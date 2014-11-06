@@ -23,7 +23,11 @@ function *getComments(id) {
     parentId,
     childList = [],
     sortedList = [];
-
+  if (!media) {
+    this.status = 403;
+    this.body = false;
+    return;
+  }
   yield media.increment('views', 1);
   var commentList = yield media.getComments();
   commentList.sort(function (a, b) {
@@ -84,6 +88,10 @@ function *getDetails(id) {
 function *postComments() {
   var data = yield parse(this);
   var media = yield mediaService.findById(data.id, this.user);
+  if (!media) {
+    this.status = 403;
+    return;
+  }
   delete data.id;
 
   this.status = 204;

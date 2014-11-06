@@ -47,9 +47,12 @@ module.exports = {
   },
   update: function* (id, config) {
     var comment = yield table.find(id);
-    yield comment.updateAttributes({
-      text: config.text
-    });
+    if (comment) {
+      yield comment.updateAttributes({
+        text: config.text
+      });
+    }
+
   },
   removeMultiple: function (ids) {
     return table.destroy({ id: ids});
