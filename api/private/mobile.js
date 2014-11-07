@@ -8,7 +8,21 @@ var app = require('koa')(),
   mediaService = require('../../service/media'),
   mobileService = require('../../service/mobile')
 ;
+function *incrementStat (stats) {
+  var media;
 
+  for (var i in stats) {
+    media = yield mediaService.findById(i, this.user);
+    if (media) {
+      yield media.increment('views', stats[i]);
+    }
+  }
+}
+function *setStat ( ) {
+  var stats = yield parse(this);
+  yield incrementStat(stats);
+
+}
 function *data() {
   var company = yield this.user.getCompany();
   this.body = {
@@ -28,7 +42,7 @@ function *getComments(id) {
     this.body = false;
     return;
   }
-  yield media.increment('views', 1);
+//  yield media.increment('views', 1);
   var commentList = yield media.getComments();
   commentList.sort(function (a, b) {
       return new Date(a.dataValues.createdAt) > new Date(b.dataValues.createdAt) ? 1 : -1;
@@ -104,6 +118,7 @@ function *postComments() {
   yield media.addComment(comment);
 }
 
+app.use(route.post('/data', setStat));
 app.use(route.get('/data', data));
 app.use(route.get('/comments/:id', getComments));
 app.use(route.get('/media/:id', getDetails));
