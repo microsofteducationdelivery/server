@@ -116,6 +116,8 @@
           window.showPopup('/resources/pages/popups/alert.html', {
             callback: function () {
               WinJS.Navigation.navigate('resources/pages/getStarted.html');
+              WinJS.Utilities.query('.b-main__link-active').removeClass('b-main__link-active');
+              WinJS.Utilities.query('.main-navigation-link')[0].classList.add('b-main__link-active');
             },
             msg: 'Your account has been successfully created. ' +
               'An email has been sent to you with your credentials.' +

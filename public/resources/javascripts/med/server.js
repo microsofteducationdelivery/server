@@ -11,7 +11,7 @@
 
     return WinJS.xhr(options).then(function (req) {
       var response = req.response;
-      if (type === 'json') {
+      if (type === 'json' && req.responseText !== 'OK') {
         response = req.responseText ? JSON.parse(req.responseText) : null;
       }
       return {

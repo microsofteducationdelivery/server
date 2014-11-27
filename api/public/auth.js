@@ -5,8 +5,8 @@ var app = require('koa')(),
   db = require('../../db'),
   mail = require('../../service/mail'),
   route = require('koa-route'),
+  bcrypt = require('bcrypt-nodejs'),
   generatePassword = require('password-generator'),
-
   config = require('../../config'),
   usersService = require('../../service/user'),
   errors = require('../../helper/errors')
@@ -36,15 +36,12 @@ function *register() {
       this.body = e.errors;
       return;
     }
-
     if (e instanceof errors.DuplicateError) {
       this.status = 409;
       return;
     }
-
     throw e;
   }
-
   this.status = 201;
 }
 function* getRecover (email) {
@@ -55,7 +52,6 @@ function* getRecover (email) {
   user = yield db.User.find({
     where: {email: email}
   });
-
   if (!user || !user.email) {
     this.status = 403;
   } else {
@@ -64,8 +60,6 @@ function* getRecover (email) {
     mail.sendRecoveryPasswordLink(user.name, link, email);
     this.status = 200;
   }
-
-
 }
 function* recoverPassword () {
   var item = yield parse(this),
@@ -75,14 +69,14 @@ function* recoverPassword () {
       where: {recoveryToken: item.token}
   });
 
+  var newPass = bcrypt.hashSync(item.newPass);
   if (user) {
-    yield user.updateAttributes({password: item.newPass},{fields: ['password']});
+    yield user.updateAttributes({password: newPass}, {fields: ['password']});
     yield user.updateAttributes({recoveryToken: ''}, {fields: ['recoveryToken']});
     this.status = 200;
   } else {
     this.status = 403;
   }
-
 }
 app.use(route.post('/login', login));
 app.use(route.post('/register', register));

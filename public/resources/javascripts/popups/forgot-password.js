@@ -20,6 +20,8 @@
               'Content-Type': 'application/x-www-form-urlencoded'
             }
           }).done(function () {
+            WinJS.Utilities.query('.b-main__link-active').removeClass('b-main__link-active');
+            WinJS.Utilities.query('.main-navigation-link')[0].classList.add('b-main__link-active');
             WinJS.Navigation.navigate('/resources/pages/getStarted.html');
           });
           window.hidePopup();
@@ -42,4 +44,4 @@
       return s.join( "&" ).replace(/%20/g, "+");
     }
   });
-}());
+})();
