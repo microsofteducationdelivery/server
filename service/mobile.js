@@ -37,11 +37,11 @@ function* getFolderContent (id, cache) {
     id = id.substr(7);
     root = yield db.Library.find(id);
     folders = yield db.Folder.findAll({where: {LibraryId: id, parentId: null}});
-    media = yield db.Media.findAll({where: {LibraryId: id, FolderId: null, status: 'converted' }});
+    media = yield db.Media.findAll({where: {LibraryId: id, FolderId: null /*, status: 'converted'*/ }});
   } else {
     root = yield db.Folder.find(id);
     folders = yield root.getChildren();
-    media = yield db.Media.findAll({where: {LibraryId: root.LibraryId, FolderId: id, status: 'converted' }});
+    media = yield db.Media.findAll({where: {LibraryId: root.LibraryId, FolderId: id /*, status: 'converted' */}});
   }
 
   var items = [];

@@ -37,7 +37,7 @@ var baseConfig = {
   //TODO: env variables
   mysql: {
     dbname: 'med',
-    user: 'root',
+    user: 'Alex',
     password: '11041990',
     host: 'localhost',
     port: 3306

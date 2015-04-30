@@ -3,6 +3,7 @@ var
   db = require('../db'),
   table = db.Media,
   comment = db.Comment,
+  company = db.Company,
   folder = db.Folder,
   library = db.Library,
   errors = require('../helper/errors'),
@@ -18,9 +19,16 @@ module.exports = {
 
     return true;
   },
-  list: function* () {
+  list: function* (user) {
+    var libraries = yield library.findAll({
+      where: {'company.id': user.dataValues.CompanyId},
+      include: [db.Company]
+    });
 
     var mediaList = yield table.findAll({
+      where: {'library.id': libraries.map(function (item) {
+        return item.dataValues.id;
+      })},
       attributes: ['name', 'views', 'type', 'id'],
       include: [{model: comment, required: true}, {model: folder, as: 'Folder'}, {model: library, as: 'Library'}]
     });
