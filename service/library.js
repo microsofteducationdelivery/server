@@ -40,7 +40,7 @@ module.exports = {
     }
 
     var sql = db.client;
-    var lookupTable = {}
+    var lookupTable = {};
 
     var folders = yield db.Folder.findAll({attributes: [
         'LibraryId',
