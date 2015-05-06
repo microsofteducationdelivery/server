@@ -38,7 +38,7 @@ var baseConfig = {
   mysql: {
     dbname: 'med',
     user: 'root',
-    password: '11041990',
+    password: '',
     host: 'localhost',
     port: 3306
   }
