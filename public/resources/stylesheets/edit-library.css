@@ -36,7 +36,8 @@
     width: 57%;
 }
 .b-library-edit--form__field-wrapper select {
-    width: 50px;
+    width: 90px;
+    background-color: #f6f6f6;
 }
 .b-library-edit--form__field-wrapper select:disabled {
     border-color: transparent;
@@ -203,6 +204,11 @@ img.b_media-list-tpl--item__image {
 .b-library-content .win-listview .win-container:hover {
     outline: #e2dce1 solid 6px;
 }
+
+.b-library-content {
+    float: left;
+}
+
 .b-library-edit.hidden {
     display: none;
 }

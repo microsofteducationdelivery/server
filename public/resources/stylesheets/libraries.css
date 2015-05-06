@@ -84,3 +84,9 @@
     overflow: auto;
     height: 290px;
 }
+
+
+.b-other-library-button {
+    position: relative;
+    display: inline-block;
+}

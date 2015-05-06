@@ -68,6 +68,9 @@
 .table .b_table-button {
     display: none;
 }
+
+
+
 .table-body tr:hover .b_table-button {
     width: 40px;
     display: block;
@@ -78,6 +81,11 @@
     background-color: inherit;
     padding: 0;
 }
+
+.b_table-button:hover {
+     background-color: #78c623 !important;
+ }
+
 .b_table-button:hover {
     width: 40px;
     display: block;

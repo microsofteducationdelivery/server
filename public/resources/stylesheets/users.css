@@ -31,6 +31,8 @@
 
 .b-edit-user__type {
     width: 280px;
+    background-color: #fff !important;
+    width: 90px !important;
 }
 
 .b-edit-user__error {

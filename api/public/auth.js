@@ -16,7 +16,7 @@ function *login() {
   var user = yield usersService.findByCredentials(yield parse(this));
   if (user) {
     var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
-    this.body = { token: token, user: _.pick(user, ['name', 'type']), serverId: config.app.serverId };
+    this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
   } else {
     this.status = 401;
   }
