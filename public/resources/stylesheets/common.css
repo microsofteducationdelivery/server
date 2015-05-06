@@ -67,9 +67,9 @@ h1 button {
     min-width: 45px;
     width: 45px;
     position: relative;
-    top: -20px;
+    top: -10px;
     height: 45px;
-    vertical-align: middle;
+    /*vertical-align: middle;*/
     font-size: 19px;
 }
 
