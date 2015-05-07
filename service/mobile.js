@@ -41,7 +41,7 @@ function* getFolderContent (id, cache) {
   } else {
     root = yield db.Folder.find(id);
     folders = yield root.getChildren();
-    media = yield db.Media.findAll({where: {LibraryId: root.LibraryId, FolderId: id , status: 'converted' }});
+    media = yield db.Media.findAll({where: {LibraryId: root.LibraryId, FolderId: id, status: 'converted' }});
   }
 
   var items = [];

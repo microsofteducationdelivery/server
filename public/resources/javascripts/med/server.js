@@ -8,8 +8,11 @@
     options.headers = options.headers || {};
     options.responseType = 'text';
     options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
-    options.url = options.url + '?time='+ new Date().getTime();
 
+    if(options.type === 'GET') {
+      options.url = options.url + '?time='+ new Date().getTime();
+    }
+    
     return WinJS.xhr(options).then(function (req) {
       var response = req.response;
       if (type === 'json' && req.responseText !== 'OK') {
