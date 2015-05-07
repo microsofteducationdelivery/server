@@ -1,16 +1,15 @@
 (function () {
   'use strict';
-  var url = '/api/libraries'
+  var url = '/api/libraries';
 
   function getLibraries () {
     return MED.Server.authXHR({
-      url: url,
+     url: url,
       type: 'GET'
     }).then(function (result) {
         return result.response;
     });
   }
-
 
   WinJS.UI.Pages.define('/resources/pages/libraries.html', {
     init: function () {
@@ -24,7 +23,9 @@
       WinJS.Utilities.query('.b-library-add-button').listen('click', function () {
         window.showPopup('/resources/pages/popups/add-new-library.html', {
           callback: function () {
-            getLibraries().then(function (libraries) { tableControl.setData(libraries)});
+            getLibraries().then(function (libraries) {
+              tableControl.setData(libraries);
+            });
           }
         });
       });
@@ -81,8 +82,6 @@
         });
 
       });
-
-
     }
 
   });
