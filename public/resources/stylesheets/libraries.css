@@ -1,10 +1,14 @@
 .b-add-library-popup {
-    position: relative;
+    position: absolute;
     background-color: white;
     max-width: 80%;
     width: 530px;
     height: 250px;
     border-top: solid #6ab01c 5px;
+    margin-left: calc(50% - 265px);
+    margin-top: calc(50vh - 125px);
+    top: 0;
+    left: 0;
 }
 .b_libraries {
     padding-top: 35px;
@@ -15,6 +19,12 @@
 .b-add-library-popup.form-library {
     height: 410px;
     width: 65%;
+    margin-left: calc(35vw / 2);
+    margin-top: calc(50vh - 205px);
+    top: 0;
+    left: 0;
+    font-weight: 300;
+
 }
 .form-library .b-library-edit {
     background-color: inherit;

@@ -93,6 +93,7 @@ module.exports = {
   update: function* (id, data, author) {
     var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
     if (data.password) {
+      data.newPassword = data.password;
       data.password = bcrypt.hashSync(data.password);
     }
 
@@ -104,6 +105,7 @@ module.exports = {
     user.phone = data.phone;
 
     yield user.save();
+    mail.sendUpdateUserProfile(data, user.email);
   },
   removeMultiple: function (ids, author) {
     console.log(ids);

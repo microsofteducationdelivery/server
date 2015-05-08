@@ -80,13 +80,18 @@ button, button:not([disabled]):hover {
     text-transform: uppercase;
 }
 .b_popup {
-    position: relative;
+    position: absolute;
     z-index: 1000;
     background-color: white;
     max-width: 80%;
     width: 530px;
     height: 250px;
     border-top: solid #6ab01c 5px;
+    margin-left: calc(50% - 265px);
+    margin-top: calc(50vh - 175px);
+    top: 0;
+    left: 0;
+    font-weight: 300;
 }
 .b_popup label {
     display: inline-block;
@@ -96,7 +101,8 @@ button, button:not([disabled]):hover {
 }
 
 .b_popup input {
-    width: auto;
+    width: 372px;
+    display: inline-block;
 }
 
 footer {
