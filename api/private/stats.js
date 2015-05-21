@@ -2,6 +2,7 @@ var
   parse = require('co-body'),
   koa = require('koa'),
   route = require('koa-route'),
+  sendCo = require('koa-send'),
 
   service = require('../../service/stats')
   ;
@@ -34,7 +35,21 @@ function* top5Views () {
   });
 }
 
+function* addToImport () {
+  var path = yield service.addToImport(this.user.CompanyId, this);
+  this.body = path;
+  return this;
+}
+
+function* addToArchive () {
+  var path = yield service.addToArchive(this.user.CompanyId, this);
+  this.body = path;
+  return this;
+}
+
 app.use(route.get('/top5Downloads', top5Downloads));
 app.use(route.get('/top5Views', top5Views));
+app.use(route.get('/addToImport', addToImport));
+app.use(route.get('/addToArchive', addToArchive));
 module.exports = app;
 

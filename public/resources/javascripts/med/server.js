@@ -6,7 +6,12 @@
     var type = options.responseType || 'json';
 
     options.headers = options.headers || {};
-    options.responseType = 'text';
+    if (options.responseType === 'arraybuffer') {
+      options.responseType = 'arraybuffer';
+    } else {
+      options.responseType = 'text';
+    }
+
     options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
 
     if(options.type === 'GET') {
@@ -18,13 +23,20 @@
       if (type === 'json' && req.responseText !== 'OK') {
         response = req.responseText ? JSON.parse(req.responseText) : null;
       }
+      var rText;
+      if (req.responseType === 'arraybuffer') {
+        rText = '';
+      } else {
+        rText = req.responseText;
+      }
+
       return {
         response: response,
         status: req.status,
         statusText: req.statusText,
         responseType: req.responseType,
         readyState: req.readyState,
-        responseText: req.responseText
+        responseText: rText
       };
     });
   };

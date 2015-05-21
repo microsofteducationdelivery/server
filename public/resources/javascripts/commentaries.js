@@ -22,6 +22,8 @@
               name: item.name,
               path: me.pathToString(item.path),
               type: item.type,
+              like: item.like,
+              unlike: item.unlike,
               id: item.id,
               date: moment(new Date(item.date)).format('DD-MM-YY'),
               amount: item.amount

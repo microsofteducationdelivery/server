@@ -169,10 +169,10 @@
     text-align: center;
 }
 .b-library-content .win-container {
-    height: auto;
+    height: 80px !important;
 }
 .b-library-content .win-container {
-    height: auto !important;
+    height: auto;
     margin-right: 0 !important;
 }
 .b_converted {
