@@ -193,7 +193,11 @@ img.b_media-list-tpl--item__image {
 
 .b_media-list-tpl--item__text {
     float: left;
+}
 
+.b_media-list-tpl--item__text > h3 {
+    display: inline-block;
+    width: 250px;
 }
 
 .listLayoutTopHeaderTemplateRoot, .gridLayoutLeftHeaderTemplateRoot {

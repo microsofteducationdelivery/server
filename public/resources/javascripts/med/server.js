@@ -15,7 +15,12 @@
     options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
 
     if(options.type === 'GET') {
-      options.url = options.url + '?time='+ new Date().getTime();
+      if(options.url.indexOf('?') !== -1) {
+        options.url = options.url + '&time='+ new Date().getTime();
+      } else {
+        options.url = options.url + '?time='+ new Date().getTime();
+      }
+
     }
 
     return WinJS.xhr(options).then(function (req) {
