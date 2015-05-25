@@ -85,9 +85,10 @@
     position: relative;
     top: -2px;
 }
+
 .b-library-content--toolbar, .b-library-edit--toolbar {
     padding: 5px;
-    height: 36px;
+    /*height: 36px;*/
     background-color: #e0e2e2;
 }
 .b_media-list-tpl--item__edit {
@@ -112,6 +113,7 @@
     font-size: 16pt;
     text-transform: uppercase;
 }
+
 .b-library--bottombar {
     position: relative;
     bottom: -10px;
@@ -193,10 +195,14 @@ img.b_media-list-tpl--item__image {
 
 .b_media-list-tpl--item__text {
     float: left;
+    display: table;
+    height: 70px;
 }
 
 .b_media-list-tpl--item__text > h3 {
-    display: inline-block;
+    /*display: inline-block;*/
+    display: table-cell;
+    vertical-align: middle;
     width: 250px;
 }
 

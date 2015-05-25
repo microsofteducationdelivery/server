@@ -47,7 +47,6 @@
       }).done(
         function (result) {
           var data = result.response;
-
           tableControl.setData(data, null, '.b_invite_users__table');
 
           tableControl.setSelection(options.users.selection);

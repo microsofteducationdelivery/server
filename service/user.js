@@ -90,6 +90,18 @@ module.exports = {
     });
   },
 
+  listForInviteUsers: function* (author, libraries) {
+    var allUsers = yield table.findAll({
+      where: { CompanyId: author.CompanyId },
+      attributes: ['id', 'login', 'type', 'name'],
+      include: [db.Library]
+    });
+
+    allUsers.forEach(function(some) {
+      some;
+    });
+  },
+
   update: function* (id, data, author) {
     var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
     if (data.password) {
