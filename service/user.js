@@ -84,21 +84,17 @@ module.exports = {
   },
 
   list: function* (author) {
-    return yield table.findAll({
-      where: { CompanyId: author.CompanyId },
-      attributes: ['id', 'login', 'type', 'name']
-    });
-  },
 
-  listForInviteUsers: function* (author, libraries) {
-    var allUsers = yield table.findAll({
+    var res = yield table.findAll({
       where: { CompanyId: author.CompanyId },
       attributes: ['id', 'login', 'type', 'name'],
       include: [db.Library]
     });
 
-    allUsers.forEach(function(some) {
-      some;
+    return yield table.findAll({
+      where: { CompanyId: author.CompanyId },
+      attributes: ['id', 'login', 'type', 'name'],
+      include: [db.Library]
     });
   },
 

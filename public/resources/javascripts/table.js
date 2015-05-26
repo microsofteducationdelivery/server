@@ -87,10 +87,6 @@
     table.className = 'table';
 
     for (var i = 0; i < column.length; i ++) {
-      if(column[i].selected === 'selected') {
-        debugger;
-        checkBoxBody.setAttribute('checked', 'checked');
-      }
       var td =  document.createElement('td'),
         tdBody = document.createElement('td')
         ;

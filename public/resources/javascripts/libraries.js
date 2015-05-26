@@ -75,6 +75,7 @@
           url: '/api/contentActions/inviteUsers/' + selectedItems,
           type: 'GET'
         }).done(function (responce) {
+          debugger;
           window.showPopup('/resources/pages/popups/library-invite-users.html', {
             libs: selectedItems,
             users: responce.response

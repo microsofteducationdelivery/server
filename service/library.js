@@ -65,6 +65,7 @@ module.exports = {
       })).map(function (library) {
       return {
         id: 'library' + library.id,
+       // id: library.id,
         name: library.name,
         folder: lookupTable[library.id] || 0,
         media: library.dataValues.mediaCount || 0,

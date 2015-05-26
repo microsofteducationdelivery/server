@@ -88,7 +88,7 @@
 
 .b-library-content--toolbar, .b-library-edit--toolbar {
     padding: 5px;
-    /*height: 36px;*/
+    min-height: 36px;
     background-color: #e0e2e2;
 }
 .b_media-list-tpl--item__edit {
