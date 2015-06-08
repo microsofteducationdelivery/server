@@ -1,0 +1,23 @@
+<div class="b-invite-library-popup">
+    <h2>UPLOAD FILE</h2>
+    <div class="b_users">
+        <form class="b-library-edit--form" id="userImportForm" action="/api/userManagement/userImport" method="POST">
+            <div class="b-library-edit--form__field-wrapper">
+                <label class="b-library-edit--form__label">File:</label>
+                <label class="b_upload-field">
+                    <input type="file" name="file" class="b-library-edit--form__fileupload" />
+                    <div type="button" class="b_upload-field__container">Upload</div>
+                </label>
+                <span class="b-library-edit--form__filename"></span>
+            </div>
+        </form>
+    </div>
+
+    <footer class="b-invite-users__footer">
+        <div class="b-footer__wrapper">
+            <button class="b-button-ok" data-win-bind="disabled: disabled">OK</button>
+            <button class="b-button-cancel">Cancel</button>
+        </div>
+
+    </footer>
+</div>

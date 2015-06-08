@@ -4,6 +4,7 @@ var
   route = require('koa-route'),
   _ = require('lodash'),
   db = require('../../db'),
+  user = require('../../service/user'),
   app = koa()
   ;
 
@@ -23,5 +24,11 @@ function* isUnique () {
 
 }
 
+function* userImport (data, author) {
+  var res = yield user.exportUsers(this.user, this);
+  this.body = res;
+}
+
+app.use(route.post('/userImport', userImport));
 app.use(route.post('/isUnique', isUnique));
 module.exports = app;

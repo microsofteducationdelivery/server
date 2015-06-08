@@ -46,7 +46,6 @@
         type: 'GET'
       }).done(
         function (result) {
-          debugger;
           var data = result.response;
           tableControl.setData(data, null, '.b_invite_users__table');
           var coincidence = [];

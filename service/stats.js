@@ -9,10 +9,8 @@ var
   excelbuilder = require('msexcel-builder'),
   fs = require('co-fs'),
   thunkify = require('co-thunkify'),
-  nodeExcel = require('excel-export'),
   _ = require('underscore'),
-  send = require('send'),
-  sendCo = require('koa-send');
+  send = require('send')
   ;
 
 var app = koa();
@@ -124,59 +122,10 @@ module.exports = {
       var path = yield thunkify(workbook.save)();
       var pathArr = path.split('/');
       return pathArr[pathArr.length - 1];
+
       //yield fs.unlink(path);
       //yield fs.rmdir(tmpdir);
 
-  },
-
-  addToArchive: function* (companyId) {
-    var libs = yield lib.findAll({
-      where: {CompanyId: companyId},
-      attributes: ["id"]
-    });
-    libs = libs.map(function (lib) {
-      return lib.dataValues.id;
-    });
-
-    var allLibraries = yield table.findAll({
-      where: {LibraryId: libs}
-    });
-
-    //allLibraries =  _.sortBy(allLibraries, 'createdAt');
-
-    var tmpdir = __dirname + '/../public/tmpExcelDir';
-
-    if(yield fs.exists(tmpdir)) {
-      if(yield fs.exists(tmpdir + '/samplesns.xlsx')) {
-        yield fs.unlink(tmpdir + '/samplesns.xlsx');
-      }
-      yield fs.rmdir(tmpdir);
-
-    }
-
-    yield fs.mkdir(tmpdir);
-
-    var workbook = excelbuilder.createWorkbook(tmpdir, 'samplesns.xlsx');
-
-    var downloads = workbook.createSheet('downloads', 20, 20);
-
-    downloads.set(2, 2, 'File name');
-    downloads.set(3, 2, 'type');
-    downloads.set(4, 2, 'viewed');
-    downloads.set(5, 2, 'downloads');
-
-    var currentLineDownloads = 3;
-    _.each(allLibraries, function(item) {
-      downloads.set(2, currentLineDownloads, item.name);
-      downloads.set(3, currentLineDownloads, item.type);
-      downloads.set(4, currentLineDownloads, item.views);
-      downloads.set(5, currentLineDownloads, item.downloads);
-      currentLineDownloads++;
-    });
-
-    var path = yield thunkify(workbook.save)();
-    var pathArr = path.split('/');
-    return pathArr[pathArr.length - 1];
   }
 
 };
