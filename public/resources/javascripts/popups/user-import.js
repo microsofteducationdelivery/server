@@ -7,11 +7,15 @@
     ready: function (element, options) {
 
       var fileNameField = WinJS.Utilities.query('span[class=b-library-edit--form__filename]', element)[0],
-        form = element.querySelector('form');
+        form = element.querySelector('.b-library-edit--form'),
+        okBtn = WinJS.Utilities.query('button[class=b-button-ok]')[0];
+
+      okBtn.disabled = true;
 
       form.file.onchange = function (element) {
         if(element.target.files.length > 0) {
           fileNameField.innerHTML = element.target.files[0].name;
+          okBtn.disabled = false;
           var type = element.target.files[0].type;
           if (type.indexOf('openxmlformats-officedocument.spreadsheetml') !== -1) {
 

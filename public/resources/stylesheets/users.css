@@ -75,3 +75,8 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+.b_user-import-link {
+    width: 150px;
+    margin: 0px 10px;
+}

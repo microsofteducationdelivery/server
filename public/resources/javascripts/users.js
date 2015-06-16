@@ -27,7 +27,8 @@
       var tableControl = WinJS.Utilities.query('div[class=b_users__table]')[0].winControl,
         selectedItems = [],
         deleteBtn = WinJS.Utilities.query('.b-users__remove-button'),
-        importBtn = WinJS.Utilities.query('.b-users__import-button');
+        importBtn = WinJS.Utilities.query('.b-users__import-button'),
+        form = WinJS.Utilities.query('form');
 
       deleteBtn[0].disabled = true;
 

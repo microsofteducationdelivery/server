@@ -7,8 +7,7 @@
 
       var me = this,
         tableControl = WinJS.Utilities.query('div[class=b_commentaries__table]')[0].winControl,
-        exportButton = WinJS.Utilities.query('.b-commentaries__exports'),
-        archiveButton = WinJS.Utilities.query('.b-commentaries__archive');
+        exportButton = WinJS.Utilities.query('.b-commentaries__exports');
 
       tableControl.onitemselected = function (id) {
         WinJS.Navigation.navigate('/resources/pages/media-comments.html', {id: id.detail});
@@ -51,6 +50,10 @@
             var column = e.currentTarget.parentElement.parentElement.firstChild;
             WinJS.Navigation.navigate('/resources/pages/edit-library.html', {id: column.title, type: 'media'});
           });
+
+          if(data.length === 0) {
+            WinJS.Utilities.query('button[class=b-commentaries__exports]')[0].disabled = true;
+          }
         },
         function (result) {
           return result.status;

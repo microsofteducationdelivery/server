@@ -1,3 +1,8 @@
+.b-library-prev {
+    width: 30px;
+    height: 30px;
+}
+
 .b-library-new-media-btn, .b-library-new-folder-btn {
     font-family: "FontAwesome";
     color: #ffffff;

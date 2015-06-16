@@ -30,19 +30,14 @@ function* commentsExport () {
     resArray.push(config);
   }
 
-  //allLibraries =  _.sortBy(allLibraries, 'createdAt');
+  var userCompany = yield this.user.getCompany();
 
   var tmpdir = __dirname + '/../../public/tmpExcelDir';
 
-  if(yield fs.exists(tmpdir)) {
-    if(yield fs.exists(tmpdir + 'samplesnsComments.xlsx')) {
-      yield fs.unlink(tmpdir + 'samplesnsComments.xlsx');
+
+    if(yield fs.exists(tmpdir + '/' + userCompany.id + 'exportComments.xlsx')) {
+      yield fs.unlink(tmpdir + '/' + userCompany.id + 'exportComments.xlsx');
     }
-    //yield fs.rmdir(tmpdir);
-
-  }
-
-  //yield fs.mkdir(tmpdir);
 
   var countCommentaries = 2;
 
@@ -50,7 +45,7 @@ function* commentsExport () {
     countCommentaries += resArray[j].data.length;
   }
 
-  var workbook = excelbuilder.createWorkbook(tmpdir, 'samplesnsComments.xlsx');
+  var workbook = excelbuilder.createWorkbook(tmpdir, userCompany.id + 'exportComments.xlsx');
 
 
   var comments = workbook.createSheet('Comments', countCommentaries, 20);
@@ -65,24 +60,24 @@ function* commentsExport () {
   for(var k = 0; k < resArray.length; k++) {
     currentLineComments++;
     if(resArray[k].addThree === true) {
-      comments.set(2, currentLineComments, resArray[k].data[0].media);
+      comments.set(2, currentLineComments, resArray[k].media);
       comments.set(3, currentLineComments, resArray[k].data[0].author);
       comments.set(4, currentLineComments, resArray[k].data[0].text);
-      comments.set(5, currentLineComments, resArray[k].data[0].date);
+      comments.set(5, currentLineComments, formatData(resArray[k].data[0].createdAt));
 
       for(var g = 1; g < resArray[k].data.length; g++) {
         currentLineComments++;
 
-        comments.set(3, currentLineComments, resArray[k].data[g].media);
+        comments.set(2, currentLineComments, resArray[k].media);
         comments.set(4, currentLineComments, resArray[k].data[g].author);
         comments.set(5, currentLineComments, resArray[k].data[g].text);
-        comments.set(6, currentLineComments, resArray[k].data[g].date);
+        comments.set(6, currentLineComments, formatData(resArray[k].data[g].createdAt));
       }
     } else {
-      comments.set(2, currentLineComments, resArray[k].data[0].media);
+      comments.set(2, currentLineComments, resArray[k].media);
       comments.set(3, currentLineComments, resArray[k].data[0].author);
       comments.set(4, currentLineComments, resArray[k].data[0].text);
-      comments.set(5, currentLineComments, resArray[k].data[0].date);
+      comments.set(5, currentLineComments, formatData(resArray[k].data[0].createdAt));
     }
   }
 
@@ -91,6 +86,10 @@ function* commentsExport () {
 
   this.body = JSON.stringify(pathArr[pathArr.length - 1]);
   return this;
+}
+
+function formatData(currentData) {
+  return currentData.toDateString() + " " + currentData.toTimeString();
 }
 
 app.use(route.post('/commentsExport', commentsExport));

@@ -47,7 +47,6 @@
         allRadio = WinJS.Utilities.query('input[type=radio][value=all]')[0],
         datePickerField = WinJS.Utilities.query('div[class=b_filter--date-picker]')[0],
         buttonImport = WinJS.Utilities.query('button[class=b-statistics__exports]')[0],
-        buttonArchive = WinJS.Utilities.query('button[class=b-statistics__archive]')[0],
         isPeriod = periodRadio.checked,
         downloadAll = WinJS.Utilities.query('button[class=b_filter--btn__download]')[0],
         downloadMostDownloaded = WinJS.Utilities.query('div[id=downloaded]>button[class=b_content--result--toolbar__btn]')[0],
@@ -94,24 +93,7 @@
           responseType: 'text'
         }).done(
           function (result) {
-            window.open("http://localhost:3000/tmpExcelDir/" + result.response, "_blank");
-          },
-          function (result) {
-            console.log(result);
-          }
-        );
-
-      };
-
-      buttonArchive.onclick = function() {
-
-        MED.Server.authXHR({
-          url: '/api/stats/addToArchive',
-          type: 'GET',
-          responseType: 'text'
-        }).done(
-          function (result) {
-            window.open("http://localhost:3000/tmpExcelDir/" + result.response, "_blank");
+            window.open(result.response, "_blank");
           },
           function (result) {
             console.log(result);

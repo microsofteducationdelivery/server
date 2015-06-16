@@ -1,19 +1,14 @@
 var
   _ = require('lodash'),
-
   bcrypt = require('bcrypt-nodejs'),
-
   db = require('../db'),
   table = db.User,
-
   errors = require('../helper/errors'),
   mail = require('./mail'),
   C = require('../helper/constants'),
+  excel = require('./createExcelExport'),
   parse = require('co-busboy'),
-  fs = require('co-fs'),
-  XLSX = require('xlsx'),
-  excelbuilder = require('msexcel-builder'),
-  thunkify = require('co-thunkify')
+  XLSX = require('xlsx')
 ;
 
 module.exports = {
@@ -34,7 +29,7 @@ module.exports = {
       }
       company.addUser(user);
     } catch (e) {
-    //  yield company.destroy();
+      //yield company.destroy();
       if (e.code === 'ER_DUP_ENTRY') {
         throw new errors.DuplicateError('Duplicate entry');
       } else {
@@ -148,9 +143,7 @@ isPermitted: function (action, data, author) {
         return me.body = 'No file';
       }
 
-
       var bufs = [];
-
 
       part.on('data', function (chank) {
         bufs.push(chank);
@@ -170,79 +163,27 @@ isPermitted: function (action, data, author) {
 
     for(var i = 0; i < allData.length; i++) {
       try {
+        if(allData[i].type !== 'admin' && allData[i].type !== 'operator' && allData[i].type !== 'mobile') {
+          throw new errors.TypeError('User type incorrect');
+        }
+
        var passwordSave = allData[i].password;
         yield me.createUser(allData[i], author);
       } catch (err) {
-        console.log(err);
         allData[i].password = passwordSave;
-        errors.push({line : i, error: err.message, data: allData[i] });
+        allData[i].line = i;
+        allData[i].error = err.message;
+        errors.push(allData[i]);
       }
     }
 
     if(errors.length > 0) {
-      var respExel = yield this.createErrorsExcel(errors);
-      return respExel;
+      var allFields = 'line|name|login|type|password|email|telephone|error';
+      return yield excel.createExcelFile(errors, allFields, 'error', author.dataValues.CompanyId);
     } else {
       return 'ok';
     }
 
-  },
-
-  createErrorsExcel: function* (data) {
-
-    var tmpdir = __dirname + '/../public/tmpExcelDir';
-
-      if(yield fs.exists(tmpdir + '/samplesnsError.xlsx')) {
-        yield fs.unlink(tmpdir + '/samplesnsError.xlsx');
-      }
-
-    var workbook = excelbuilder.createWorkbook(tmpdir, 'samplesnsError.xlsx');
-
-    var downloads = workbook.createSheet('sheet', 20, 20);
-
-    downloads.set(2, 1, 'name');
-    downloads.set(3, 1, 'login');
-    downloads.set(4, 1, 'type');
-    downloads.set(5, 1, 'password');
-    downloads.set(6, 1, 'email');
-    downloads.set(7, 1, 'telephone');
-    downloads.set(8, 1, 'error');
-
-    var currentLineDownloads = 2;
-    _.each(data, function(item) {
-
-      if(item.data.name) {
-        downloads.set(2, currentLineDownloads, item.data.name);
-      }
-
-      if(item.data.login) {
-        downloads.set(3, currentLineDownloads, item.data.login);
-      }
-
-      if(item.data.type) {
-        downloads.set(4, currentLineDownloads, item.data.type);
-      }
-
-      if(item.data.password) {
-        downloads.set(5, currentLineDownloads, item.data.password);
-      }
-
-      if(item.data.email) {
-        downloads.set(6, currentLineDownloads, item.data.email);
-      }
-
-      if(item.data.telephone) {
-        downloads.set(7, currentLineDownloads, item.data.telephone);
-      }
-      downloads.set(8, currentLineDownloads, item.error);
-      currentLineDownloads++;
-    });
-
-    var path = yield thunkify(workbook.save)();
-    var pathArr = path.split('/');
-    return pathArr[pathArr.length - 1];
-
   }
-
 };
 

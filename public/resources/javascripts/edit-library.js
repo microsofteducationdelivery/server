@@ -27,6 +27,22 @@
                     }
                 });
             });
+
+          WinJS.Utilities.query('button.b-media-image-ok', element).listen('click', function () {
+            var form = element.querySelector('.b-library-edit-media--form');
+            var formParent = element.querySelector('.b-library-edit--form');
+            form.action += '?token=' + localStorage.getItem('token') + '&media=' + formParent.dataset.id;
+            $(form).ajaxSubmit({
+              success: function (result) {
+                WinJS.Utilities.query('.b-library-prev', element)[0].setAttribute('src', result);
+              },
+              error: function (error) {
+                console.log(error);
+              }
+            });
+
+          });
+
             WinJS.Utilities.query('button[class=b-library-new-media-btn]').listen('click', function () {
                 window.showPopup('/resources/pages/popups/add-new-media.html', {
                     libraryId: currentId,
@@ -117,7 +133,7 @@
             });
 
             WinJS.Utilities.query('button[class=b-libraries__save-button]', element).listen('click', function () {
-                var form = element.querySelector('form'),
+                var form = element.querySelector('.b-library-edit--form'),
                     data = {
                         name: form.name.value,
                         links: form.link.value,
