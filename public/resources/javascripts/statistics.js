@@ -90,12 +90,19 @@
         MED.Server.authXHR({
           url: '/api/stats/addToImport',
           type: 'GET',
-          responseType: 'text'
+          responseType: 'arraybuffer',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          }
         }).done(
           function (result) {
-            window.open(result.response, "_blank");
+            debugger;
+            var blob = new Blob([result.response], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+            saveAs(blob, 'table.xlsx');
           },
           function (result) {
+            debugger;
             console.log(result);
           }
         );

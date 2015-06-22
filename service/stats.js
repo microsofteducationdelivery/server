@@ -11,7 +11,8 @@ var
   fs = require('co-fs'),
   thunkify = require('co-thunkify'),
   _ = require('underscore'),
-  send = require('send')
+  send = require('send'),
+  sendKoa = require('koa-send')
   ;
 
 var app = koa();
@@ -48,7 +49,7 @@ module.exports = {
     });
   },
 
-  addToImport: function* (companyId, me) {
+  addToImport: function* (companyId) {
 
     var libs = yield lib.findAll({
       where: {CompanyId: companyId},
@@ -64,9 +65,11 @@ module.exports = {
     });
 
     var stringName = 'name|type|createdAt|downloads|views';
-
-    var fileName = yield excel.createExcelFile(topDownloads, stringName, 'stats', companyId);
-    return 'http://' + me.host + '/tmpExcelDir/' + fileName;
+    return {
+      fields: stringName,
+      data: topDownloads
+    };
+    //return yield excel.createExcelFile(topDownloads, stringName, 'stats', companyId);
   }
 
 };

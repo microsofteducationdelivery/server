@@ -30,7 +30,7 @@
       }
       var rText;
       if (req.responseType === 'arraybuffer') {
-        rText = '';
+        response = req.response;
       } else {
         rText = req.responseText;
       }
@@ -52,8 +52,19 @@
     }
     return xhr(options);
   };
+
+  var fileXHR = function (options) {
+
+    if (WinJS.Application.sessionState.token) {
+      options.headers = options.headers || {};
+      options.headers.Authorization = 'Bearer ' + WinJS.Application.sessionState.token;
+    }
+
+    return xhr(options);
+  };
   WinJS.Namespace.define('MED.Server', {
     xhr: xhr,
-    authXHR: authXHR
+    authXHR: authXHR,
+    fileXHR: fileXHR
   });
 })();

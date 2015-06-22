@@ -4,7 +4,10 @@ var
   route = require('koa-route'),
   _ = require('lodash'),
   db = require('../../db'),
+  fs = require('co-fs'),
+  excel = require('../../service/createExcelExport'),
   user = require('../../service/user'),
+  send = require('koa-send'),
   app = koa()
   ;
 
@@ -24,9 +27,16 @@ function* isUnique () {
 
 }
 
-function* userImport (data, author) {
-  var res = yield user.exportUsers(this.user, this);
-  this.body = res;
+function* userImport () {
+  var creds = yield user.exportUsers(this.user.dataValues.id, this);
+
+  if (creds) {
+    var path = yield excel.createExcelFile(creds.errors, creds.fields, 'error', this.user);
+
+    yield send(this, path);
+    yield fs.unlink(path);
+  }
+  return this;
 }
 
 app.use(route.post('/userImport', userImport));

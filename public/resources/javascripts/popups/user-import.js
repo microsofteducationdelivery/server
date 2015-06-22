@@ -31,18 +31,60 @@
       });
 
       WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
-        form.action += '?token=' + localStorage.getItem('token');
+
+        $.ajaxTransport("+binary", function(options, originalOptions, jqXHR){
+          if (window.FormData && ((options.dataType && (options.dataType == 'binary')) || (options.data && ((window.ArrayBuffer && options.data instanceof ArrayBuffer) || (window.Blob && options.data instanceof Blob)))))
+          {
+            return {
+              send: function(headers, callback){
+                var xhr = new XMLHttpRequest(),
+                  url = options.url,
+                  type = options.type,
+                  async = options.async || true,
+                  dataType = options.responseType || "blob",
+                  data = options.data || null,
+                  username = options.username || null,
+                  password = options.password || null;
+
+                xhr.addEventListener('load', function(){
+                  var data = {};
+                  data[options.dataType] = xhr.response;
+                  callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+                });
+
+                xhr.open(type, url, async, username, password);
+
+                for (var i in headers ) {
+                  xhr.setRequestHeader(i, headers[i] );
+                }
+
+                xhr.responseType = dataType;
+                xhr.send(data);
+              },
+              abort: function(){
+                jqXHR.abort();
+              }
+            };
+          }
+        });
         $(form).ajaxSubmit({
+          headers: {
+            Authorization: 'Bearer ' + WinJS.Application.sessionState.token,
+            Accept: '*'
+          },
+          dataType: 'binary',
           success: function (result) {
+
+            debugger;
             if(result !== 'ok') {
-              window.open("http://localhost:3000/tmpExcelDir/" + result, "_blank");
+              saveAs(result, 'tableError.xlsx');
             } else {
               window.hidePopup();
               options.callback();
             }
           },
-          error: function (error) {
-           console.log(error);
+          error: function (error, errorType) {
+            console.log(error);
           }
         });
 

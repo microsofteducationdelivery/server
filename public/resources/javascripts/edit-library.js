@@ -11,6 +11,8 @@
             var me = this;
             var listView = WinJS.Utilities.query('div[data-win-control="WinJS.UI.ListView"]', element);
 
+            WinJS.Utilities.query('.b-library-prev', element)[0].setAttribute('src', '/preview/' + options.id + '.png');
+
             WinJS.Utilities.query('button[id=path-back-btn]').listen('click', function () {
                 var link = WinJS.Utilities.query('div[class=b-library-path]', element)[0].lastChild;
                 me.getFolderData({id: link.id});
@@ -28,10 +30,9 @@
                 });
             });
 
-          WinJS.Utilities.query('button.b-media-image-ok', element).listen('click', function () {
-            var form = element.querySelector('.b-library-edit-media--form');
-            var formParent = element.querySelector('.b-library-edit--form');
-            form.action += '?token=' + localStorage.getItem('token') + '&media=' + formParent.dataset.id;
+          var form = WinJS.Utilities.query('.b-library-edit-media--form')[0];
+          form.file.onchange = function () {
+            form.action += '?token=' + localStorage.getItem('token') + '&media=' + options.id;
             $(form).ajaxSubmit({
               success: function (result) {
                 WinJS.Utilities.query('.b-library-prev', element)[0].setAttribute('src', result);
@@ -40,8 +41,7 @@
                 console.log(error);
               }
             });
-
-          });
+          };
 
             WinJS.Utilities.query('button[class=b-library-new-media-btn]').listen('click', function () {
                 window.showPopup('/resources/pages/popups/add-new-media.html', {

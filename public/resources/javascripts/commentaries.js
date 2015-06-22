@@ -35,9 +35,14 @@
           exportButton.listen('click', function() {
             MED.Server.authXHR({
               url: '/api/commentsManagement/commentsExport',
-              type: 'POST'
+              type: 'GET',
+              responseType: 'arraybuffer',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'}
             }).done(function (result) {
-              window.open("http://localhost:3000/tmpExcelDir/" + result.response, "_blank");
+              var blob = new Blob([result.response], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+              saveAs(blob, 'tableComment.xlsx');
             }, function (err) {
               console.log(err);
             });

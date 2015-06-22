@@ -16,7 +16,7 @@ function* changeImage() {
   var parts = parse(this, {
       checkFile: function (fieldname, file, filename) {
         if (path.extname(filename) !== '.png') {
-          var err = new Error('invalid jpg image');
+          var err = new Error('invalid png image');
           err.status = 400;
           return err;
         }

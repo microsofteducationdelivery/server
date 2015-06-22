@@ -3,7 +3,8 @@ var
   koa = require('koa'),
   route = require('koa-route'),
   sendCo = require('koa-send'),
-
+  fs = require('co-fs'),
+  excel = require('../../service/createExcelExport'),
   service = require('../../service/stats')
   ;
 
@@ -36,8 +37,10 @@ function* top5Views () {
 }
 
 function* addToImport () {
-  var path = yield service.addToImport(this.user.CompanyId, this);
-  this.body = path;
+  var creds = yield service.addToImport(this.user.CompanyId);
+  var path = yield excel.createExcelFile(creds.data, creds.fields, 'stats', this.user.CompanyId);
+  yield sendCo(this, path);
+  yield fs.unlink(path);
   return this;
 }
 

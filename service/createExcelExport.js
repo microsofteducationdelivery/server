@@ -2,7 +2,8 @@ var
   excelbuilder = require('msexcel-builder'),
   thunkify = require('co-thunkify'),
   fs = require('co-fs'),
-  _ = require('underscore');
+  _ = require('underscore')
+  ;
 
 module.exports = {
 
@@ -44,9 +45,7 @@ module.exports = {
       currentLineDownloads++;
     }
 
-    var path = yield thunkify(workbook.save)();
-    var pathArr = path.split('/');
-    return pathArr[pathArr.length - 1];
+    return yield thunkify(workbook.save)();
   }
 
 };

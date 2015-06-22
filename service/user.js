@@ -8,7 +8,9 @@ var
   C = require('../helper/constants'),
   excel = require('./createExcelExport'),
   parse = require('co-busboy'),
-  XLSX = require('xlsx')
+  XLSX = require('xlsx'),
+  fs = require('co-fs'),
+  send = require('koa-send')
 ;
 
 module.exports = {
@@ -134,9 +136,9 @@ isPermitted: function (action, data, author) {
 
     var parts = parse(reqBody),
       part,
-      me = this,
-      allData;
-    var errors = [];
+      me = reqBody,
+      allData,
+      errors = [];
 
     while (part = yield parts) {
       if (!part.filename) {
@@ -179,9 +181,12 @@ isPermitted: function (action, data, author) {
 
     if(errors.length > 0) {
       var allFields = 'line|name|login|type|password|email|telephone|error';
-      return yield excel.createExcelFile(errors, allFields, 'error', author.dataValues.CompanyId);
+      return {
+        errors: errors,
+        fields: allFields
+      };
     } else {
-      return 'ok';
+      return "ok";
     }
 
   }
