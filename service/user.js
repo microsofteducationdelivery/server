@@ -31,7 +31,7 @@ module.exports = {
       }
       company.addUser(user);
     } catch (e) {
-      //yield company.destroy();
+     // yield company.destroy();
       if (e.code === 'ER_DUP_ENTRY') {
         throw new errors.DuplicateError('Duplicate entry');
       } else {
@@ -170,7 +170,7 @@ isPermitted: function (action, data, author) {
         }
 
        var passwordSave = allData[i].password;
-        yield me.createUser(allData[i], author);
+        yield this.createUser(allData[i], author);
       } catch (err) {
         allData[i].password = passwordSave;
         allData[i].line = i;
@@ -186,7 +186,7 @@ isPermitted: function (action, data, author) {
         fields: allFields
       };
     } else {
-      return "ok";
+      return null;
     }
 
   }

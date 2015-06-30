@@ -7,7 +7,7 @@
             </label>
         </div>
         <img src="#" class="b_media-list-tpl--item__image"  data-win-bind="src: picture NED.media.getSrc; style.display: type NED.media.getDisplay" />
-        <div class="b_media-list-tpl--item__text"> <!--data-win-bind="style.paddingTop: type NED.media.getPadding" -->
+        <div class="b_media-list-tpl--item__text" data-win-bind="style.paddingTop: type NED.media.getPadding">
             <h3 data-win-bind="textContent: name"></h3>
         </div>
         <div class="b_media-list-tpl--item__edit" data-win-bind="style.display: type NED.media.getEditDisplay">
@@ -85,7 +85,7 @@
         <div class="b-library-edit--form__field-wrapper">
             <label class="b-library-edit--form__label">Thumbnails:</label>
 
-            <form class="b-library-edit-media--form" id="mediaUploadForm" action="/api/mediaManagement/changeImage" method="POST">
+            <form class="b-library-edit-media--form" id="mediaUploadForm" method="POST">
 
                 <label class="b_upload-field">
                     <input type="file" name="file" class="b-library-edit--form__fileupload" />

@@ -97,12 +97,10 @@
           }
         }).done(
           function (result) {
-            debugger;
             var blob = new Blob([result.response], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-            saveAs(blob, 'table.xlsx');
+            saveAs(blob, 'medStats.xlsx');
           },
           function (result) {
-            debugger;
             console.log(result);
           }
         );

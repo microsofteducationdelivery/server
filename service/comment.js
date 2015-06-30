@@ -73,7 +73,7 @@ module.exports = {
     var countCommentaries = 2;
 
     for(var j = 0; j < resArray.length; j++) {
-      countCommentaries += resArray[j].data.length;
+      countCommentaries += resArray[j].length;
     }
 
     var workbook = excelbuilder.createWorkbook(tmpdir, companyId.id + 'exportComments.xlsx');
@@ -83,40 +83,41 @@ module.exports = {
 
     comments.set(2, 2, 'Media name');
     comments.set(3, 2, 'author');
-    comments.set(4, 2, 'text');
-    comments.set(5, 2, 'date');
+    comments.set(4, 2, 'reply/comment');
+    comments.set(5, 2, 'text');
+    comments.set(6, 2, 'date');
 
     var currentLineComments = 3;
 
     for(var k = 0; k < resArray.length; k++) {
+      var allStroke = [2, 3, 4, 5, 6];
       currentLineComments++;
-      if(resArray[k].addThree === true) {
-        comments.set(2, currentLineComments, resArray[k].media);
-        comments.set(3, currentLineComments, resArray[k].data[0].author);
-        comments.set(4, currentLineComments, resArray[k].data[0].text);
-        comments.set(5, currentLineComments, this.formatData(resArray[k].data[0].createdAt));
+      if(resArray[k].length > 1) {
 
-        for(var g = 1; g < resArray[k].data.length; g++) {
+        for(var g = 0; g < resArray[k].length; g++) {
           currentLineComments++;
 
+          var parrent;
+          if(resArray[k][g].dataValues.parentId) {
+           parrent = 'reply';
+          } else {
+            parrent = 'comment';
+          }
           comments.set(2, currentLineComments, resArray[k].media);
-          comments.set(4, currentLineComments, resArray[k].data[g].author);
-          comments.set(5, currentLineComments, resArray[k].data[g].text);
-          comments.set(6, currentLineComments, this.formatData(resArray[k].data[g].createdAt));
+          comments.set(3, currentLineComments, resArray[k][g].author);
+          comments.set(4, currentLineComments, parrent);
+          comments.set(5, currentLineComments, resArray[k][g].text);
+          comments.set(6, currentLineComments, resArray[k][g].date);
         }
       } else {
         comments.set(2, currentLineComments, resArray[k].media);
-        comments.set(3, currentLineComments, resArray[k].data[0].author);
-        comments.set(4, currentLineComments, resArray[k].data[0].text);
-        comments.set(5, currentLineComments, this.formatData(resArray[k].data[0].createdAt));
+        comments.set(3, currentLineComments, resArray[k][0].author);
+        comments.set(4, currentLineComments, 'comment');
+        comments.set(5, currentLineComments, resArray[k][0].text);
+        comments.set(6, currentLineComments, resArray[k][0].date);
       }
     }
 
-    var path = yield thunkify(workbook.save)();
-    return path;
-  },
-
-  formatData: function(currentData) {
-    return currentData.toDateString() + " " + currentData.toTimeString();
+    return yield thunkify(workbook.save)();
   }
 };

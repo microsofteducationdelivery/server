@@ -14,7 +14,9 @@
   WinJS.UI.Pages.define('/resources/pages/libraries.html', {
     init: function () {
       var me = this;
-      return getLibraries().then( function (libraries) {me._data = libraries; });
+      return getLibraries().then( function (libraries) {
+        me._data = libraries;
+      });
     },
 
     ready: function (element, options) {
@@ -74,11 +76,10 @@
         MED.Server.authXHR({
           url: '/api/contentActions/inviteUsers/' + selectedItems,
           type: 'GET'
-        }).done(function (responce) {
-          debugger;
+        }).done(function (response) {
           window.showPopup('/resources/pages/popups/library-invite-users.html', {
             libs: selectedItems,
-            users: responce.response
+            users: response.response
           });
         });
 

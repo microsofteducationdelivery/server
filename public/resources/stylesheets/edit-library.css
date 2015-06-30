@@ -117,6 +117,9 @@
     margin-left: 10px;
     font-size: 16pt;
     text-transform: uppercase;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
 }
 
 .b-library--bottombar {
@@ -200,15 +203,15 @@ img.b_media-list-tpl--item__image {
 
 .b_media-list-tpl--item__text {
     float: left;
-    display: table;
     height: 70px;
 }
 
 .b_media-list-tpl--item__text > h3 {
-    /*display: inline-block;*/
-    display: table-cell;
-    vertical-align: middle;
-    width: 250px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 260px;
+    height: 30px;
 }
 
 .listLayoutTopHeaderTemplateRoot, .gridLayoutLeftHeaderTemplateRoot {

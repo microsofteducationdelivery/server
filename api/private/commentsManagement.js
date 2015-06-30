@@ -17,16 +17,8 @@ function* commentsExport () {
 
   for(var i = 0; res.length > i; i++) {
     var oneComment = yield comment.findById(res[i].id);
-    var config = {};
-    if(oneComment.length > 1) {
-      config.addThree = true;
-    } else {
-      config.addThree = false;
-    }
-    config.data = oneComment;
-    config.media = res[i].name;
-
-    resArray.push(config);
+    oneComment.media = res[i].name;
+    resArray.push(oneComment);
   }
 
   var userCompany = yield this.user.getCompany();

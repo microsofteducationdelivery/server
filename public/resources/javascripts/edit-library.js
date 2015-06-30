@@ -8,7 +8,9 @@
 
     WinJS.UI.Pages.define('/resources/pages/edit-library.html', {
         ready: function (element, options) {
+
             var me = this;
+
             var listView = WinJS.Utilities.query('div[data-win-control="WinJS.UI.ListView"]', element);
 
             WinJS.Utilities.query('.b-library-prev', element)[0].setAttribute('src', '/preview/' + options.id + '.png');
@@ -32,13 +34,18 @@
 
           var form = WinJS.Utilities.query('.b-library-edit-media--form')[0];
           form.file.onchange = function () {
-            form.action += '?token=' + localStorage.getItem('token') + '&media=' + options.id;
+
+            form.action = '/api/mediaManagement/changeImage?media=' + options.id;
             $(form).ajaxSubmit({
+              headers: {
+                Authorization: 'Bearer ' + WinJS.Application.sessionState.token
+              },
               success: function (result) {
-                WinJS.Utilities.query('.b-library-prev', element)[0].setAttribute('src', result);
+                WinJS.Utilities.query('.b-library-prev', element)[0].setAttribute('src', result + '?time=' + new Date().getTime());
               },
               error: function (error) {
                 console.log(error);
+                alert('It is not png image');
               }
             });
           };
@@ -407,6 +414,11 @@
         mediaData.splice(0, mediaData.length);
 
         data.forEach(function (item) {
+          if(item.name.length > 30) {
+            item.prevName = item.name.slice(0, 30) + '...';
+          } else {
+            item.prevName = item.name;
+          }
             mediaData.push(item);
         });
     }

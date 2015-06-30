@@ -28,13 +28,15 @@ function* isUnique () {
 }
 
 function* userImport () {
-  var creds = yield user.exportUsers(this.user.dataValues.id, this);
+  var creds = yield user.exportUsers(this.user, this);
 
   if (creds) {
     var path = yield excel.createExcelFile(creds.errors, creds.fields, 'error', this.user);
 
     yield send(this, path);
     yield fs.unlink(path);
+  } else {
+    this.body = 'ok';
   }
   return this;
 }

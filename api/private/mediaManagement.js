@@ -10,8 +10,6 @@ var
 ;
 
 function* changeImage() {
-  console.log(this.query);
-
 
   var parts = parse(this, {
       checkFile: function (fieldname, file, filename) {
@@ -41,10 +39,11 @@ function* changeImage() {
 
   try {
     yield fs.writeFile('public/preview/' + this.query.media + '.png', Buffer.concat(bufs));
-    this.body = 'http://' + this.host + '/preview/' + this.query.media + '.png';
+    this.body = '/preview/' + this.query.media + '.png';
   } catch (e) {
     console.log(e);
   }
+
 }
 
 app.use(route.post('/changeImage', changeImage));

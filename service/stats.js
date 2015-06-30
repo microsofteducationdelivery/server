@@ -69,7 +69,6 @@ module.exports = {
       fields: stringName,
       data: topDownloads
     };
-    //return yield excel.createExcelFile(topDownloads, stringName, 'stats', companyId);
   }
 
 };

@@ -123,12 +123,17 @@
 }
 
 .b-import-user-popup {
-    height: 140px;
+    height: 250px;
 }
 
 .b-import-user-popup-header {
-    text-align:center;
-    padding: 0;
-    font-size: 16px;
+    padding: 35px;
 }
 
+.b-library-import-user {
+    float: left;
+    width: 13%;
+    text-align: right;
+    color: grey;
+    margin-right: 20px;
+}

@@ -23,7 +23,8 @@ module.exports = {
 
     downloads.set(1, 1, type);
     downloads.font(1, 1, { sz: 10 });
-    downloads.set(2, 1, new Date());
+
+    downloads.set(2, 1, this.formatData(new Date()));
 
 
     _.each(arrayName, function(item, index) {
@@ -36,6 +37,13 @@ module.exports = {
       for(var i = 0; i < arrayName.length; i++) {
         var field = arrayName[i];
         var currentCell = i + 1;
+
+        if(field === 'createdAt' && type === 'error') {
+          data[j][field] = this.formatData(data[j][field]);
+        } else if(field === 'createdAt' && type !== 'error') {
+          data[j].dataValues[field] = this.formatData(data[j].dataValues[field]);
+        }
+
         if(type === 'error') {
           downloads.set(currentCell, currentLineDownloads, data[j][field]);
         } else {
@@ -46,6 +54,10 @@ module.exports = {
     }
 
     return yield thunkify(workbook.save)();
+  },
+
+  formatData: function (data) {
+    return data.getDate() + '.' + (data.getMonth() + 1)+ '.' + data.getFullYear() + '  ' + (data.getHours() + 1) + ':' + (data.getMinutes() + 1);
   }
 
 };
