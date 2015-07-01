@@ -155,7 +155,6 @@ isPermitted: function (action, data, author) {
           var workbook = XLSX.read(Buffer.concat(bufs));
           allData = XLSX.utils.sheet_to_json(workbook.Sheets['sheet1']);
 
-
         } catch (err) {
           console.log(err);
           return me.body = 'Invalid file';

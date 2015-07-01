@@ -14,9 +14,9 @@
 
       form.file.onchange = function (element) {
         if(element.target.files.length > 0) {
-          var type = element.target.files[0].type;
+          var type = element.target.files[0].name;
 
-          if (type.indexOf('openxmlformats-officedocument.spreadsheetml') !== -1) {
+          if (type.indexOf('.xlsx') !== -1) {
             fileNameField.innerHTML = element.target.files[0].name;
             okBtn.disabled = false;
           } else {
@@ -34,12 +34,11 @@
 
         $(form).ajaxSubmit({
           headers: {
-            Authorization: 'Bearer ' + WinJS.Application.sessionState.token,
-            Accept: '*'
+            Authorization: 'Bearer ' + WinJS.Application.sessionState.token
           },
           dataType: 'binary',
           success: function (result) {
-
+            
             if(result.size > 2) {
               saveAs(result, 'tableError.xlsx');
             } else {

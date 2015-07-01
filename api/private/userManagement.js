@@ -31,7 +31,7 @@ function* userImport () {
   var creds = yield user.exportUsers(this.user, this);
 
   if (creds) {
-    var path = yield excel.createExcelFile(creds.errors, creds.fields, 'error', this.user);
+    var path = yield excel.createExcelFile(creds.errors, creds.fields, 'sheet1', this.user);
 
     yield send(this, path);
     yield fs.unlink(path);

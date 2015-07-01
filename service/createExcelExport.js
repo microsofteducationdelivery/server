@@ -21,17 +21,11 @@ module.exports = {
 
     var downloads = workbook.createSheet(type, arrayName.length, data.length + 3);
 
-    downloads.set(1, 1, type);
-    downloads.font(1, 1, { sz: 10 });
-
-    downloads.set(2, 1, this.formatData(new Date()));
-
-
     _.each(arrayName, function(item, index) {
-      downloads.set(++index, 2, item);
+      downloads.set(++index, 1, item);
     });
 
-    var currentLineDownloads = 3;
+    var currentLineDownloads = 2;
 
     for(var j = 0; j < data.length; j++) {
       for(var i = 0; i < arrayName.length; i++) {
@@ -44,7 +38,7 @@ module.exports = {
           data[j].dataValues[field] = this.formatData(data[j].dataValues[field]);
         }
 
-        if(type === 'error') {
+        if(type === 'sheet1') {
           downloads.set(currentCell, currentLineDownloads, data[j][field]);
         } else {
           downloads.set(currentCell, currentLineDownloads, data[j].dataValues[field]);
