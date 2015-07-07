@@ -42,7 +42,7 @@
                 Accept: 'application/json'}
             }).done(function (result) {
               var blob = new Blob([result.response], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-              saveAs(blob, 'tableComment.xlsx');
+              saveAs(blob, 'tableComment'  + new Date() + '.xlsx');
             }, function (err) {
               console.log(err);
             });

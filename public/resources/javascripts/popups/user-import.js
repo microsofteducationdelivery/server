@@ -38,15 +38,15 @@
           },
           dataType: 'binary',
           success: function (result) {
-            
+
             if(result.size > 2) {
-              saveAs(result, 'tableError.xlsx');
+              saveAs(result, 'tableError' + new Date() + '.xlsx');
             } else {
               window.hidePopup();
               options.callback();
             }
           },
-          error: function (error, errorType) {
+          error: function (error) {
             console.log(error);
           }
         });

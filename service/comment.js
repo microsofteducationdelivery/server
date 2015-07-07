@@ -90,7 +90,6 @@ module.exports = {
     var currentLineComments = 3;
 
     for(var k = 0; k < resArray.length; k++) {
-      var allStroke = [2, 3, 4, 5, 6];
       currentLineComments++;
       if(resArray[k].length > 1) {
 
@@ -103,21 +102,22 @@ module.exports = {
           } else {
             parrent = 'comment';
           }
-          comments.set(2, currentLineComments, resArray[k].media);
-          comments.set(3, currentLineComments, resArray[k][g].author);
-          comments.set(4, currentLineComments, parrent);
-          comments.set(5, currentLineComments, resArray[k][g].text);
-          comments.set(6, currentLineComments, resArray[k][g].date);
+          yield this.excelAddLine(resArray[k][g], comments, currentLineComments, parrent, resArray[k].media);
         }
       } else {
-        comments.set(2, currentLineComments, resArray[k].media);
-        comments.set(3, currentLineComments, resArray[k][0].author);
-        comments.set(4, currentLineComments, 'comment');
-        comments.set(5, currentLineComments, resArray[k][0].text);
-        comments.set(6, currentLineComments, resArray[k][0].date);
+        yield this.excelAddLine(resArray[k][0], comments, currentLineComments, 'comment', resArray[k].media);
       }
     }
 
     return yield thunkify(workbook.save)();
+  },
+
+  excelAddLine: function* (data, sheet, currentLineComments, type, media) {
+
+    sheet.set(2, currentLineComments, media);
+    sheet.set(3, currentLineComments, data.author);
+    sheet.set(4, currentLineComments, type);
+    sheet.set(5, currentLineComments, data.text);
+    sheet.set(6, currentLineComments, data.date);
   }
 };

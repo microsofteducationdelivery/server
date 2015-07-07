@@ -98,7 +98,7 @@
         }).done(
           function (result) {
             var blob = new Blob([result.response], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-            saveAs(blob, 'medStats.xlsx');
+            saveAs(blob, 'medStats'  + new Date() + '.xlsx');
           },
           function (result) {
             console.log(result);

@@ -51,7 +51,7 @@ module.exports = {
   },
 
   formatData: function (data) {
-    return data.getDate() + '.' + (data.getMonth() + 1)+ '.' + data.getFullYear() + '  ' + (data.getHours() + 1) + ':' + (data.getMinutes() + 1);
+    return data.getDate() + '.' + (data.getMonth() + 1) + '.' + data.getFullYear() + '  ' + (data.getHours() + 1) + ':' + (data.getMinutes() + 1);
   }
 
 };
