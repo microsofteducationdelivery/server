@@ -47,11 +47,30 @@
       }).done(
         function (result) {
           var data = result.response;
-
           tableControl.setData(data, null, '.b_invite_users__table');
+          var coincidence = [];
+          var partialCoincidence = [];
 
-          tableControl.setSelection(options.users.selection);
-          tableControl.setThreeStateSelection(options.users.threeStateSelection);
+          for(var i = 0; result.response.length > i; i++) {
+
+            var numberCoincidence = 0;
+            for(var j = 0; options.libs.length > j; j++) {
+              for(var k = 0; k < result.response[i].libraries.length; k++) {
+                if(result.response[i].libraries[k].id === +options.libs[j].substr(7)) {
+                  numberCoincidence++;
+                }
+              }
+            }
+
+            if(numberCoincidence > 0 && numberCoincidence < options.libs.length) {
+              partialCoincidence.push(result.response[i].id);
+            } else if(numberCoincidence === options.libs.length) {
+              coincidence.push(result.response[i].id);
+            }
+          }
+
+         tableControl.setSelection(coincidence);
+          tableControl.setThreeStateSelection(partialCoincidence);
         },
         function (result) {
           return result.status;

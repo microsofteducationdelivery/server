@@ -54,7 +54,7 @@
     <div class="b-library-edit--toolbar">
         <span class="b-library-edit--toolbar__title"></span>
     </div>
-    <div style="height: calc(100% - 106px)"><form class="b-library-edit--form">
+    <div style="height: calc(100% - 106px); overflow-y: scroll;"><form class="b-library-edit--form">
         <div class="b_converted hidden">This file is being converted and is not available to users yet</div>
         <div class="b-library-edit--form__field-wrapper">
             <label class="b-library-edit--form__label">Name:</label>
@@ -81,6 +81,21 @@
             <textarea name="link" rows="4" placeholder="http://"></textarea>
         </div>
     </form>
+
+        <div class="b-library-edit--form__field-wrapper">
+            <label class="b-library-edit--form__label">Thumbnails:</label>
+
+            <form class="b-library-edit-media--form" id="mediaUploadForm" method="POST">
+
+                <label class="b_upload-field">
+                    <input type="file" name="file" class="b-library-edit--form__fileupload" />
+                    <div type="button" class="b_upload-field__container">Upload</div>
+                </label>
+
+                <span class="b-library-edit--form__filename"></span>
+            </form>
+            <img class="b-library-prev">
+        </div>
     </div>
     <div class="b-library--bottombar">
         <div class="b-footer__wrapper">

@@ -1,10 +1,35 @@
+#progress_bar {
+    font-size: 14px;
+    clear: both;
+    opacity: 0;
+    -moz-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    -webkit-transition: opacity 1s linear;
+    height: 10px;
+    width: 100%;
+    display: inline-block;
+}
+#progress_bar.loading {
+    opacity: 1.0;
+}
+#progress_bar .percent {
+    background-color: #78c623;
+    width: 0;
+    height: 10px;
+    margin-top: -6px;
+}
+
 .b-add-library-popup {
-    position: relative;
+    position: absolute;
     background-color: white;
     max-width: 80%;
     width: 530px;
     height: 250px;
     border-top: solid #6ab01c 5px;
+    margin-left: calc(50% - 265px);
+    margin-top: calc(50vh - 125px);
+    top: 0;
+    left: 0;
 }
 .b_libraries {
     padding-top: 35px;
@@ -15,6 +40,12 @@
 .b-add-library-popup.form-library {
     height: 410px;
     width: 65%;
+    margin-left: calc(35vw / 2);
+    margin-top: calc(50vh - 205px);
+    top: 0;
+    left: 0;
+    font-weight: 300;
+
 }
 .form-library .b-library-edit {
     background-color: inherit;
@@ -89,4 +120,20 @@
 .b-other-library-button {
     position: relative;
     display: inline-block;
+}
+
+.b-import-user-popup {
+    height: 250px;
+}
+
+.b-import-user-popup-header {
+    padding: 35px;
+}
+
+.b-library-import-user {
+    float: left;
+    width: 13%;
+    text-align: right;
+    color: grey;
+    margin-right: 20px;
 }

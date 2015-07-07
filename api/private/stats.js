@@ -2,7 +2,9 @@ var
   parse = require('co-body'),
   koa = require('koa'),
   route = require('koa-route'),
-
+  sendCo = require('koa-send'),
+  fs = require('co-fs'),
+  excel = require('../../service/createExcelExport'),
   service = require('../../service/stats')
   ;
 
@@ -34,7 +36,16 @@ function* top5Views () {
   });
 }
 
+function* addToImport () {
+  var creds = yield service.addToImport(this.user.CompanyId);
+  var path = yield excel.createExcelFile(creds.data, creds.fields, 'stats', this.user.CompanyId);
+  yield sendCo(this, path);
+  yield fs.unlink(path);
+  return this;
+}
+
 app.use(route.get('/top5Downloads', top5Downloads));
 app.use(route.get('/top5Views', top5Views));
+app.use(route.get('/addToImport', addToImport));
 module.exports = app;
 

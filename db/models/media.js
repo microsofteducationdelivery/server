@@ -10,6 +10,14 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       defaultValue: 0
     },
+    like: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    unlike: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     downloads: {
       type: DataTypes.INTEGER,
       defaultValue: 0

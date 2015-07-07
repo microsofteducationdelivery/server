@@ -1,3 +1,8 @@
+.b-library-prev {
+    width: 100px;
+    height: 60px;
+}
+
 .b-library-new-media-btn, .b-library-new-folder-btn {
     font-family: "FontAwesome";
     color: #ffffff;
@@ -85,9 +90,10 @@
     position: relative;
     top: -2px;
 }
+
 .b-library-content--toolbar, .b-library-edit--toolbar {
     padding: 5px;
-    height: 36px;
+    min-height: 36px;
     background-color: #e0e2e2;
 }
 .b_media-list-tpl--item__edit {
@@ -111,7 +117,11 @@
     margin-left: 10px;
     font-size: 16pt;
     text-transform: uppercase;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
 }
+
 .b-library--bottombar {
     position: relative;
     bottom: -10px;
@@ -169,10 +179,10 @@
     text-align: center;
 }
 .b-library-content .win-container {
-    height: auto;
+    height: 80px !important;
 }
 .b-library-content .win-container {
-    height: auto !important;
+    height: auto;
     margin-right: 0 !important;
 }
 .b_converted {
@@ -193,7 +203,15 @@ img.b_media-list-tpl--item__image {
 
 .b_media-list-tpl--item__text {
     float: left;
+    height: 70px;
+}
 
+.b_media-list-tpl--item__text > h3 {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 260px;
+    height: 30px;
 }
 
 .listLayoutTopHeaderTemplateRoot, .gridLayoutLeftHeaderTemplateRoot {

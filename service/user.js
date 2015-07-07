@@ -1,17 +1,46 @@
 var
   _ = require('lodash'),
-
   bcrypt = require('bcrypt-nodejs'),
-
   db = require('../db'),
   table = db.User,
-
   errors = require('../helper/errors'),
   mail = require('./mail'),
-  C = require('../helper/constants')
+  C = require('../helper/constants'),
+  excel = require('./createExcelExport'),
+  parse = require('co-busboy'),
+  XLSX = require('xlsx'),
+  fs = require('co-fs'),
+  send = require('koa-send')
 ;
+
 module.exports = {
-  isPermitted: function (action, data, author) {
+  createUser: function*(data, author) {
+    var company = (author ? yield author.getCompany() : yield db.Company.create());
+
+    if (!this.isPermitted(C.CREATE, data, author)) {
+      throw new errors.AccessDeniedError('Access denied');
+    }
+    console.log(data);
+    var user, clearPassword = data.password;
+    try {
+      data.password = bcrypt.hashSync(data.password);
+      user = yield table.create(data);
+      if (data.email) {
+        console.log('mail sent');
+        mail.sendWelcomeEmail(data.login, clearPassword, data.email);
+      }
+      company.addUser(user);
+    } catch (e) {
+     // yield company.destroy();
+      if (e.code === 'ER_DUP_ENTRY') {
+        throw new errors.DuplicateError('Duplicate entry');
+      } else {
+        throw new errors.ValidationError('Validation failed', { errors: e });
+      }
+    }
+  },
+
+isPermitted: function (action, data, author) {
     if (action === C.CREATE && !author && data.type === 'admin') {
       return true;
     }
@@ -58,41 +87,29 @@ module.exports = {
   },
 
   add: function* (data, author) {
-    var company = yield (author ? author.getCompany() : db.Company.create());
-
-    if (!this.isPermitted(C.CREATE, data, author)) {
-      throw new errors.AccessDeniedError('Access denied');
-    }
-    console.log(data);
-    var user, clearPassword = data.password;
-    try {
-      data.password = bcrypt.hashSync(data.password);
-      user = yield table.create(data);
-      if (data.email) {
-        console.log('mail sent');
-        mail.sendWelcomeEmail(data.login, clearPassword, data.email);
-      }
-      company.addUser(user);
-    } catch (e) {
-      yield company.destroy();
-      if (e.code === 'ER_DUP_ENTRY') {
-        throw new errors.DuplicateError('Duplicate entry');
-      } else {
-        throw new errors.ValidationError('Validation failed', { errors: e });
-      }
-    }
+    var company = yield author.getCompany();
+    yield this.createUser(data, author);
   },
 
   list: function* (author) {
+
+    var res = yield table.findAll({
+      where: { CompanyId: author.CompanyId },
+      attributes: ['id', 'login', 'type', 'name'],
+      include: [db.Library]
+    });
+
     return yield table.findAll({
       where: { CompanyId: author.CompanyId },
-      attributes: ['id', 'login', 'type', 'name']
+      attributes: ['id', 'login', 'type', 'name'],
+      include: [db.Library]
     });
   },
 
   update: function* (id, data, author) {
     var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
     if (data.password) {
+      data.newPassword = data.password;
       data.password = bcrypt.hashSync(data.password);
     }
 
@@ -104,6 +121,7 @@ module.exports = {
     user.phone = data.phone;
 
     yield user.save();
+    mail.sendUpdateUserProfile(data, user.email);
   },
   removeMultiple: function (ids, author) {
     console.log(ids);
@@ -112,6 +130,64 @@ module.exports = {
       throw new errors.AccessDeniedError('Access denied');
     }
     return table.destroy({ id: ids, CompanyId: author.CompanyId });
+  },
+
+  exportUsers: function* (author, reqBody) {
+
+    var parts = parse(reqBody),
+      part,
+      me = reqBody,
+      allData,
+      errors = [];
+
+    while (part = yield parts) {
+      if (!part.filename) {
+        return me.body = 'No file';
+      }
+
+      var bufs = [];
+
+      part.on('data', function (chank) {
+        bufs.push(chank);
+      });
+      part.on('end', function () {
+        try {
+          var workbook = XLSX.read(Buffer.concat(bufs));
+          allData = XLSX.utils.sheet_to_json(workbook.Sheets['sheet1']);
+
+        } catch (err) {
+          console.log(err);
+          return me.body = 'Invalid file';
+        }
+      });
+    }
+
+    for(var i = 0; i < allData.length; i++) {
+      try {
+        if(allData[i].type !== 'admin' && allData[i].type !== 'operator' && allData[i].type !== 'mobile') {
+          throw new errors.TypeError('User type incorrect');
+        }
+
+       var passwordSave = allData[i].password;
+        yield this.createUser(allData[i], author);
+      } catch (err) {
+        allData[i].password = passwordSave;
+        allData[i].line = i;
+        allData[i].error = err.message;
+        errors.push(allData[i]);
+      }
+    }
+
+    if(errors.length > 0) {
+      var allFields = 'line|name|login|type|password|email|telephone|error';
+      return {
+        errors: errors,
+        fields: allFields
+      };
+    } else {
+      return null;
+    }
+
   }
 };
 

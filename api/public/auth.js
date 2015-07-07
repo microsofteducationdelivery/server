@@ -46,7 +46,7 @@ function *register() {
 }
 function* getRecover (email) {
   var token = generatePassword(),
-    link = this.request.host + '/index.html',
+    link = 'http://' + this.request.host + '/index.html',
     user;
 
   user = yield db.User.find({

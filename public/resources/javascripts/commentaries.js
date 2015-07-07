@@ -6,7 +6,9 @@
       WinJS.UI.processAll(element);
 
       var me = this,
-        tableControl = WinJS.Utilities.query('div[class=b_commentaries__table]')[0].winControl;
+        tableControl = WinJS.Utilities.query('div[class=b_commentaries__table]')[0].winControl,
+        exportButton = WinJS.Utilities.query('.b-commentaries__exports');
+
       tableControl.onitemselected = function (id) {
         WinJS.Navigation.navigate('/resources/pages/media-comments.html', {id: id.detail});
       };
@@ -22,11 +24,30 @@
               name: item.name,
               path: me.pathToString(item.path),
               type: item.type,
+              like: item.like,
+              unlike: item.unlike,
               id: item.id,
               date: moment(new Date(item.date)).format('DD-MM-YY'),
               amount: item.amount
             };
           }), true);
+
+          exportButton.listen('click', function() {
+            MED.Server.authXHR({
+              url: '/api/commentsManagement/commentsExport',
+              type: 'GET',
+              responseType: 'arraybuffer',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'}
+            }).done(function (result) {
+              var blob = new Blob([result.response], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+              saveAs(blob, 'tableComment'  + new Date() + '.xlsx');
+            }, function (err) {
+              console.log(err);
+            });
+          });
+
           WinJS.Utilities.query('button[class=b_table-button]').listen('click', function (e) {
 
             e.stopPropagation();
@@ -34,6 +55,10 @@
             var column = e.currentTarget.parentElement.parentElement.firstChild;
             WinJS.Navigation.navigate('/resources/pages/edit-library.html', {id: column.title, type: 'media'});
           });
+
+          if(data.length === 0) {
+            WinJS.Utilities.query('button[class=b-commentaries__exports]')[0].disabled = true;
+          }
         },
         function (result) {
           return result.status;

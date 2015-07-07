@@ -9,11 +9,14 @@ window.authXHR = function (options) {
 };
 
 window.showPopup = function (location, options) {
-  var popupHolder = document.querySelector('.b-popup-holder');
-  popupHolder.innerHTML = '';
-  WinJS.UI.Pages.render(location, popupHolder, options).then(function () {
-    popupHolder.classList.add('b-popup-holder--visible');
-  });
+
+  if(WinJS.Utilities.query('.b-popup-holder--visible').length === 0) {
+    var popupHolder = document.querySelector('.b-popup-holder');
+    popupHolder.innerHTML = '';
+    WinJS.UI.Pages.render(location, popupHolder, options).then(function () {
+      popupHolder.classList.add('b-popup-holder--visible');
+    });
+  }
 };
 
 window.hidePopup = function () {

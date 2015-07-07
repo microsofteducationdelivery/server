@@ -149,6 +149,7 @@
       trBody.appendChild(tdBody);
       trBody.className = 'table-body-row';
     }
+
     return table;
   }
 

@@ -12,6 +12,11 @@
   }
 
   WinJS.UI.Pages.define('/resources/pages/users.html', {
+    init: function () {
+      var me = this;
+      return getUsers().then( function (users) {me._data = users; });
+    },
+
     ready: function (element, options) {
       WinJS.UI.processAll(element);
 
@@ -21,7 +26,9 @@
 
       var tableControl = WinJS.Utilities.query('div[class=b_users__table]')[0].winControl,
         selectedItems = [],
-        deleteBtn = WinJS.Utilities.query('.b-users__remove-button');
+        deleteBtn = WinJS.Utilities.query('.b-users__remove-button'),
+        importBtn = WinJS.Utilities.query('.b-users__import-button'),
+        form = WinJS.Utilities.query('form');
 
       deleteBtn[0].disabled = true;
 
@@ -64,6 +71,16 @@
           tableControl.deselectAll();
         }});
 
+      });
+
+      importBtn.listen('click', function() {
+        window.showPopup('/resources/pages/popups/user-import.html', {
+          callback: function () {
+            getUsers().then(function (users) {
+              tableControl.setData(users);
+            });
+          }
+        });
       });
 
       MED.Server.authXHR({
