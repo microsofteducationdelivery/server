@@ -87,7 +87,6 @@ isPermitted: function (action, data, author) {
   },
 
   add: function* (data, author) {
-    var company = yield author.getCompany();
     yield this.createUser(data, author);
   },
 

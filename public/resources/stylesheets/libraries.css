@@ -130,6 +130,10 @@
     padding: 35px;
 }
 
+.b_download_button {
+    width: 85px;
+}
+
 .b-library-import-user {
     float: left;
     width: 13%;
