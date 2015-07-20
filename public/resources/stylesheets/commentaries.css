@@ -4,7 +4,6 @@
 }
 .b_commentaries {
     padding-top: 35px;
-    overflow: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     max-height: calc(100% - 160px);
 }
