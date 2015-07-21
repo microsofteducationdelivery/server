@@ -16,9 +16,9 @@
 
     if(options.type === 'GET') {
       if(options.url.indexOf('?') !== -1) {
-        options.url = options.url + '&time='+ new Date().getTime();
+        options.url = options.url + '&time='+ Math.random();
       } else {
-        options.url = options.url + '?time='+ new Date().getTime();
+        options.url = options.url + '?time='+ Math.random();
       }
 
     }

@@ -13,7 +13,9 @@
 
             var listView = WinJS.Utilities.query('div[data-win-control="WinJS.UI.ListView"]', element);
 
-            WinJS.Utilities.query('.b-library-prev', element)[0].setAttribute('src', '/preview/' + options.id + '.png');
+            var prevBlock = WinJS.Utilities.query('div[class="b-libraries-prev"');
+
+            WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', '/preview/' + options.id + '.png');
 
             WinJS.Utilities.query('button[id=path-back-btn]').listen('click', function () {
                 var link = WinJS.Utilities.query('div[class=b-library-path]', element)[0].lastChild;
@@ -41,7 +43,7 @@
                 Authorization: 'Bearer ' + WinJS.Application.sessionState.token
               },
               success: function (result) {
-                WinJS.Utilities.query('.b-library-prev', element)[0].setAttribute('src', result + '?time=' + new Date().getTime());
+                WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', result + '?time=' + new Date().getTime());
               },
               error: function (error) {
                 console.log(error);
@@ -205,6 +207,40 @@
                         target = listItem.querySelector('div[class=b_media-list-tpl--item__edit]'),
                         type = target.style
                         ;
+
+
+
+                  /* IMAGES */
+
+                  checkedImage(1);
+
+                  function checkedImage(number) {
+                    var img = new Image();
+                    img.src = '/preview/' + itemId + '-' + number + '.png';
+
+                    img.onload = function(e) {
+                      img.setAttribute('data-image-name', itemId + '-' + number + '.png');
+                      prevBlock[0].appendChild(img);
+                      var newImage = WinJS.Utilities.query('img[data-image-name="' + itemId + '-' + number + '.png"]', element);
+                      newImage.listen('click', function(e) {
+
+                        MED.Server.authXHR({
+                          url: '/api/mediaManagement/copyImage?name=' + e.target.getAttribute('data-image-name') + '&fileChange=' + itemId + '.png',
+                          type: 'GET'
+                        }).done(function() {
+                            var currentImage = WinJS.Utilities.query('.b-libraries-prev-current', element)[0];
+                              currentImage.removeAttribute('src');
+                              currentImage.setAttribute('src', '/preview/library' + itemId + '.png?time=' + Math.random());
+                        },
+                        function(err) {
+                          console.log(err);
+                        });
+
+                      });
+
+                      checkedImage(number + 1);
+                    }
+                  }
 
                     for (var i = 0; i < mediaItems.length; i++) {
                         mediaItems[i].setAttribute('class', 'b_media-list-tpl--item');
