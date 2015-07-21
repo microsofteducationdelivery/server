@@ -22,7 +22,9 @@ module.exports = co(function* () {
     token: '',
     email: 'demo@demo.me',
     password: bcrypt.hashSync('demo'),
-    type: 'admin'
+    type: 'admin',
+    deviceId: '',
+    singleDevice: false
   });
 
   var user2 = db.User.build({

@@ -30,6 +30,14 @@ module.exports = function (sequelize, DataTypes) {
     type: {
       type: DataTypes.ENUM('owner', 'admin', 'operator', 'mobile'),
       allowNull: false
+    },
+    deviceId: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    singleDevice: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     associate: function(models) {

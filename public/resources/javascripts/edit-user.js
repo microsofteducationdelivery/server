@@ -4,7 +4,8 @@
 
     ready: function (element, options) {
       var checkEmail,
-        checkPhone
+        checkPhone,
+        checkDevice
         ;
 
       MED.Validation.params.password.required = false;
@@ -13,6 +14,7 @@
       WinJS.UI.Fragments.renderCopy('/resources/pages/templates/edit-user-tpl.html', basicFragmentLoadDiv).done(function (element) {
         checkEmail = WinJS.Utilities.query('input[name=send_email]');
         checkPhone =  WinJS.Utilities.query('input[name=send_sms]');
+        checkDevice = WinJS.Utilities.query('input[name=device_bind');
         var form = element.querySelector('form'),
           okBtn = WinJS.Utilities.query('.b-button-ok')[0];
 
@@ -29,6 +31,7 @@
           form.id.value = options.id;
           form.password.value = '';
           form.type.value = data.type;
+          form.device.value = data.deviceId;
 
           if (data.type === 'owner') {
             WinJS.Utilities.query('select[name=type]')[0].disabled = true;
@@ -45,6 +48,12 @@
             form.phone.value = data.phone;
             checkPhone[0].checked = true;
             WinJS.Utilities.query('input[name=phone]')[0].disabled = false;
+          }
+
+          if (data.deviceId) {
+            form.device.value = data.deviceId;
+            checkDevice[0].checked = data.singleDevice;
+            WinJS.Utilities.query('input[name=device]')[0].disabled = !data.singleDevice;
           }
 
         });
@@ -82,7 +91,9 @@
             name: form.name.value,
             login: form.login.value,
             type: form.type.value,
-            password: form.password.value
+            password: form.password.value,
+            device: form.device.value,
+            singleDevice: false
           };
 
           if(form.phone.value && checkPhone[0].checked) {
@@ -90,6 +101,10 @@
           }
           if (form.email.value && checkEmail[0].checked) {
             values.email = form.email.value;
+          }
+          if (form.device.value && checkDevice[0].checked) {
+            values.device = form.device.value;
+            values.singleDevice = true;
           }
           MED.Validation.userRequiredValidation(form, values);
 

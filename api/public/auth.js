@@ -13,8 +13,14 @@ var app = require('koa')(),
 ;
 
 function *login() {
-  var user = yield usersService.findByCredentials(yield parse(this));
+  var data = yield parse(this);
+  var user = yield usersService.findByCredentials(data);
   if (user) {
+    if(user.singleDevice === true && user.deviceId !== data.deviceId) {
+      throw new errors.DeviceError('Device is incorrect');
+    } else if(user.singleDevice === false && data.deviceId !== '') {
+      yield user.updateAttributes({deviceId: data.deviceId});
+    }
     var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
     this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
   } else {
