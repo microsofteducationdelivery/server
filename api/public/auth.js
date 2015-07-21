@@ -12,6 +12,27 @@ var app = require('koa')(),
   errors = require('../../helper/errors')
 ;
 
+function *liveIdLogin () {
+  var data = yield parse(this);
+  var user = yield usersService.findBy(data);
+  if (!user) {
+    data.login = data.email;
+    data.password = generatePassword();
+    console.log(data.password);
+    data.type = 'admin';
+    try {
+      yield usersService.createUser(data);
+    } catch (e) {
+      this.status = 400;
+      this.body = e.errors;
+    }
+    this.status = 200;
+  } else {
+    this.status = 200;
+  }
+
+}
+
 function *login() {
   var user = yield usersService.findByCredentials(yield parse(this));
   if (user) {
@@ -79,6 +100,7 @@ function* recoverPassword () {
   }
 }
 app.use(route.post('/login', login));
+app.use(route.post('/loginWithLiveID', liveIdLogin));
 app.use(route.post('/register', register));
 app.use(route.post('/passwordRecovery/', recoverPassword));
 app.use(route.put('/passwordRecovery/:email', getRecover));
