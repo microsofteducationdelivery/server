@@ -1,4 +1,9 @@
-.b-library-prev {
+.b-libraries-prev img {
+    width: 100px;
+    height: 60px;
+}
+
+.b-libraries-prev-current {
     width: 100px;
     height: 60px;
 }

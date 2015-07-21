@@ -4,7 +4,8 @@
 
     ready: function (element) {
       var checkEmail,
-        checkPhone
+        checkPhone,
+        checkDevice
         ;
 
       MED.Validation.params.password.required = true;
@@ -15,6 +16,7 @@
 
         checkEmail = WinJS.Utilities.query('input[name=send_email]');
         checkPhone =  WinJS.Utilities.query('input[name=send_sms]');
+        checkDevice = WinJS.Utilities.query('input[name=device_bind');
         var form = element.querySelector('form'),
           okBtn = WinJS.Utilities.query('.b-button-ok')[0];
 
@@ -47,7 +49,9 @@
             name: form.name.value,
             login: form.login.value,
             type: form.type.value,
-            password: form.password.value
+            password: form.password.value,
+            deviceId: form.device.value,
+            singleDevice: false
           };
 
           if (form.phone.value && checkPhone[0].checked) {
@@ -56,6 +60,12 @@
           if (form.email.value && checkEmail[0].checked) {
             values.email = form.email.value;
           }
+
+          if (form.device.value && checkDevice[0].checked) {
+            values.deviceId = form.device.value;
+            values.singleDevice = true;
+          }
+
           MED.Validation.userRequiredValidation(form, values);
           if (WinJS.Utilities.query('.b-edit-user__error', form).length) {
             this.disabled = true;

@@ -64,7 +64,7 @@ isPermitted: function (action, data, author) {
 
     return table.find({
       where: where,
-      attributes: [ 'id', 'name', 'login', 'email', 'type', 'CompanyId', 'phone']
+      attributes: [ 'id', 'name', 'login', 'email', 'type', 'CompanyId', 'phone', 'deviceId', 'singleDevice']
     });
   },
 
