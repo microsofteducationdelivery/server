@@ -18,19 +18,20 @@ function *liveIdLogin () {
   if (!user) {
     data.login = data.email;
     data.password = generatePassword();
+
     console.log(data.password);
     data.type = 'admin';
     try {
       yield usersService.createUser(data);
+      user = yield usersService.findBy(data);
     } catch (e) {
       this.status = 400;
       this.body = e.errors;
     }
-    this.status = 200;
-  } else {
-    this.status = 200;
   }
 
+  var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
+  this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
 }
 
 function *login() {

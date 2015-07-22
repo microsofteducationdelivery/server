@@ -8,7 +8,8 @@
       url: '/api/auth/loginWithLiveId',
       responseType: 'json',
       data: JSON.stringify({
-        email: creds.email
+        email: creds.email,
+        name: creds.name
       })
     });
   };
@@ -37,17 +38,20 @@
     if (token) {
       (function($) {
         var odurl = 'https://apis.live.net/v5.0/me';
-
         var odquery = '?access_token=' + token;
+
         $.ajax({
           url: odurl + odquery,
           dataType: 'json',
           success: function(data) {
             login({
-              email: data.emails.account
-            }).done(function () {
-              localStorage.setItem('token', token);
-              localStorage.setItem('user', JSON.stringify(data.emails.account));
+              email: data.emails.account,
+              name: data.name
+            }).done(function (req) {
+              var response = req.response;
+
+              localStorage.setItem('token', response.token);
+              localStorage.setItem('user', JSON.stringify(response.user));
               window.location = '/admin.html';
             });
           }
