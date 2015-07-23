@@ -50,8 +50,6 @@
             login: form.login.value,
             type: form.type.value,
             password: form.password.value
-           /* deviceId: form.device.value,
-            singleDevice: false*/
           };
 
           if (form.phone.value && checkPhone[0].checked) {
