@@ -55,13 +55,13 @@ nav {
     height: 90px;
     color: #5c7e82;
     border-top: solid #6ab01c 2px;
-    text-align: center;
     font-size: 14pt;
 }
 .b-navigation-footer--label {
     float: left;
     margin-left: 16px;
     margin-top: 9px;
+    width: 60%;
 }
 
 .b-navigation-footer__wrapper {
@@ -78,4 +78,12 @@ nav {
     min-width: 45px;
     width: 45px;
     height: 45px;
+}
+
+.b-navigation-footer__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80%;
+    display: inline-block;
 }
