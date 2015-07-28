@@ -4,6 +4,7 @@ var app = require('koa')(),
   datauri = require('datauri'),
   parse = require('co-body'),
   route = require('koa-route'),
+  bcrypt = require('bcrypt-nodejs'),
 
   mediaService = require('../../service/media'),
   mobileService = require('../../service/mobile')
@@ -118,9 +119,24 @@ function *postComments() {
   yield media.addComment(comment);
 }
 
+function *mobilePasswordRecovery() {
+  var item = yield parse(this);
+
+  var user = yield db.User.find({
+    where: {id: item.id}
+  });
+
+  if(user && user.password === bcrypt.hashSync(item.oldPassword)) {
+    var newPass = bcrypt.hashSync(item.newPass);
+
+    yield user.updateAttributes({password: newPass}, {fields: ['password']});
+  }
+}
+
 app.use(route.post('/data', setStat));
 app.use(route.get('/data', data));
 app.use(route.get('/comments/:id', getComments));
 app.use(route.get('/media/:id', getDetails));
 app.use(route.post('/comments', postComments));
+app.use(route.put('/passwordRecovery', mobilePasswordRecovery));
 module.exports = app;
