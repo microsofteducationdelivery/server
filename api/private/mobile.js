@@ -130,6 +130,9 @@ function *mobilePasswordRecovery() {
     var newPass = bcrypt.hashSync(item.newPass);
 
     yield user.updateAttributes({password: newPass}, {fields: ['password']});
+    this.status = 200;
+  } else {
+    this.status = 403;
   }
 }
 
