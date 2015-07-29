@@ -49,9 +49,7 @@
             name: form.name.value,
             login: form.login.value,
             type: form.type.value,
-            password: form.password.value,
-            deviceId: form.device.value,
-            singleDevice: false
+            password: form.password.value
           };
 
           if (form.phone.value && checkPhone[0].checked) {
