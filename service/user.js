@@ -67,18 +67,11 @@ isPermitted: function (action, data, author) {
       attributes: [ 'id', 'name', 'login', 'email', 'type', 'CompanyId', 'phone', 'deviceId', 'singleDevice']
     });
   },
-
+  findBy: function *(params) {
+    return yield table.find({ where: params });
+  },
   findByCredentials: function* (credentials) {
-    var request = {};
-    if (credentials.email) {
-      request = { email: credentials.email.toLowerCase() };
-    } else {
-      request = { login: credentials.login.toLowerCase() };
-    }
-    var user = yield table.find({ where: request });
-    if (!user) {
-      return null;
-    }
+   var user = yield this.findBy(_.omit(credentials, 'password'));
     try {
       return bcrypt.compareSync(credentials.password, user.password) ? user : null;
     } catch (e) {

@@ -1,9 +1,19 @@
 (function () {
 
   'use strict';
-
+  var getParam = function (obj) {
+    var s = [];
+    for (var p in obj) {
+      if (!obj.hasOwnProperty(p)) {
+        continue;
+      }
+      s.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+    }
+    return s.join( '&' ).replace(/%20/g, '+');
+  };
   var xhr = function (options) {
     var type = options.responseType || 'json';
+
 
     options.headers = options.headers || {};
     if (options.responseType === 'arraybuffer') {

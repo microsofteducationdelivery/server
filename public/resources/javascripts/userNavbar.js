@@ -9,6 +9,7 @@
       } else {
         WinJS.Navigation.navigate('/resources/pages/getStarted.html');
       }
+
       WinJS.Utilities.query('a[href="/resources/pages/getStarted.html"]', element).addClass('b-main__link-active');
       WinJS.Binding.processAll(element, {
         user: WinJS.Application.sessionState.user

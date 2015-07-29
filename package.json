@@ -16,6 +16,7 @@
     "co-body": "^1.0.0",
     "co-busboy": "^1.2.0",
     "co-fs": "^1.2.0",
+    "co-thunkify": "0.0.1",
     "datauri": "^0.5.5",
     "error-factory": "^0.1.4",
     "koa": "^0.11.0",
@@ -28,11 +29,17 @@
     "lodash": "^2.4.1",
     "mandrill-api": "^1.0.40",
     "mime": "^1.2.11",
+    "msexcel-builder": "0.0.2",
     "mysql": "^2.5.0",
     "password-generator": "^0.2.2",
     "save-to": "^1.0.3",
+    "send": "^0.13.0",
     "sequelize": "^1.7.10",
-    "validator": "^3.18.1"
+    "underscore": "^1.8.3",
+    "validator": "^3.18.1",
+    "xlsx": "^0.8.0",
+    "passport": "~0.2.2",
+    "passport-auth0": "~0.3.0"
   },
   "directories": {
     "test": "tests"

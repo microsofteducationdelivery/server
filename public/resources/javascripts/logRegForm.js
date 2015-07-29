@@ -15,6 +15,10 @@
 
         });
       });
+      WinJS.Utilities.query('.live_id_login_btn', element).listen('click', function () {
+        window.MED.LiveAuth.challengeForAuth();
+      });
+
       loginBtn.listen('click', function (e) {
         console.log('try to register');
         var creds = me.getLoginCreds();
