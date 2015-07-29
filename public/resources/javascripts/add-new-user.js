@@ -45,7 +45,6 @@
         });
         WinJS.Utilities.query('.b-button-ok').listen('click', function (e) {
           e.preventDefault();
-          debugger;
           var values = {
             name: form.name.value,
             login: form.login.value,
@@ -60,7 +59,6 @@
             values.email = form.email.value;
           }
 
-          debugger;
           if (form.device.value && checkDevice[0].checked) {
             values.deviceId = form.device.value;
             values.singleDevice = true;
