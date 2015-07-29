@@ -27,6 +27,8 @@ function *liveIdLogin () {
     } catch (e) {
       this.status = 400;
       this.body = e.errors;
+      
+      return;
     }
   }
 
