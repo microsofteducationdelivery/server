@@ -46,12 +46,14 @@ module.exports = {
       .replace('<login>', data.login)
       .replace('<email>', data.email)
       .replace('<password>', data.newPassword)
-      .replace('<type>', data.type);
+      .replace('<type>', data.type)
+      .replace('<singleDevice>', data.singleDevice)
+      .replace('<deviceId>', data.deviceId);
 
     mandrillClient.messages.send({
       message: {
         from_email: config.mail.from,
-        subject: config.mail.recoverySubject,
+        subject: 'Your profile was updated',
         text: message,
         to: [{email: email}]
       }

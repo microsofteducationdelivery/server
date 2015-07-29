@@ -119,6 +119,17 @@ isPermitted: function (action, data, author) {
     user.email = data.email;
     user.phone = data.phone;
 
+
+    if(!data.singleDevice) {
+      user.singleDevice = false;
+      data.singleDevice = false;
+      data.deviceId = user.deviceId;
+    }
+
+    if(!data.password) {
+      data.newPassword = 'Password was not changed';
+    }
+
     yield user.save();
     mail.sendUpdateUserProfile(data, user.email);
   },

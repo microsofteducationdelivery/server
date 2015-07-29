@@ -119,14 +119,14 @@ function *postComments() {
   yield media.addComment(comment);
 }
 
-function *mobilePasswordRecovery() {
+function *mobilePasswordRecovery(id) {
   var item = yield parse(this);
 
   var user = yield db.User.find({
-    where: {id: item.id}
+    where: {id: id}
   });
 
-  if(user && user.password === bcrypt.hashSync(item.oldPassword)) {
+  if(user && bcrypt.compareSync( item.oldPassword, user.password)) {
     var newPass = bcrypt.hashSync(item.newPass);
 
     yield user.updateAttributes({password: newPass}, {fields: ['password']});
@@ -136,10 +136,11 @@ function *mobilePasswordRecovery() {
   }
 }
 
+
 app.use(route.post('/data', setStat));
 app.use(route.get('/data', data));
 app.use(route.get('/comments/:id', getComments));
 app.use(route.get('/media/:id', getDetails));
 app.use(route.post('/comments', postComments));
-app.use(route.put('/passwordRecovery', mobilePasswordRecovery));
+app.use(route.put('/changePassword/:id', mobilePasswordRecovery));
 module.exports = app;

@@ -30,8 +30,8 @@
           form.login.value = data.login;
           form.id.value = options.id;
           form.password.value = '';
-          form.type.value = data.type;
-          form.device.value = data.deviceId;
+          /*form.type.value = data.type;
+          form.device.value = data.deviceId;*/
 
           if (data.type === 'owner') {
             WinJS.Utilities.query('select[name=type]')[0].disabled = true;
@@ -100,11 +100,13 @@
           if (form.email.value && checkEmail[0].checked) {
             values.email = form.email.value;
           }
+
+          MED.Validation.userRequiredValidation(form, values);
+
           if (form.device.value && checkDevice[0].checked) {
-            values.device = form.device.value;
+            values.deviceId = form.device.value;
             values.singleDevice = true;
           }
-          MED.Validation.userRequiredValidation(form, values);
 
           if (WinJS.Utilities.query('.b-edit-user__error', form).length) {
             this.disabled = true;
