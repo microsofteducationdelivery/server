@@ -141,5 +141,5 @@ app.use(route.get('/data', data));
 app.use(route.get('/comments/:id', getComments));
 app.use(route.get('/media/:id', getDetails));
 app.use(route.post('/comments', postComments));
-app.use(route.put('/passwordRecovery', mobilePasswordRecovery));
+app.use(route.post('/changePassword', mobilePasswordRecovery));
 module.exports = app;
