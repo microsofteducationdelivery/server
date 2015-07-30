@@ -30,8 +30,6 @@
           form.login.value = data.login;
           form.id.value = options.id;
           form.password.value = '';
-          /*form.type.value = data.type;
-          form.device.value = data.deviceId;*/
 
           if (data.type === 'owner') {
             WinJS.Utilities.query('select[name=type]')[0].disabled = true;
@@ -55,6 +53,8 @@
             checkDevice[0].checked = data.singleDevice;
             WinJS.Utilities.query('input[name=device]')[0].disabled = !data.singleDevice;
           }
+
+          okBtn.disabled = true;
 
         });
 
