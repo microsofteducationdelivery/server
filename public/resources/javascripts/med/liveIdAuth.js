@@ -106,7 +106,7 @@
     var scriptTag = document.getElementById('odauth');
     var clientId = scriptTag.getAttribute('clientId');
     var scopes = scriptTag.getAttribute('scopes');
-    var redirectUri = scriptTag.getAttribute('redirectUri');
+    var redirectUri = window.location.origin + '/callback.html';
 
     return {
       clientId: clientId,
