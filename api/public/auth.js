@@ -38,7 +38,7 @@ function *liveIdLogin () {
 
 function *login() {
   var data = yield parse(this);
-  var user = yield usersService.findByCredentials({login: data.login, password: data.password});
+  var user = yield usersService.findByCredentials(data);
   if (user) {
     if(user.singleDevice === true && user.deviceId !== data.deviceId) {
       throw new errors.DeviceError('Device is incorrect');
