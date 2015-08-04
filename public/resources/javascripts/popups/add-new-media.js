@@ -65,7 +65,7 @@
                 }
             };
             form.FolderId.value = options.libraryId;
-            form.action += '?token=' + localStorage.getItem('token');
+            form.action += '?token=' + MED.Storage.getToken();
 
             form.file.onchange = function (element) {
               var progressBar = WinJS.Utilities.query('#progress_bar')[0];
@@ -118,6 +118,11 @@
                         }
 
                         window.hidePopup();
+
+                      if(!JSON.parse(MED.Storage.getUser()).hideInvitePopup) {
+                        window.showPopup('/resources/pages/popups/invite-users-after-media-upload.html', { libraryId: options.libraryId });
+                      }
+
                     },
                     error: function () {
                         if (options.error && typeof(options.error) === 'function') {

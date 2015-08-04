@@ -41,6 +41,17 @@ function* userImport () {
   return this;
 }
 
+function* userInvite() {
+  var data = yield parse(this);
+
+  if(this.user) {
+    yield this.user.updateAttributes({
+      inviteUser: data.currentValue
+    });
+  }
+
+}
+
 app.use(route.post('/userImport', userImport));
 app.use(route.post('/isUnique', isUnique));
 module.exports = app;

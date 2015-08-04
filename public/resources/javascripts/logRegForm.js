@@ -57,8 +57,8 @@
           console.log('login success' + req);
           var response = req.response;
 
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('user', JSON.stringify(response.user));
+          MED.Storage.setToken(response.token);
+          MED.Storage.setUser(response.user);
           window.location = '/admin.html';
 
         },
