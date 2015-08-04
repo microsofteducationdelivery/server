@@ -104,13 +104,11 @@
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
                 $(form).ajaxSubmit({
                     success: function () {
-                      debugger;
                         if (options.callback && typeof(options.callback) === 'function') {
                             options.callback();
                         }
 
                         window.hidePopup();
-                        window.showPopup('/resources/pages/popups/invite-users-after-media-upload.html');
                     },
                     error: function () {
                         if (options.error && typeof(options.error) === 'function') {
