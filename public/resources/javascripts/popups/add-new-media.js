@@ -122,7 +122,6 @@
                       if(!JSON.parse(MED.Storage.getUser()).hideInvitePopup) {
                         window.showPopup('/resources/pages/popups/invite-users-after-media-upload.html', { libraryId: options.libraryId });
                       }
-
                     },
                     error: function () {
                         if (options.error && typeof(options.error) === 'function') {
