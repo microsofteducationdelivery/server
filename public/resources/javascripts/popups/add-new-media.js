@@ -69,15 +69,12 @@
 
             form.file.onchange = function (element) {
               var progressBar = WinJS.Utilities.query('#progress_bar')[0];
-              if( WinJS.Utilities.hasClass(progressBar, 'loading')) {
-                WinJS.Utilities.removeClass(progressBar, 'loading');
-              }
+
 
                 if(element.target.files.length > 0) {
+                  WinJS.Utilities.query('#progress_bar')[0].className = 'loading';
 
-                  if (form.file.files[0].type.search('video') !== -1) {
-                    WinJS.Utilities.query('#progress_bar')[0].className = 'loading';
-                  }
+
 
                   if(element.target.files[0].name.length > 20) {
                     fileNameField.innerHTML = element.target.files[0].name.substring(0, 20) + '...' + element.target.files[0].type.split('/')[1];
@@ -89,7 +86,11 @@
                     if (type) {
                         form.type.value = type.text;
                         icon.className = 'fa ' + type.icon;
-                        okBtn.disabled = !(me.isValidType(element.target.files[0].type) && form.name.value);
+                        var isLoaded = (me.isValidType(element.target.files[0].type) && form.name.value);
+                        okBtn.disabled = !isLoaded ;
+                      if( isLoaded ) {
+                        WinJS.Utilities.removeClass(progressBar, 'loading');
+                      }
                     } else {
                         okBtn.disabled = true;
                     }
@@ -103,10 +104,13 @@
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
                 $(form).ajaxSubmit({
                     success: function () {
+                      debugger;
                         if (options.callback && typeof(options.callback) === 'function') {
                             options.callback();
                         }
+
                         window.hidePopup();
+                        window.showPopup('/resources/pages/popups/invite-users-after-media-upload.html');
                     },
                     error: function () {
                         if (options.error && typeof(options.error) === 'function') {

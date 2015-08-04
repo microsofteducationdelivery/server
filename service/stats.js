@@ -61,7 +61,7 @@ module.exports = {
 
     var topDownloads = yield table.findAll({
       where: {LibraryId: libs},
-      order: 'createdAt DESC'
+      order: 'createdAt ASC'
     });
 
     var stringName = 'name|type|createdAt|downloads|views';
