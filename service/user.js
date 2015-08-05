@@ -5,6 +5,7 @@ var
   table = db.User,
   errors = require('../helper/errors'),
   mail = require('./mail'),
+  sms = require('./sms'),
   C = require('../helper/constants'),
   excel = require('./createExcelExport'),
   parse = require('co-busboy'),
@@ -29,6 +30,12 @@ module.exports = {
         console.log('mail sent');
         mail.sendWelcomeEmail(data.login, clearPassword, data.email);
       }
+
+      if (data.phone) {
+        console.log('sms sent');
+        sms.sendWelcomeSms(data.login, clearPassword, data.phone);
+      }
+
       company.addUser(user);
     } catch (e) {
      // yield company.destroy();

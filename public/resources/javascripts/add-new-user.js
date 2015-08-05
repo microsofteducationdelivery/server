@@ -59,10 +59,10 @@
             values.email = form.email.value;
           }
 
-          if (form.device.value && checkDevice[0].checked) {
+          /*if (form.device.value && checkDevice[0].checked) {
             values.deviceId = form.device.value;
             values.singleDevice = true;
-          }
+          }*/
 
           MED.Validation.userRequiredValidation(form, values);
           if (WinJS.Utilities.query('.b-edit-user__error', form).length) {
