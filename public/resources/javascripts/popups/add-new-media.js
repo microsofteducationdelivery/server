@@ -102,6 +102,15 @@
                 window.hidePopup();
             });
             WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
+
+              WinJS.Utilities.query('button.b-button-cancel', element)[0].setAttribute('style', 'display: none');
+              WinJS.Utilities.query('button.b-button-ok', element)[0].disabled = true;
+              WinJS.Utilities.query('button.b-button-ok', element)[0].innerHTML = 'Uploading ...';
+              WinJS.Utilities.query('.b_upload-field__container', element)[0].setAttribute('style', 'display: none');
+
+              window.hidePopup();
+              window.showPopup('/resources/pages/popups/uploading-file.html');
+
                 $(form).ajaxSubmit({
                     success: function () {
                         if (options.callback && typeof(options.callback) === 'function') {
@@ -117,10 +126,8 @@
                         window.hidePopup();
                     }
                 });
-                WinJS.Utilities.query('button.b-button-cancel', element)[0].setAttribute('style', 'display: none');
-                WinJS.Utilities.query('button.b-button-ok', element)[0].disabled = true;
-                WinJS.Utilities.query('button.b-button-ok', element)[0].innerHTML = 'Uploading ...';
-                WinJS.Utilities.query('.b_upload-field__container', element)[0].setAttribute('style', 'display: none');
+
+
             });
         },
         isValidType: function (fileType) {
