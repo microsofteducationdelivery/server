@@ -23,7 +23,6 @@
         console.log('try to register');
         var creds = me.getLoginCreds();
 
-        debugger;
         if (creds.password && creds.login) {
           me.login(creds);
           e.preventDefault();
@@ -40,7 +39,6 @@
       });
     },
     login: function (creds) {
-      debugger;
       var loginErr = WinJS.Utilities.query('#login_err');
 
       MED.Server.xhr({
@@ -84,7 +82,6 @@
       return s.join( "&" ).replace(/%20/g, "+");
     },
     _getValue: function (query) {
-      debugger;
       var el = document.querySelector(query);
 
       return !el.validity.valid ? null : el.value;
@@ -97,7 +94,6 @@
       };
     },
     getLoginCreds: function () {
-      debugger;
       return {
         login: this._getValue('#login-form input[name="login"]'),
         password: this._getValue('#login-form input[name="loginPass"]')

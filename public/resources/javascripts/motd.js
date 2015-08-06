@@ -3,14 +3,17 @@
 
   function getMOTD() {
     return MED.Server.authXHR({
+      type: 'GET',
       url: '/api/motd'
 
     }).then(function (res) {
+      debugger;
       return res.response.text;
     });
   }
 
   function setMOTD(text) {
+
     return MED.Server.authXHR({
       url: '/api/motd',
       type: 'POST',
@@ -73,6 +76,7 @@
         validator();
         setMOTD(newMOTD.value).done(function () {
           getMOTD().done(function (text) {
+            debugger;
             that.loaded = true;
             that.motd = text;
             validator();
