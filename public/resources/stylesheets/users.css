@@ -68,6 +68,12 @@
     box-align:center;
 }
 
+.b-edit-user__note {
+    font-size: 14px;
+    color: grey;
+    margin-left: 20px;
+}
+
 .b-edit-user__buttons button {
     margin-left: 5px;
     margin-right: 5px;
