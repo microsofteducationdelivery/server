@@ -24,7 +24,6 @@
 
     options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
 
-    debugger;
     if(options.type === 'GET') {
       if(options.url.indexOf('?') !== -1) {
         options.url = options.url + '&time='+ Math.random();
@@ -62,7 +61,6 @@
       options.headers.Authorization = 'Bearer ' + WinJS.Application.sessionState.token;
     }
 
-    debugger;
     return xhr(options);
   };
 

@@ -7,7 +7,6 @@
       url: '/api/motd'
 
     }).then(function (res) {
-      debugger;
       return res.response.text;
     });
   }
@@ -76,7 +75,6 @@
         validator();
         setMOTD(newMOTD.value).done(function () {
           getMOTD().done(function (text) {
-            debugger;
             that.loaded = true;
             that.motd = text;
             validator();
