@@ -37,8 +37,9 @@
     height: 20px;
     display: inline-block;
     padding-top: 10px;
-    color: white;
-    background-color: #583c58;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #78c623;
     font-size: 10pt;
     text-align: center;
 }
