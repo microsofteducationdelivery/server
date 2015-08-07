@@ -48,11 +48,11 @@
             WinJS.Utilities.query('input[name=phone]')[0].disabled = false;
           }
 
-          if (data.deviceId) {
+          /*if (data.deviceId) {
             form.device.value = data.deviceId;
             checkDevice[0].checked = data.singleDevice;
             WinJS.Utilities.query('input[name=device]')[0].disabled = !data.singleDevice;
-          }
+          }*/
 
           okBtn.disabled = true;
 
@@ -103,10 +103,10 @@
 
           MED.Validation.userRequiredValidation(form, values);
 
-          if (form.device.value && checkDevice[0].checked) {
+         /* if (form.deviceId.value && checkDevice[0].checked) {
             values.deviceId = form.device.value;
             values.singleDevice = true;
-          }
+          }*/
 
           if (WinJS.Utilities.query('.b-edit-user__error', form).length) {
             this.disabled = true;

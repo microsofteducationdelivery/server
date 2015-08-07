@@ -139,8 +139,17 @@ isPermitted: function (action, data, author) {
       data.newPassword = 'Password was not changed';
     }
 
+    if(user.dataValues.login !== data.login || bcrypt.compareSync(data.password, user.dataValues.password)) {
+      sms.sendUpdateUserProfile(data, user.phone);
+    }
+
+
+
     yield user.save();
     mail.sendUpdateUserProfile(data, user.email);
+
+
+
   },
   removeMultiple: function (ids, author) {
     console.log(ids);
