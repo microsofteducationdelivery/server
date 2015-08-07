@@ -31,6 +31,16 @@
     top: 0;
     left: 0;
 }
+.b-popup-after-uploading-text {
+    margin: 10px 20px 10px 20px;
+    color: gray;
+    font-size: 16px;
+}
+.b-popup-after-uploading-checkbox {
+    padding-left: 20px !important;
+    color: gray;
+    font-size: 16px;
+}
 .b_libraries {
     padding-top: 35px;
     overflow: auto;
