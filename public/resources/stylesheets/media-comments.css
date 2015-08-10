@@ -99,6 +99,8 @@
     width: 530px;
     height: 250px;
     border-top: solid #6ab01c 5px;
+    margin-left: calc(50% - 265px);
+    margin-top: calc(50vh - 125px);
 }
 .b-edit-comment__footer {
     height: 65px;

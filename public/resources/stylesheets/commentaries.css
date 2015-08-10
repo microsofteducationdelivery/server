@@ -7,3 +7,9 @@
     overflow: hidden;
     max-height: calc(100% - 160px);
 }
+
+.b-edit-comment__messagebox {
+    display: block;
+    width: 360px;
+    height: 40px;
+}

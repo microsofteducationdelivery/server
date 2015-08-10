@@ -26,7 +26,6 @@
             form = element.querySelector('form')
             ;
 
-          debugger;
           form.name.value = data.name;
           form.login.value = data.login;
           form.id.value = options.id;
