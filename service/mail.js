@@ -53,7 +53,7 @@ module.exports = {
     mandrillClient.messages.send({
       message: {
         from_email: config.mail.from,
-        subject: 'Your profile was updated',
+        subject: config.mail.changeSubject,
         text: message,
         to: [{email: email}]
       }

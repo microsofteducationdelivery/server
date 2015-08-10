@@ -40,9 +40,9 @@ function *login() {
   var data = yield parse(this);
   var user = yield usersService.findByCredentials(data);
   if (user) {
-    if(user.singleDevice === true && user.deviceId !== data.deviceId) {
+    if(user.singleDevice && data.deviceId && user.deviceId !== data.deviceId) {
       throw new errors.DeviceError('Device is incorrect');
-    } else if(user.singleDevice === false && data.deviceId !== '') {
+    } else if(!user.singleDevice && data.deviceId && data.deviceId !== '') {
       yield user.updateAttributes({deviceId: data.deviceId});
     }
     var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });

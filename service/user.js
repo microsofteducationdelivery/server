@@ -71,7 +71,16 @@ isPermitted: function (action, data, author) {
     return yield table.find({ where: params });
   },
   findByCredentials: function* (credentials) {
-   var user = yield this.findBy(_.omit(credentials, 'password'));
+    var credentialsData = {
+      password: credentials.password
+    };
+
+    if(credentials.email) {
+      credentialsData.email = credentials.email;
+    } else {
+      credentialsData.login = credentials.login;
+    }
+   var user = yield this.findBy(_.omit(credentialsData, 'password'));
     try {
       return bcrypt.compareSync(credentials.password, user.password) ? user : null;
     } catch (e) {

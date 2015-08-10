@@ -23,6 +23,7 @@ input[type="checkbox"] {
     max-height: 50px;
     margin-left: 20px;
     margin-right: 20px;
+    display: inline-block;
 }
 .b_start-footer__link a {
     color: #ffffff;
