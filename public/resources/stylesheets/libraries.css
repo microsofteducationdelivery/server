@@ -76,6 +76,8 @@
     max-width: 80%;
     width: 530px;
     border-top: solid #6ab01c 5px;
+    margin-left: calc(50% - 265px);
+    margin-top: calc(50vh - 200px);
 }
 .form-library .b-library-edit textarea {
     overflow: auto;
@@ -134,6 +136,9 @@
 
 .b-import-user-popup {
     height: 250px;
+    position: absolute;
+    margin-left: calc(50% - 265px);
+    margin-top: calc(50vh - 125px);
 }
 
 .b-import-user-popup-header {
