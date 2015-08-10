@@ -26,10 +26,12 @@
             form = element.querySelector('form')
             ;
 
+          debugger;
           form.name.value = data.name;
           form.login.value = data.login;
           form.id.value = options.id;
           form.password.value = '';
+          form.type.value = data.type;
 
           if (data.type === 'owner') {
             WinJS.Utilities.query('select[name=type]')[0].disabled = true;
@@ -48,8 +50,9 @@
             WinJS.Utilities.query('input[name=phone]')[0].disabled = false;
           }
 
-          /*if (data.deviceId) {
-            form.device.value = data.deviceId;
+
+         /* if (data.deviceId) {
+            form.deviceId.value = data.deviceId;
             checkDevice[0].checked = data.singleDevice;
             WinJS.Utilities.query('input[name=device]')[0].disabled = !data.singleDevice;
           }*/
