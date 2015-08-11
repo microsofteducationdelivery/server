@@ -8,6 +8,13 @@
     height: 60px;
 }
 
+.b-block-for-button {
+    display: inline-block;
+    position: relative;
+    width: 45px;
+    height: 45px;
+}
+
 .b-library-new-media-btn, .b-library-new-folder-btn {
     font-family: "FontAwesome";
     color: #ffffff;
@@ -16,8 +23,29 @@
     position: relative;
     margin-left: 8px;
     bottom: 18px;
-    width: 56px;
+    width: 45px;
     height: 45px;
+}
+
+
+.b-library-new-media-btn:hover + .label-rect-add-media, .b-library-new-folder-btn:hover + .label-rect-add-media {
+    position: absolute;
+    top: -50px;
+    left: 30px;
+    -webkit-transform: translateX(-50%);
+    width: 120px;
+    height: 20px;
+    display: inline-block;
+    padding-top: 10px;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #78c623;
+    font-size: 10pt;
+    text-align: center;
+}
+
+.label-rect-add-media {
+    display: none;
 }
 
 .b-library-edit--form__icon {
