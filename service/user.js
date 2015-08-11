@@ -117,6 +117,10 @@ isPermitted: function (action, data, author) {
       data.password = bcrypt.hashSync(data.password);
     }
 
+    if(user.dataValues.login !== data.login || bcrypt.compareSync(data.password, user.dataValues.password)) {
+      sms.sendUpdateUserProfile(data, user.phone);
+    }
+
     console.log(data);
     _.forIn(data, function(value, key) {
       user[key] = value;
@@ -135,9 +139,7 @@ isPermitted: function (action, data, author) {
       data.newPassword = 'Password was not changed';
     }
 
-    if(user.dataValues.login !== data.login || bcrypt.compareSync(data.password, user.dataValues.password)) {
-      sms.sendUpdateUserProfile(data, user.phone);
-    }
+
 
 
 
