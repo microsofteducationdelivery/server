@@ -46,6 +46,7 @@
       var newMOTD = element.querySelector('textarea');
       var errorText = element.querySelector('.b-motd__error');
       var currentMOTD = element.querySelector('.b-motd__current-value');
+      newMOTD.value = '';
 
       var that = this;
 
