@@ -15,8 +15,6 @@
 
             var prevBlock = WinJS.Utilities.query('div[class="b-libraries-prev"');
 
-            WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', '/preview/' + options.id + '.png');
-
             WinJS.Utilities.query('button[id=path-back-btn]').listen('click', function () {
                 var link = WinJS.Utilities.query('div[class=b-library-path]', element)[0].lastChild;
                 me.getFolderData({id: link.id});
@@ -239,6 +237,7 @@
                   /* IMAGES */
 
                   prevBlock[0].innerHTML = '';
+                  WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', '/preview/' + itemId + '.png');
                   checkedImage(1, itemId);
 
 
