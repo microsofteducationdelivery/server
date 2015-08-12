@@ -8,6 +8,7 @@
       type: 'GET'
     }).then(function (result) {
         return result.response;
+
     });
   }
 

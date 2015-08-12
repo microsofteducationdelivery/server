@@ -79,14 +79,10 @@ isPermitted: function (action, data, author) {
   },
   findByCredentials: function* (credentials) {
     var credentialsData = {
-      password: credentials.password
+      password: credentials.password,
+      login: credentials.login
     };
 
-    if(credentials.email) {
-      credentialsData.email = credentials.email;
-    } else {
-      credentialsData.login = credentials.login;
-    }
    var user = yield this.findBy(_.omit(credentialsData, 'password'));
     try {
       return bcrypt.compareSync(credentials.password, user.password) ? user : null;
@@ -114,12 +110,27 @@ isPermitted: function (action, data, author) {
     });
   },
 
+  credentialsChanged: function (user, newUser, phone) {
+    if(user.dataValues.login !== newUser.login || bcrypt.compareSync(newUser.password, user.dataValues.password)) {
+      sms.sendUpdateUserProfile(newUser, phone);
+    }
+  },
+
   update: function* (id, data, author) {
+    var numberForSms;
     var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
     if (data.password) {
       data.newPassword = data.password;
       data.password = bcrypt.hashSync(data.password);
     }
+
+    if(user.dataValues.phone) {
+      this.credentialsChanged(user, data, user.dataValues.phone);
+    } else if(data.phone) {
+      this.credentialsChanged(user, data, data.phone);
+    }
+
+
 
     console.log(data);
     _.forIn(data, function(value, key) {
@@ -139,16 +150,8 @@ isPermitted: function (action, data, author) {
       data.newPassword = 'Password was not changed';
     }
 
-    if(user.dataValues.login !== data.login || bcrypt.compareSync(data.password, user.dataValues.password)) {
-      sms.sendUpdateUserProfile(data, user.phone);
-    }
-
-
-
     yield user.save();
     mail.sendUpdateUserProfile(data, user.email);
-
-
 
   },
   removeMultiple: function (ids, author) {

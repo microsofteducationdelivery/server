@@ -3,6 +3,7 @@
     width: 80%;
     padding-top: 10px;
     margin-left: 5%;
+    position: relative;
 }
 .b_users {
     padding-top: 35px;
@@ -46,26 +47,16 @@
 
 .b-edit-user__buttons {
     height: 100px;
+    display: block;
+    margin-left: calc(40% - 50px);
+    margin-top: 35px;
+    position: relative;
+}
 
-
-    display:-ms-flexbox;
-    -ms-flex-pack:center;
-    -ms-flex-align:center;
-
-    /* Firefox */
-    display:-moz-box;
-    -moz-box-pack:center;
-    -moz-box-align:center;
-
-    /* Safari, Opera, and Chrome */
-    display:-webkit-box;
-    -webkit-box-pack:center;
-    -webkit-box-align:center;
-
-    /* W3C */
-    display:box;
-    box-pack:center;
-    box-align:center;
+.b-edit-user__note {
+    font-size: 14px;
+    color: grey;
+    margin-left: 20px;
 }
 
 .b-edit-user__buttons button {

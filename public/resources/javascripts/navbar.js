@@ -26,14 +26,14 @@
       });
 
       WinJS.Utilities.query('button.b-navigation-footer__logout', element).listen('click', function (event) {
-        localStorage.removeItem('token');
+        MED.Storage.deleteToken();
         window.location = '/index.html';
       });
     }
   });
     var links;
 
-    var user = localStorage.getItem('user');
+    var user = MED.Storage.getUser();
     if (user === 'undefined') {
         user = {};
     } else {

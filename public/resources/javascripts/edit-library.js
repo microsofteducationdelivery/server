@@ -15,8 +15,6 @@
 
             var prevBlock = WinJS.Utilities.query('div[class="b-libraries-prev"');
 
-            WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', '/preview/' + options.id + '.png');
-
             WinJS.Utilities.query('button[id=path-back-btn]').listen('click', function () {
                 var link = WinJS.Utilities.query('div[class=b-library-path]', element)[0].lastChild;
                 me.getFolderData({id: link.id});
@@ -161,6 +159,34 @@
                 });
             });
 
+          function checkedImage(number, itemId) {
+            var img = new Image();
+            img.src = '/preview/' + itemId + '-' + number + '.png';
+
+            img.onload = function(e) {
+              img.setAttribute('data-image-name', itemId + '-' + number + '.png');
+              prevBlock[0].appendChild(img);
+              var newImage = WinJS.Utilities.query('img[data-image-name="' + itemId + '-' + number + '.png"]', element);
+              newImage.listen('click', function(e) {
+
+                MED.Server.authXHR({
+                  url: '/api/mediaManagement/copyImage?name=' + e.target.getAttribute('data-image-name') + '&fileChange=' + itemId + '.png',
+                  type: 'GET'
+                }).done(function() {
+                    var currentImage = WinJS.Utilities.query('.b-libraries-prev-current', element)[0];
+                    currentImage.removeAttribute('src');
+                    currentImage.setAttribute('src', '/preview/library' + itemId + '.png?time=' + Math.random());
+                  },
+                  function(err) {
+                    console.log(err);
+                  });
+
+              });
+
+              checkedImage(number + 1, itemId);
+            }
+          }
+
             listView.listen('click', function (event) {
                 event.stopPropagation();
                 var currTarget = event.target,
@@ -208,41 +234,14 @@
                         type = target.style
                         ;
 
-
-
                   /* IMAGES */
 
-                  checkedImage(1);
+                  prevBlock[0].innerHTML = '';
+                  WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', '/preview/' + itemId + '.png');
+                  checkedImage(1, itemId);
 
-                  function checkedImage(number) {
-                    var img = new Image();
-                    img.src = '/preview/' + itemId + '-' + number + '.png';
 
-                    img.onload = function(e) {
-                      img.setAttribute('data-image-name', itemId + '-' + number + '.png');
-                      prevBlock[0].appendChild(img);
-                      var newImage = WinJS.Utilities.query('img[data-image-name="' + itemId + '-' + number + '.png"]', element);
-                      newImage.listen('click', function(e) {
-
-                        MED.Server.authXHR({
-                          url: '/api/mediaManagement/copyImage?name=' + e.target.getAttribute('data-image-name') + '&fileChange=' + itemId + '.png',
-                          type: 'GET'
-                        }).done(function() {
-                            var currentImage = WinJS.Utilities.query('.b-libraries-prev-current', element)[0];
-                              currentImage.removeAttribute('src');
-                              currentImage.setAttribute('src', '/preview/library' + itemId + '.png?time=' + Math.random());
-                        },
-                        function(err) {
-                          console.log(err);
-                        });
-
-                      });
-
-                      checkedImage(number + 1);
-                    }
-                  }
-
-                    for (var i = 0; i < mediaItems.length; i++) {
+                  for (var i = 0; i < mediaItems.length; i++) {
                         mediaItems[i].setAttribute('class', 'b_media-list-tpl--item');
                     }
 

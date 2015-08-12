@@ -101,7 +101,11 @@
 .table i:hover .label-rect {
     position: relative;
     top: -68px;
+    -moz-transform:    translateX(-46%);
+    -o-transform:      translateX(-46%);
     -webkit-transform: translateX(-46%);
+    -ms-transform: translate(-46%);
+    transform:         translateX(-46%);
     width: 100px;
     right: -3px;
     height: 20px;

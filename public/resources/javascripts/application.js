@@ -1,6 +1,6 @@
 function initialize() {
-  var user = localStorage.getItem('user'),
-    token = localStorage.getItem('token');
+  var user = MED.Storage.getUser(),
+    token = MED.Storage.getToken();
 
   if (token === 'undefined') {
     token = '';
@@ -49,7 +49,7 @@ function initialize() {
   };
 
   WinJS.Application.sessionState.user = user;
-  WinJS.Application.sessionState.token = localStorage.getItem('token');
+  WinJS.Application.sessionState.token = MED.Storage.getToken();
 
   /*window.authXHR = function (options) {
     options.headers = options.headers || {};

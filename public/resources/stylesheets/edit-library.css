@@ -32,7 +32,11 @@
     position: absolute;
     top: -50px;
     left: 30px;
+    -moz-transform:    translateX(-50%);
+    -o-transform:      translateX(-50%);
     -webkit-transform: translateX(-50%);
+    -ms-transform: translate(-50%);
+    transform:         translateX(-50%);
     width: 120px;
     height: 20px;
     display: inline-block;

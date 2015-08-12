@@ -23,7 +23,7 @@
         console.log('try to register');
         var creds = me.getLoginCreds();
 
-        if (creds.password && creds.email) {
+        if (creds.password && creds.login) {
           me.login(creds);
           e.preventDefault();
         }
@@ -49,7 +49,7 @@
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         data: this._getParam({
-          email: creds.email,
+          login: creds.login,
           password: creds.password
         })
       }).done(
@@ -57,8 +57,8 @@
           console.log('login success' + req);
           var response = req.response;
 
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('user', JSON.stringify(response.user));
+          MED.Storage.setToken(response.token);
+          MED.Storage.setUser(response.user);
           window.location = '/admin.html';
 
         },
@@ -95,7 +95,7 @@
     },
     getLoginCreds: function () {
       return {
-        email: this._getValue('#login-form input[name="login"]'),
+        login: this._getValue('#login-form input[name="login"]'),
         password: this._getValue('#login-form input[name="loginPass"]')
       };
     },

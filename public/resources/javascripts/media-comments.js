@@ -90,7 +90,7 @@
     manageComments: function (list) {
       var sortedList = [],
         coreComments = [],
-        userName = JSON.parse(localStorage.getItem('user')).name,
+        userName = JSON.parse(MED.Storage.getUser()).name,
         replayComments = [];
 
       list.forEach(function (item) {
@@ -165,7 +165,7 @@
       return lvl === 0 ? 'block' : 'none';
     }),
     getEditDisplay: WinJS.Binding.converter(function (author) {
-      var userName = JSON.parse(localStorage.getItem('user')).name;
+      var userName = JSON.parse(MED.Storage.getUser()).name;
       return  userName === author ? 'block' : 'none';
     })
   });

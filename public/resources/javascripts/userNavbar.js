@@ -32,7 +32,7 @@
       });
 
       WinJS.Utilities.query('button.b-navigation-footer__logout', element).listen('click', function (event) {
-        localStorage.removeItem('token');
+        MED.Storage.deleteToken();
         window.location = '/index.html';
       });
 

@@ -60,6 +60,7 @@
       options.headers = options.headers || {};
       options.headers.Authorization = 'Bearer ' + WinJS.Application.sessionState.token;
     }
+
     return xhr(options);
   };
 

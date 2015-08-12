@@ -17,7 +17,7 @@
         var text =  WinJS.Utilities.query('[class=b-edit-comment__messagebox]')[0].value,
           method = options.replay === 'Edit'  ?  'PUT' : 'POST',
           url = '/api/comments',
-          userName = JSON.parse(localStorage.getItem('user')).name,
+          userName = JSON.parse(MED.Storage.getUser()).name,
           data = JSON.stringify({id: id, text: text, parentId: options.parentId, author: userName});
 
         url += method === 'PUT' ? '/' + id : '';

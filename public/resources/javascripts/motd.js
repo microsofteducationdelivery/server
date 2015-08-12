@@ -3,6 +3,7 @@
 
   function getMOTD() {
     return MED.Server.authXHR({
+      type: 'GET',
       url: '/api/motd'
 
     }).then(function (res) {
@@ -11,6 +12,7 @@
   }
 
   function setMOTD(text) {
+
     return MED.Server.authXHR({
       url: '/api/motd',
       type: 'POST',
@@ -44,6 +46,7 @@
       var newMOTD = element.querySelector('textarea');
       var errorText = element.querySelector('.b-motd__error');
       var currentMOTD = element.querySelector('.b-motd__current-value');
+      newMOTD.value = '';
 
       var that = this;
 
