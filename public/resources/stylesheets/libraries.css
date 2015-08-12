@@ -48,10 +48,11 @@
     max-height: calc(100% - 215px);
 }
 .b-add-library-popup.form-library {
-    height: 410px;
+    height: auto;
     width: 65%;
     margin-left: calc(35vw / 2);
     margin-top: calc(50vh - 205px);
+    padding-bottom: 50px;
     top: 0;
     left: 0;
     font-weight: 300;
