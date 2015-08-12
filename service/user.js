@@ -111,7 +111,7 @@ isPermitted: function (action, data, author) {
   },
 
   credentialsChanged: function (user, newUser, phone) {
-    if(user.dataValues.login !== newUser.login || bcrypt.compareSync(newUser.password, user.dataValues.password)) {
+    if(user.dataValues.login !== newUser.login || !bcrypt.compareSync(newUser.password, user.dataValues.password)) {
       sms.sendUpdateUserProfile(newUser, phone);
     }
   },
@@ -124,13 +124,9 @@ isPermitted: function (action, data, author) {
       data.password = bcrypt.hashSync(data.password);
     }
 
-    if(user.dataValues.phone) {
-      this.credentialsChanged(user, data, user.dataValues.phone);
-    } else if(data.phone) {
+    if(data.phone) {
       this.credentialsChanged(user, data, data.phone);
     }
-
-
 
     console.log(data);
     _.forIn(data, function(value, key) {

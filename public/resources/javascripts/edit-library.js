@@ -237,7 +237,18 @@
                   /* IMAGES */
 
                   prevBlock[0].innerHTML = '';
-                  WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', '/preview/' + itemId + '.png');
+
+                  var img = new Image();
+                  img.src = '/preview/' + itemId + '.png';
+
+                  img.onload = function(e) {
+                    WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', '/preview/' + itemId + '.png');
+                  };
+
+                  img.onerror = function(e) {
+                    WinJS.Utilities.query('.b-libraries-prev-current', element)[0].setAttribute('src', '/resources/images/stub.png');
+                  };
+
                   checkedImage(1, itemId);
 
 
