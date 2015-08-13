@@ -14,7 +14,6 @@
         }
       }
       WinJS.Utilities.query('button.b-button-cancel', element).listen('click', function () {
-        debugger;
         window.hidePopup();
 
         notAskAgain();
