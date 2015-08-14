@@ -48,10 +48,11 @@
     max-height: calc(100% - 215px);
 }
 .b-add-library-popup.form-library {
-    height: 410px;
+    height: auto;
     width: 65%;
     margin-left: calc(35vw / 2);
-    margin-top: calc(50vh - 205px);
+    margin-top: 50px;
+    padding-bottom: 50px;
     top: 0;
     left: 0;
     font-weight: 300;
@@ -81,7 +82,7 @@
 }
 .form-library .b-library-edit textarea {
     overflow: auto;
-    width: 65.5%;
+    width: 65%;
 }
 
 .form-library.b-add-library-popup label {
