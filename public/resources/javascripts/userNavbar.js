@@ -4,7 +4,7 @@
   var PageConstructor = WinJS.UI.Pages.define("/resources/pages/userNavbar.html", {
     ready: function (element, options) {
       // Data bind to the child tree to set the control text
-      if (location.hash.search('#') !== -1 ) {
+      if (location.hash.search('#token') !== -1 ) {
         WinJS.Navigation.navigate('resources/pages/password-recovery.html', {token: location.hash});
       } else {
         WinJS.Navigation.navigate('/resources/pages/getStarted.html');

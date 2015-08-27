@@ -86,7 +86,7 @@ function* getRecover (email) {
     this.status = 403;
   } else {
     yield user.updateAttributes({recoveryToken: token}, {fields: ['recoveryToken']});
-    link += '#' + token;
+    link += '#token=' + token;
     mail.sendRecoveryPasswordLink(user.name, link, email);
     this.status = 200;
   }
@@ -96,7 +96,7 @@ function* recoverPassword () {
     user;
 
   user = yield db.User.find({
-      where: {recoveryToken: item.token}
+      where: {recoveryToken: item.token.substr(6)}
   });
 
   var newPass = bcrypt.hashSync(item.newPass);
