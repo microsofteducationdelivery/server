@@ -5,10 +5,11 @@ var config = require('./config'),
     koa = require('koa'),
 
     debug = require('./debug'),
-
+  cors = require('koa-cors'),
     app = koa();
 
 module.exports = app;
+app.use(cors());
 
 app.init = function () {
   koaConfig(app);
