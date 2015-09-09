@@ -44,6 +44,7 @@ var baseConfig = {
   app: {
     root: path.normalize(__dirname + '/../..'),
     port: process.env.PORT || 3000,
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000/',
     env: process.env.NODE_ENV || 'development',
     secret: 'secret key',
     serverId: 'sqldemo'

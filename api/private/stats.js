@@ -5,7 +5,8 @@ var
   sendCo = require('koa-send'),
   fs = require('co-fs'),
   excel = require('../../service/createExcelExport'),
-  service = require('../../service/stats')
+  service = require('../../service/stats'),
+  config = require('../../config')
   ;
 
 var app = koa();
@@ -17,7 +18,7 @@ function* top5Downloads () {
       id: item.id,
       number: item.downloads,
       text: item.name,
-      picture: (item.status === 'converted') ? '/preview/' + item.id + '.png' : null,
+      picture: (item.status === 'converted') ? config.app.baseUrl + '/preview/' + item.id + '.png' : null,
       folder: item.FolderId || 'library' + item.LibraryId
     };
   });
@@ -30,7 +31,7 @@ function* top5Views () {
       id: item.id,
       number: item.views,
       text: item.name,
-      picture: (item.status === 'converted') ? '/preview/' + item.id + '.png' : null,
+      picture: (item.status === 'converted') ? config.app.baseUrl + '/preview/' + item.id + '.png' : null,
       folder: item.FolderId || 'library' + item.LibraryId
     };
   });
@@ -48,4 +49,3 @@ app.use(route.get('/top5Downloads', top5Downloads));
 app.use(route.get('/top5Views', top5Views));
 app.use(route.get('/addToImport', addToImport));
 module.exports = app;
-

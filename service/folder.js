@@ -61,7 +61,7 @@ module.exports = {
           id: media.id,
           name: media.name,
           type: 'media',
-          picture: media.status === 'converted' ? '/preview/' + media.id + '.png' : null };
+          picture: media.status === 'converted' ? config.app.baseUrl + '/preview/' + media.id + '.png' : null };
       })
     );
 
