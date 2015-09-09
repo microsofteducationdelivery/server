@@ -89,6 +89,7 @@ module.exports = {
       }
       var newFolder = yield table.create(data);
       library.addFolder(newFolder);
+      return newFolder;
     } catch (e) {
 
       if (e.code === 'ER_DUP_ENTRY') {
