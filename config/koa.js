@@ -4,12 +4,14 @@ var fs = require('fs'),
   jwt = require('koa-jwt'),
   config = require('../config'),
   mount = require('koa-mount'),
+  cors =  require('koa-cors'),
 
   errors = require('../helper/errors'),
   userService = require('../service/user')
   ;
 
 module.exports = function (app) {
+  app.use(cors());
   if (config.app.env !== 'test') {
     app.use(logger());
   }
