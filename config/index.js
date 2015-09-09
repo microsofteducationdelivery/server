@@ -47,7 +47,7 @@ var baseConfig = {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000/',
     env: process.env.NODE_ENV || 'development',
     secret: 'secret key',
-    serverId: 'sqldemo'
+    serverId: 'sqldemo' || process.env.MED_SERVER_ID
   },
   //TODO: env variables
   mysql: {
