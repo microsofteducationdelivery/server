@@ -40,17 +40,24 @@ function *login() {
   var data = yield parse(this);
   var user = yield usersService.findByCredentials(data);
 
-  if(user.type === 'mobile') {
-    this.status = 401;
-    return;
-  }
-
-  if (user) {
+  if (user && user.type === 'mobile') {
     if(user.singleDevice && data.deviceId && user.deviceId !== data.deviceId) {
       throw new errors.DeviceError('Device is incorrect');
     } else if(!user.singleDevice && data.deviceId && data.deviceId !== '') {
       yield user.updateAttributes({deviceId: data.deviceId});
     }
+    var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
+    this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
+  } else {
+    this.status = 400;
+  }
+}
+
+function *desktopLogin() {
+  var data = yield parse(this);
+  var user = yield usersService.findByCredentials(data);
+
+  if (user && user.type !== 'mobile') {
     var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
     this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
   } else {
@@ -115,6 +122,7 @@ function* recoverPassword () {
   }
 }
 app.use(route.post('/login', login));
+app.use(route.post('/desktopLogin', desktopLogin));
 app.use(route.post('/loginWithLiveID', liveIdLogin));
 app.use(route.post('/register', register));
 app.use(route.post('/passwordRecovery/', recoverPassword));

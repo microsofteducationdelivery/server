@@ -43,7 +43,7 @@
 
       MED.Server.xhr({
         type: 'POST',
-        url: '/api/auth/login',
+        url: '/api/auth/desktopLogin',
         responseType: 'json',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
