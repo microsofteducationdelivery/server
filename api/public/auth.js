@@ -95,7 +95,7 @@ function* getRecover (email) {
   user = yield db.User.find({
     where: {email: email}
   });
-  if (!user || !user.email) {
+  if (!user || !user.email || user.type === 'mobile') {
     this.status = 403;
   } else {
     yield user.updateAttributes({recoveryToken: token}, {fields: ['recoveryToken']});
