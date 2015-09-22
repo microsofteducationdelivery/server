@@ -221,6 +221,13 @@ isPermitted: function (action, data, author) {
       return null;
     }
 
+  },
+
+  searchUser: function* (search) {
+    return yield table.findAll({
+      where:  ["name like ?", '%' + search + '%'],
+      attributes: ['id', 'name']
+    });
   }
 };
 
