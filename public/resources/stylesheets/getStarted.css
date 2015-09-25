@@ -35,11 +35,21 @@
     font-weight: bold;
     font-size: 14pt;
 }
+.downloads-btn {
+    position: absolute;
+    bottom: -40px;
+    right: 20px;
+}
 .download-btn {
     width: 271px;
-    float: right;
     height: 67px;
+    margin-bottom: 10px;
     background-image:  url(/resources/images/download.png);
+}
+.download2-btn {
+    width: 271px;
+    height: 67px;
+    background-image:  url(/resources/images/download2.png);
 }
 .b_step-box {
     margin-left: 6%;

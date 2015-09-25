@@ -8,6 +8,7 @@
   WinJS.UI.Pages.define('/resources/pages/popups/forgot-password.html', {
 
     ready: function (element) {
+      MED.Storage.deleteToken();
       WinJS.Utilities.query('button.b-button-ok', element).listen('click', function () {
         var email = WinJS.Utilities.query('input[type=email]', element)[0];
 

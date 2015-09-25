@@ -253,6 +253,7 @@ nav {
     margin-left: 6%;
     margin-right: 10%;
     margin-top: 20px;
+    position: relative;
 }
 .b_start-header {
     height: auto;

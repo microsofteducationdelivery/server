@@ -3,7 +3,7 @@
 
   var PageConstructor = WinJS.UI.Pages.define("/resources/pages/navbar.html", {
     ready: function (element, options) {
-      var libHref = WinJS.Utilities.query('a[href="/resources/pages/libraries.html"]', element)
+      var libHref = WinJS.Utilities.query('a[href="/resources/pages/libraries.html"]', element);
       WinJS.Navigation.navigate(libHref[0].href);
       libHref.addClass('b-navigation__link-active');
 

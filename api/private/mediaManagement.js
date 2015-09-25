@@ -46,7 +46,6 @@ function* changeImage() {
 
 }
 
-
 function* copyImage() {
   var copyFile = yield fs.readFile('public/preview/' + this.query.name);
   yield fs.writeFile('public/preview/library' + this.query.fileChange, copyFile);

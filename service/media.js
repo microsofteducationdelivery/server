@@ -72,5 +72,12 @@ module.exports = {
 
     var media = yield db.Media.create(data);
     library.addMedium(media);
+  },
+
+  searchMedia: function* (search) {
+    return yield table.findAll({
+      where: ["name like ?", '%' + search + '%'],
+      attributes: ['id', 'name', 'type', 'FolderId', 'LibraryId']
+    });
   }
 };

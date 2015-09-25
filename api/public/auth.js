@@ -39,7 +39,8 @@ function *liveIdLogin () {
 function *login() {
   var data = yield parse(this);
   var user = yield usersService.findByCredentials(data);
-  if (user) {
+
+  if (user && user.type === 'mobile') {
     if(user.singleDevice && data.deviceId && user.deviceId !== data.deviceId) {
       throw new errors.DeviceError('Device is incorrect');
     } else if(!user.singleDevice && data.deviceId && data.deviceId !== '') {
@@ -48,7 +49,19 @@ function *login() {
     var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
     this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
   } else {
-    this.status = 401;
+    this.status = 400;
+  }
+}
+
+function *desktopLogin() {
+  var data = yield parse(this);
+  var user = yield usersService.findByCredentials(data);
+
+  if (user && user.type !== 'mobile') {
+    var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
+    this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
+  } else {
+    this.status = 400;
   }
 }
 
@@ -82,11 +95,11 @@ function* getRecover (email) {
   user = yield db.User.find({
     where: {email: email}
   });
-  if (!user || !user.email) {
+  if (!user || !user.email || user.type === 'mobile') {
     this.status = 403;
   } else {
     yield user.updateAttributes({recoveryToken: token}, {fields: ['recoveryToken']});
-    link += '#' + token;
+    link += '#token=' + token;
     mail.sendRecoveryPasswordLink(user.name, link, email);
     this.status = 200;
   }
@@ -96,7 +109,7 @@ function* recoverPassword () {
     user;
 
   user = yield db.User.find({
-      where: {recoveryToken: item.token}
+      where: {recoveryToken: item.token.substr(6)}
   });
 
   var newPass = bcrypt.hashSync(item.newPass);
@@ -109,6 +122,7 @@ function* recoverPassword () {
   }
 }
 app.use(route.post('/login', login));
+app.use(route.post('/desktopLogin', desktopLogin));
 app.use(route.post('/loginWithLiveID', liveIdLogin));
 app.use(route.post('/register', register));
 app.use(route.post('/passwordRecovery/', recoverPassword));

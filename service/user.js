@@ -111,7 +111,11 @@ isPermitted: function (action, data, author) {
   },
 
   credentialsChanged: function (user, newUser, phone) {
-    if(user.dataValues.login !== newUser.login || !bcrypt.compareSync(newUser.password, user.dataValues.password)) {
+    if(user.dataValues.login !== newUser.login || (newUser.newPassword && !bcrypt.compareSync(newUser.newPassword, user.dataValues.password))) {
+
+      if(!newUser.newPassword) {
+        newUser.newPassword = 'Password was not changed';
+      }
       sms.sendUpdateUserProfile(newUser, phone);
     }
   },
@@ -122,6 +126,8 @@ isPermitted: function (action, data, author) {
     if (data.password) {
       data.newPassword = data.password;
       data.password = bcrypt.hashSync(data.password);
+    } else {
+      data.password = user.dataValues.password;
     }
 
     if(data.phone) {
@@ -215,6 +221,13 @@ isPermitted: function (action, data, author) {
       return null;
     }
 
+  },
+
+  searchUser: function* (search) {
+    return yield table.findAll({
+      where:  ["name like ?", '%' + search + '%'],
+      attributes: ['id', 'name']
+    });
   }
 };
 

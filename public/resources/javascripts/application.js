@@ -10,10 +10,16 @@ function initialize() {
   } else {
     user = JSON.parse(user);
   }
-  if ((!user || !token ) && window.location.pathname !== '/index.html') {
+  if ((!user || !token ) && (window.location.pathname !== '/index.html')) {
     window.location = '/index.html';
   }
-  if (user && token && window.location.pathname === '/index.html') {
+
+  if (window.location.hash.indexOf('#token') !== -1) {
+    debugger;
+    window.localStorage.clear();
+  }
+
+  if (user && token && (window.location.pathname === '/index.html' || window.location.pathname === '/')) {
       window.location = '/admin.html';
   }
 
