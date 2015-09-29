@@ -1,7 +1,7 @@
 var
   db = require('../db'),
   table = db.Library,
-
+  sequelize = require('sequelize'),
   errors = require('../helper/errors'),
   C = require('../helper/constants')
 ;
@@ -41,15 +41,13 @@ module.exports = {
 
     var sql = db.client;
     var lookupTable = {};
-
-    var folders = yield db.Folder.findAll({attributes: [
-        'LibraryId',
-        [sql.fn('COUNT', 'id'), 'count']
-      ]
+    //var folders = yield db.Folder.count({ group: 'LibraryId', attributes: ['LibraryId'] });
+    var folders = yield db.Folder.findAll({
+      attributes: ['LibraryId', [sequelize.fn('count', sequelize.col('LibraryId')), 'count']],
+      group: ['LibraryId']
     });
-
     folders.forEach(function (record) {
-      lookupTable[record.LibraryId] = record.dataValues.count;
+      lookupTable[record.dataValues.LibraryId] = record.dataValues.count;
     });
 
     return (yield table.findAll({
