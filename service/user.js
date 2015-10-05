@@ -152,7 +152,16 @@ isPermitted: function (action, data, author) {
       data.newPassword = 'Password was not changed';
     }
 
-    yield user.save();
+    try {
+      yield user.save();
+    } catch(e) {
+      if (e[0].code === 'ER_DUP_ENTRY') {
+        throw new errors.DuplicateError('Duplicate email');
+      } else {
+        throw new errors.Error(e[0].message);
+      }
+    }
+
     mail.sendUpdateUserProfile(data, user.email);
 
   },
