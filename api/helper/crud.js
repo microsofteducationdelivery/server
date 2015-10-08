@@ -13,9 +13,8 @@ module.exports = function (service, customActions) {
     },
 
     create: function* () {
-      var body = yield service.add(yield parse(this), this.user);
+      this.body = yield service.add(yield parse(this), this.user);
       this.status = 201;
-      this.body = body;
     },
 
     show: function* (id) {

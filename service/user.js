@@ -174,7 +174,7 @@ isPermitted: function (action, data, author) {
     return table.destroy({ id: ids, CompanyId: author.CompanyId });
   },
 
-  exportUsers: function* (author, reqBody) {
+  importUsers: function* (author, reqBody) {
 
     var parts = parse(reqBody),
       part,
