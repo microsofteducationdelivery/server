@@ -53,11 +53,16 @@ module.exports = function (app) {
   app.use(jwt({secret: config.app.secret, passthrough: true}));
   app.use(function* (next) {
     console.log(this.request.type);
-    if (this.request.type === 'multipart/form-data' && this.query.token) {
+    if (this.query.token) {
       this.user = yield jwt.verify(this.query.token, config.app.secret);
     }
 
     if (!this.user || !this.user.id) {
+      this.status = 403;
+      return;
+    }
+
+    if (this.user.userAccess === 'mobile' && /\/mobile\/data|comments|media|changePassword\/*[0-9]/.test(this.req.url)) {
       this.status = 403;
       return;
     }

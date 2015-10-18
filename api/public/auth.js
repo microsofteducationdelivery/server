@@ -9,7 +9,8 @@ var app = require('koa')(),
   generatePassword = require('password-generator'),
   config = require('../../config'),
   usersService = require('../../service/user'),
-  errors = require('../../helper/errors')
+  errors = require('../../helper/errors'),
+  ua = require('mobile-agent')
 ;
 
 function *liveIdLogin () {
@@ -46,7 +47,7 @@ function *login() {
     } else if(!user.singleDevice && data.deviceId && data.deviceId !== '') {
       yield user.updateAttributes({deviceId: data.deviceId});
     }
-    var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
+    var token = jwt.sign({id: user.id, issueTime: Date.now(), userAccess: 'mobile'}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
     this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
   } else {
     this.status = 400;
@@ -58,7 +59,7 @@ function *desktopLogin() {
   var user = yield usersService.findByCredentials(data);
 
   if (user && user.type !== 'mobile') {
-    var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
+    var token = jwt.sign({id: user.id, issueTime: Date.now(), userAccess: 'desktop'}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
     this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
   } else {
     this.status = 400;
