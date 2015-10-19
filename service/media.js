@@ -77,6 +77,7 @@ module.exports = {
   searchMedia: function* (search) {
     return yield table.findAll({
       where: ["name like ?", '%' + search + '%'],
+      attributes: ['id', 'name', 'type', 'FolderId', 'LibraryId']
     });
   }
 };

@@ -52,7 +52,6 @@ module.exports = function (app) {
   // middleware below this line is only reached if jwt token is valid
   app.use(jwt({secret: config.app.secret, passthrough: true}));
   app.use(function* (next) {
-    console.log(this.request.type);
     if (this.query.token) {
       this.user = yield jwt.verify(this.query.token, config.app.secret);
     }
@@ -62,7 +61,8 @@ module.exports = function (app) {
       return;
     }
 
-    if (this.user.userAccess === 'mobile' && /\/mobile\/data|comments|media|changePassword\/*[0-9]/.test(this.req.url)) {
+    var mobileRe = /\/mobile\/(data|comments(\/[0-9]+)?|media\/[0-9]+|changePassword\/[0-9]*)$/;
+    if (this.user.userAccess === 'mobile' && mobileRe.test(this.req.url)) {
       this.status = 403;
       return;
     }

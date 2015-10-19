@@ -9,8 +9,7 @@ var app = require('koa')(),
   generatePassword = require('password-generator'),
   config = require('../../config'),
   usersService = require('../../service/user'),
-  errors = require('../../helper/errors'),
-  ua = require('mobile-agent')
+  errors = require('../../helper/errors')
 ;
 
 function *liveIdLogin () {
