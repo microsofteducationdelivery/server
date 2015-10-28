@@ -40,8 +40,10 @@ function* top5Views () {
 function* addToImport () {
   try {
     var creds = yield service.addToImport(this.user.CompanyId);
+    console.log(creds);
     var path = yield excel.createExcelFile(creds.data, creds.fields, 'stats', this.user.CompanyId);
     yield sendCo(this, path);
+    console.log(path);
     yield fs.unlink(path);
   } catch (err) {
     console.log(err);
