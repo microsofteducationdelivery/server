@@ -28,7 +28,7 @@ function* isUnique () {
 }
 
 function* userImport () {
-  var creds = yield user.exportUsers(this.user, this);
+  var creds = yield user.importUsers(this.user, this);
 
   if (creds) {
     var path = yield excel.createExcelFile(creds.errors, creds.fields, 'sheet1', this.user);
@@ -49,9 +49,21 @@ function* userInvite() {
       inviteUser: data.currentValue
     });
   }
+}
 
+function* getFileImport() {
+  var path = './static/userImportTemplate.xlsx';
+  var fstat = yield fs.stat(path);
+
+  console.log(fstat.isFile());
+  if (fstat.isFile()) {
+    this.set('Content-Disposition', 'attachment; filename="userImportTemplate.xlsx"');
+    this.body = yield fs.createReadStream(path);
+  }
 }
 
 app.use(route.post('/userImport', userImport));
 app.use(route.post('/isUnique', isUnique));
+app.use(route.get('/getImportFile', getFileImport));
+
 module.exports = app;

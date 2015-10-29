@@ -98,6 +98,7 @@ module.exports = {
         throw new errors.ValidationError('Validation failed', { errors: e });
       }
     }
+    return {id: newFolder.dataValues.id, name: newFolder.dataValues.name};
   },
 
   update: function* (id, data, author) {
