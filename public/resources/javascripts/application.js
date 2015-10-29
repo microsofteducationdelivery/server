@@ -15,7 +15,6 @@ function initialize() {
   }
 
   if (window.location.hash.indexOf('#token') !== -1) {
-    debugger;
     window.localStorage.clear();
   }
 

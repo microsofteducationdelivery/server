@@ -5,7 +5,7 @@
     'use strict';
     var controlClass = WinJS.Class.define(
         function Control_ctor (element, options) {
-            WinJS.Utilities.query('a', element).listen('click', function (event) {
+            WinJS.Utilities.query('a[class="b_start-footer-link"]', element).listen('click', function (event) {
 
                 event.preventDefault();
 
