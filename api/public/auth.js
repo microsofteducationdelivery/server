@@ -89,7 +89,7 @@ function *register() {
 }
 function* getRecover (email) {
   var token = generatePassword(),
-    link = '/getStarted.html',
+    link = this.get('referer'),
     user;
 
   user = yield db.User.find({
@@ -99,7 +99,7 @@ function* getRecover (email) {
     this.status = 403;
   } else {
     yield user.updateAttributes({recoveryToken: token}, {fields: ['recoveryToken']});
-    link = '#token=' + token;
+    link += '#token=' + token;
     mail.sendRecoveryPasswordLink(user.name, link, email);
     this.status = 200;
   }
