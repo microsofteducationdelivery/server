@@ -11,21 +11,15 @@ var
 
 function* searchUsersAndMedia() {
   var data =  yield parse(this);
-  var commonArray = [];
-  if(data) {
-    var mediaFiles = yield media.searchMedia(data);
-    mediaFiles.forEach(function(item) {
-      item.type = 'media';
-      commonArray.push(item);
-    });
-    var users = yield user.searchUser(data);
-    users.forEach(function(item) {
-      item.type = 'user';
-      commonArray.push(item);
-    });
-  }
 
-  return this.body = commonArray;
+    var mediaFiles = yield media.searchMedia(data);
+
+    var users = yield user.searchUser(data);
+
+  return this.body = {
+    media: mediaFiles,
+    users: users
+  };
 }
 
 app.use(route.post('/search', searchUsersAndMedia));
