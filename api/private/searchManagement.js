@@ -12,9 +12,9 @@ var
 function* searchUsersAndMedia() {
   var data =  yield parse(this);
 
-    var mediaFiles = yield media.searchMedia(data);
+    var mediaFiles = yield media.searchMedia(data, this.user);
 
-    var users = yield user.searchUser(data);
+    var users = yield user.searchUser(data, this.user);
 
   return this.body = {
     media: mediaFiles,

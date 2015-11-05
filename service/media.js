@@ -74,9 +74,17 @@ module.exports = {
     library.addMedium(media);
   },
 
-  searchMedia: function* (search) {
+  searchMedia: function* (search, user) {
+
+    var libraries = yield library.findAll({
+      where: {'company.id': user.dataValues.CompanyId},
+      include: [db.Company]
+    });
+
     return yield table.findAll({
-      where: ["name like ?", '%' + search + '%'],
+      where: ['name like ? ', '%' + search + '%', 'LibraryId:', libraries.map(function(item) {
+        return item.dataValues.id;
+      })],
       attributes: ['id', 'name', 'type', 'FolderId', 'LibraryId']
     });
   }

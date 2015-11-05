@@ -46,7 +46,6 @@ module.exports = {
       }
       currentLineDownloads++;
     }
-
     return yield thunkify(workbook.save)();
   },
 
