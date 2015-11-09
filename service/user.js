@@ -232,10 +232,10 @@ isPermitted: function (action, data, author) {
 
   },
 
-  searchUser: function* (search) {
+  searchUser: function* (search, user) {
     return yield table.findAll({
-      where:  ["name like ?", '%' + search + '%'],
-      attributes: ['id', 'name']
+      where:  ['name like ?', '%' + search + '%', 'CompanyId:', user.dataValues.id],
+      attributes: ['id', 'name', 'CompanyId']
     });
   }
 };
