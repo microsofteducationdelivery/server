@@ -96,13 +96,6 @@ isPermitted: function (action, data, author) {
   },
 
   list: function* (author) {
-
-    var res = yield table.findAll({
-      where: { CompanyId: author.CompanyId },
-      attributes: ['id', 'login', 'type', 'name'],
-      include: [db.Library]
-    });
-
     return yield table.findAll({
       where: { CompanyId: author.CompanyId },
       attributes: ['id', 'login', 'type', 'name'],
@@ -234,7 +227,7 @@ isPermitted: function (action, data, author) {
 
   searchUser: function* (search, user) {
     return yield table.findAll({
-      where:  ['name like ?', '%' + search + '%', 'CompanyId:', user.dataValues.id],
+      where:  ['name like ? AND CompanyId=' + user.dataValues.CompanyId + '', '%' + search + '%'],
       attributes: ['id', 'name', 'CompanyId']
     });
   }

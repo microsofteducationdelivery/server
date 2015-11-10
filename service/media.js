@@ -82,9 +82,9 @@ module.exports = {
     });
 
     return yield table.findAll({
-      where: ['name like ? ', '%' + search + '%', 'LibraryId:', libraries.map(function(item) {
+      where: ['name like ? AND LibraryId= ?', '%' + search + '%', libraries.map(function(item) {
         return item.dataValues.id;
-      })],
+      }).join()],
       attributes: ['id', 'name', 'type', 'FolderId', 'LibraryId']
     });
   }
