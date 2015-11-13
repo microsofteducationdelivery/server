@@ -32,9 +32,6 @@ function* changeImage() {
     part.on('data', function (chank) {
       bufs.push(chank);
     });
-    part.on('end', function () {
-
-    });
   }
 
   try {
@@ -42,13 +39,18 @@ function* changeImage() {
     this.body = '/preview/' + this.query.media + '.png';
   } catch (e) {
     console.log(e);
+    this.body = 404;
   }
 
 }
 
 function* copyImage() {
-  var copyFile = yield fs.readFile('public/preview/' + this.query.name);
-  yield fs.writeFile('public/preview/library' + this.query.fileChange, copyFile);
+  try {
+    var copyFile = yield fs.readFile('public/preview/' + this.query.name);
+    yield fs.writeFile('public/preview/library' + this.query.fileChange, copyFile);
+  } catch (e) {
+    this.body = 404;
+  }
 }
 
 app.use(route.post('/changeImage', changeImage));

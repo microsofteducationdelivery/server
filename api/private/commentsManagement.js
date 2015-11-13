@@ -23,9 +23,19 @@ function* commentsExport () {
 
   var userCompany = yield this.user.getCompany();
 
-  var path = yield comment.commentsExport(resArray, userCompany);
-  yield send(this, path);
-  yield fs.unlink(path);
+  if(resArray.length && userCompany.length) {
+
+    var path = yield comment.commentsExport(resArray, userCompany);
+    if(path) {
+      yield send(this, path);
+      yield fs.unlink(path);
+    } else {
+      this.body = 404;
+    }
+  } else {
+    this.body = 500;
+  }
+
 }
 
 app.use(route.get('/commentsExport', commentsExport));

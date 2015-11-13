@@ -9,13 +9,23 @@ module.exports = function (service, customActions) {
   var app = koa();
   var actions = _.assign({
     index: function* () {
-      this.body = yield service.list(this.user);
+      try {
+        this.body = yield service.list(this.user);
+      } catch (e) {
+        this.body = 404;
+      }
+
     },
 
     create: function* () {
       var body = yield service.add(yield parse(this), this.user);
-      this.status = 201;
-      this.body = body;
+      if (body) {
+        this.status = 201;
+        this.body = body;
+      } else {
+        this.status = 500;
+      }
+
     },
 
     show: function* (id) {
@@ -27,18 +37,28 @@ module.exports = function (service, customActions) {
           this.body = doc;
         }
       } catch (e) {
-        this.status = 400;
+        this.status = 404;
       }
     },
 
     update: function* (id) {
-      yield service.update(id, yield parse(this), this.user);
-      this.status = 204;
+      try {
+        yield service.update(id, yield parse(this), this.user);
+        this.status = 204;
+      } catch (e) {
+        this.status = 500;
+      }
+
     },
 
     destroyMultiple: function* () {
-      yield service.removeMultiple(yield parse(this), this.user);
-      this.status = 204;
+      try {
+        yield service.removeMultiple(yield parse(this), this.user);
+        this.status = 204;
+      } catch (e) {
+        this.status = 500;
+      }
+
     }
   }, customActions);
 
