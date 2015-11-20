@@ -29,14 +29,14 @@ module.exports = {
       where: {'library.id': libraries.map(function (item) {
         return item.dataValues.id;
       })},
-      attributes: ['name', 'views', 'type', 'id', 'like', 'unlike'],
+      attributes: ['name', 'views', 'type', 'id', 'like', 'unlike', 'FolderId', 'LibraryId'],
       include: [{model: comment, required: true}, {model: folder, as: 'Folder'}, {model: library, as: 'Library'}]
     });
     return yield mediaList.map(function* (item) {
       var path;
       path = item.folder ? yield folders.getPath(item.folder.dataValues.id ) : item.library.dataValues.name;
 
-      return _(item).pick(['id', 'name', 'type', 'like', 'unlike']).merge({
+      return _(item).pick(['id', 'name', 'type', 'like', 'unlike', 'FolderId', 'LibraryId']).merge({
         path: path,
         amount: item.comments.length,
         date: _.last(item.comments).createdAt

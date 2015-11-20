@@ -42,19 +42,23 @@ module.exports = {
     });
   },
   sendUpdateUserProfile: function(data, email) {
-    var message = config.mail.changeUserText.replace('<user>', data.login)
-      .replace('<login>', data.login)
-      .replace('<email>', data.email)
-      .replace('<password>', data.newPassword)
-      .replace('<type>', data.type)
-      .replace('<singleDevice>', data.singleDevice)
-      .replace('<deviceId>', data.deviceId);
+    var messageUpdateArray = config.mail.changeUserText;
+
+    for(var name in data) {
+      messageUpdateArray.push(name + ': ' + '<' + name + '>');
+    }
+
+    var message = messageUpdateArray.join('\n');
+
+    for(var nameField in data) {
+      message.replace('<' + nameField + '>', data[nameField]);
+    }
 
     mandrillClient.messages.send({
       message: {
         from_email: config.mail.from,
         subject: config.mail.changeSubject,
-        text: message,
+        text: message + 'Regards',
         to: [{email: email}]
       }
     }, function (result) {
