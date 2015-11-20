@@ -3,7 +3,7 @@ var path = require('path'),
 
 var baseConfig = {
   mail: {
-    key: 'pPSw8KIDRM86OYtpe6ABIQ',
+    key: process.env.MAIL_KEY || 'pPSw8KIDRM86OYtpe6ABIQ',
     from: 'noreply@microsofteducationdelivery.net',
     recoverySubject: 'Microsoft Education Delivery password recovery',
     recoveryText: 'Hello' +
@@ -31,15 +31,9 @@ var baseConfig = {
       'Hi',
       '',
       'Your profile was changed.',
-      'Your new user data are:',
-      '',
-      'username: <user>',
-      'password: <password>',
-      'email: <email>',
-      'user type: <type>',
-      '',
-      'Regards'
-    ].join('\n')
+      'Your new user data is:',
+      ''
+    ]
   },
   app: {
     root: path.normalize(__dirname + '/../..'),
@@ -58,11 +52,11 @@ var baseConfig = {
     port: process.env.DB_PORT || 3306
   },
   sms: {
-    accountSid: 'AC5eb47ab59b156d2a529812b8b2cd35e2',
-    authToken: '7f32140ae849193d754cf91eef840828',
+    accountSid: process.env.SMS_SID || 'AC5eb47ab59b156d2a529812b8b2cd35e2',
+    authToken: process.env.SMS_TOKEN || '7f32140ae849193d754cf91eef840828',
     welcomeText: 'Welcome to MED. Your credentials are: <user> and <password>',
     changeUserText: 'Your MED credentials have been changed: <user> / <password>',
-    from: '+16123516315'
+    from: process.env.SMS_FROM || '+16123516315'
   }
 };
 
