@@ -54,7 +54,7 @@ function* userInvite() {
 function* getFileImport() {
   var path = './static/userImportTemplate.xlsx';
   var fstat = yield fs.stat(path);
-  
+
   if (fstat.isFile()) {
     this.set('Content-Disposition', 'attachment; filename="userImportTemplate.xlsx"');
     this.body = yield fs.createReadStream(path);

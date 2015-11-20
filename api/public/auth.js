@@ -70,7 +70,7 @@ function *register() {
   data.login = data.email;
   data.password = generatePassword();
   console.log(data.password);
-  data.type = 'owner';
+  data.type = 'admin';
   try {
     yield usersService.add(data);
   } catch (e) {
