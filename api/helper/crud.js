@@ -18,14 +18,16 @@ module.exports = function (service, customActions) {
     },
 
     create: function* () {
-      var body = yield service.add(yield parse(this), this.user);
-      if (body) {
+      try {
+        var body = yield service.add(yield parse(this), this.user);
         this.status = 201;
-        this.body = body;
-      } else {
+      } catch (e) {
         this.status = 500;
       }
 
+      if (body) {
+        this.body = body;
+      }
     },
 
     show: function* (id) {
