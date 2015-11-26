@@ -42,11 +42,10 @@ module.exports = {
 
   },
   findById: function* (id) {
-    var commentList = yield table.findAll({
+    return yield table.findAll({
       where: {MediumId: id},
       attributes: ['text', 'author', 'date', 'id', 'parentId', 'createdAt']
     });
-    return commentList;
   },
   update: function* (id, config) {
     var comment = yield table.find(id);

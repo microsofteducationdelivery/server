@@ -1,7 +1,8 @@
 var
   config = require('../config'),
   mandrill = require('mandrill-api/mandrill'),
-  mandrillClient = new mandrill.Mandrill(config.mail.key)
+  mandrillClient = new mandrill.Mandrill(config.mail.key),
+  _ = require('lodash')
 ;
 
 
@@ -42,23 +43,23 @@ module.exports = {
     });
   },
   sendUpdateUserProfile: function(data, email) {
-    var messageUpdateArray = config.mail.changeUserText;
+    var messageUpdateArray = _.clone(config.mail.changeUserText);
 
-    for(var name in data) {
-      messageUpdateArray.push(name + ': ' + '<' + name + '>');
-    }
+    _.forIn(data, function(value, key) {
+      messageUpdateArray.push(key + ': ' + '<' + key + '>');
+    });
 
     var message = messageUpdateArray.join('\n');
 
-    for(var nameField in data) {
-      message.replace('<' + nameField + '>', data[nameField]);
-    }
+    _.forIn(data, function(value, key) {
+      message = message.replace('<' + key + '>', value);
+    });
 
     mandrillClient.messages.send({
       message: {
         from_email: config.mail.from,
         subject: config.mail.changeSubject,
-        text: message + 'Regards',
+        text: message + '\n Regards',
         to: [{email: email}]
       }
     }, function (result) {

@@ -74,5 +74,16 @@ module.exports = {
     //strip "library" part from id
     ids = ids.map(function (id) { return id.substr(7)});
     return table.destroy({ id: ids, CompanyId: author.CompanyId });
+  },
+
+  changeLibraryName: function* (id, name, author) {
+    if (!this.isPermitted(C.UPDATE, {}, author)) {
+      throw new errors.AccessDeniedError('Access denied');
+    }
+
+    var library = yield table.find(id.substr(7));
+    yield library.updateAttributes({
+      name: name
+    });
   }
 };

@@ -117,6 +117,18 @@ isPermitted: function (action, data, author) {
     var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
     var allAdminUser = yield table.findAll({where: {type: 'admin', CompanyId: author.CompanyId}});
     var mailMessage = {};
+    var arrayFields = ['name', 'login', 'password', 'email', 'phone', 'type'];
+
+    for(var i = 0; i < arrayFields.length; i++) {
+      if(data[arrayFields[i]] && user.dataValues[arrayFields[i]] !== data[arrayFields[i]] && arrayFields[i] !== 'password') {
+        mailMessage[arrayFields[i]] = data[arrayFields[i]];
+      } else if(arrayFields[i] === 'password') {
+        if(data.password && !bcrypt.compareSync(data.password, user.dataValues.password)) {
+          mailMessage.password = data.password;
+        }
+      }
+    }
+
     if (data.password) {
       data.newPassword = data.password;
       data.password = bcrypt.hashSync(data.password);
@@ -141,27 +153,12 @@ isPermitted: function (action, data, author) {
       data.deviceId = user.deviceId;
     }
 
-    /*if(!data.password) {
-      data.newPassword = 'Password was not changed';
-    }*/
-
     if(user.type === 'admin' && data.type !== 'admin' && allAdminUser.length === 1) {
       if (user.id === allAdminUser[0].dataValues.id) {
         //Ask it
         throw new Error('It is last admin for company.');
       }
     }
-
-    var arrayFields = ['name', 'login', 'password', 'email', 'phone', 'type'];
-    arrayFields.map(function(item) {
-      if(data[item] && user[item] !== data[item] && item !== 'password') {
-        mailMessage[item] = data[item];
-      } else {
-        if(data.password && !bcrypt.compareSync(data.password, user.password)) {
-          mailMessage.password = data.password;
-        }
-      }
-    });
 
     try {
       yield user.save();
@@ -177,8 +174,6 @@ isPermitted: function (action, data, author) {
 
   },
   removeMultiple: function (ids, author) {
-    console.log(ids);
-    console.log(author.id);
     if (ids.indexOf(author.id.toString()) !== -1) {
       throw new errors.AccessDeniedError('Access denied');
     }
