@@ -33,7 +33,7 @@ var baseConfig = {
       'Your profile was changed.',
       'Your new user data is:',
       ''
-    ]
+    ].join('\n')
   },
   app: {
     root: path.normalize(__dirname + '/../..'),

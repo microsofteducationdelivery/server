@@ -43,23 +43,19 @@ module.exports = {
     });
   },
   sendUpdateUserProfile: function(data, email) {
-    var messageUpdateArray = _.clone(config.mail.changeUserText);
+    var messageText = config.mail.changeUserText;
 
     _.forIn(data, function(value, key) {
-      messageUpdateArray.push(key + ': ' + '<' + key + '>');
+      messageText += key + ':' + value + '\n';
     });
 
-    var message = messageUpdateArray.join('\n');
-
-    _.forIn(data, function(value, key) {
-      message = message.replace('<' + key + '>', value);
-    });
+    messageText = messageText + '\n Regards';
 
     mandrillClient.messages.send({
       message: {
         from_email: config.mail.from,
         subject: config.mail.changeSubject,
-        text: message + '\n Regards',
+        text: messageText,
         to: [{email: email}]
       }
     }, function (result) {
