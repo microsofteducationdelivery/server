@@ -16,7 +16,7 @@ var
 
 module.exports = {
   createUser: function*(data, author) {
-    var company = (author.dataValues.CompanyId ? yield author.getCompany() : yield db.Company.create());
+    var company = (author ? yield author.getCompany() : yield db.Company.create());
 
     if (!this.isPermitted(C.CREATE, data, author)) {
       throw new errors.AccessDeniedError('Access denied');

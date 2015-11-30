@@ -3,7 +3,10 @@ var
   table = db.Library,
   sequelize = require('sequelize'),
   errors = require('../helper/errors'),
-  C = require('../helper/constants')
+  C = require('../helper/constants'),
+  koa = require('koa'),
+  app = koa(),
+  route = require('koa-route')
 ;
 
 module.exports = {
@@ -76,14 +79,14 @@ module.exports = {
     return table.destroy({ id: ids, CompanyId: author.CompanyId });
   },
 
-  changeLibraryName: function* (id, name, author) {
+  changeLibraryName: function* (data, author) {
     if (!this.isPermitted(C.UPDATE, {}, author)) {
       throw new errors.AccessDeniedError('Access denied');
     }
 
-    var library = yield table.find(id.substr(7));
+    var library = yield table.find(data.id.substr(7));
     yield library.updateAttributes({
-      name: name
+      name: data.name
     });
   }
 };
