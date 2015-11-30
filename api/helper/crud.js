@@ -5,29 +5,17 @@ var
   _ = require('lodash');
 
 module.exports = function (service, customActions) {
-  customActions = customActions || {}
+  customActions = customActions || {};
   var app = koa();
   var actions = _.assign({
     index: function* () {
-      try {
-        this.body = yield service.list(this.user);
-      } catch (e) {
-        this.body = 404;
-      }
-
+      this.body = yield service.list(this.user);
     },
 
     create: function* () {
-      try {
-        var body = yield service.add(yield parse(this), this.user);
-        this.status = 201;
-      } catch (e) {
-        this.status = 500;
-      }
-
-      if (body) {
-        this.body = body;
-      }
+      var body = yield service.add(yield parse(this), this.user);
+      this.status = 201;
+      this.body = body;
     },
 
     show: function* (id) {
@@ -39,28 +27,18 @@ module.exports = function (service, customActions) {
           this.body = doc;
         }
       } catch (e) {
-        this.status = 404;
+        this.status = 400;
       }
     },
 
     update: function* (id) {
-      try {
-        yield service.update(id, yield parse(this), this.user);
-        this.status = 204;
-      } catch (e) {
-        this.status = 500;
-      }
-
+      yield service.update(id, yield parse(this), this.user);
+      this.status = 204;
     },
 
     destroyMultiple: function* () {
-      try {
         yield service.removeMultiple(yield parse(this), this.user);
         this.status = 204;
-      } catch (e) {
-        this.status = 500;
-      }
-
     }
   }, customActions);
 

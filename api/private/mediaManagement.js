@@ -34,23 +34,14 @@ function* changeImage() {
     });
   }
 
-  try {
-    yield fs.writeFile('public/preview/' + this.query.media + '.png', Buffer.concat(bufs));
-    this.body = '/preview/' + this.query.media + '.png';
-  } catch (e) {
-    console.log(e);
-    this.body = 404;
-  }
+  yield fs.writeFile('public/preview/' + this.query.media + '.png', Buffer.concat(bufs));
+  this.body = '/preview/' + this.query.media + '.png';
 
 }
 
 function* copyImage() {
-  try {
-    var copyFile = yield fs.readFile('public/preview/' + this.query.name);
-    yield fs.writeFile('public/preview/library' + this.query.fileChange, copyFile);
-  } catch (e) {
-    this.body = 404;
-  }
+  var copyFile = yield fs.readFile('public/preview/' + this.query.name);
+  yield fs.writeFile('public/preview/library' + this.query.fileChange, copyFile);
 }
 
 app.use(route.post('/changeImage', changeImage));

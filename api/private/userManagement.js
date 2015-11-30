@@ -27,6 +27,18 @@ function* isUnique () {
 
 }
 
+function* isLastAdmin () {
+  var allAdmins = yield db.User.findAll({
+    where: {type: 'admin'}
+  });
+  if(allAdmins.length > 1) {
+    this.body = false;
+  } else {
+    this.body = true;
+  }
+  return this;
+}
+
 function* userImport () {
   var creds = yield user.importUsers(this.user, this);
 
@@ -64,5 +76,6 @@ function* getFileImport() {
 app.use(route.post('/userImport', userImport));
 app.use(route.post('/isUnique', isUnique));
 app.use(route.get('/getImportFile', getFileImport));
+app.use(route.post('/isLastAdmin', isLastAdmin));
 
 module.exports = app;
