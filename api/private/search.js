@@ -22,6 +22,6 @@ function* searchUsersAndMedia() {
   };
 }
 
-app.use(route.post('/search', searchUsersAndMedia));
+app.use(route.post('/', searchUsersAndMedia));
 
 module.exports = app;

@@ -60,13 +60,13 @@ module.exports = {
     return table.destroy({ id: ids});
   },
 
-  commentsExport: function* (resArray, companyId) {
+  commentsExport: function* (resArray, company) {
 
     var tmpdir = __dirname + '/../public/tmpExcelDir';
 
 
-    if(yield fs.exists(tmpdir + '/' + companyId.id + 'exportComments.xlsx')) {
-      yield fs.unlink(tmpdir + '/' + companyId.id + 'exportComments.xlsx');
+    if(yield fs.exists(tmpdir + '/' + company.id + 'exportComments.xlsx')) {
+      yield fs.unlink(tmpdir + '/' + company.id + 'exportComments.xlsx');
     }
 
     var countCommentaries = 2;
@@ -75,7 +75,7 @@ module.exports = {
       countCommentaries += resArray[j].length;
     }
 
-    var workbook = excelbuilder.createWorkbook(tmpdir, companyId.id + 'exportComments.xlsx');
+    var workbook = excelbuilder.createWorkbook(tmpdir, company.id + 'exportComments.xlsx');
 
 
     var comments = workbook.createSheet('Comments', countCommentaries, 20);
