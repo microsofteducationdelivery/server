@@ -35,7 +35,7 @@
           var form = WinJS.Utilities.query('.b-library-edit-media--form')[0];
           form.file.onchange = function () {
 
-            form.action = '/api/mediaManagement/changeImage?media=' + options.id;
+            form.action = '/api/media/changeImage?media=' + options.id;
             $(form).ajaxSubmit({
               headers: {
                 Authorization: 'Bearer ' + WinJS.Application.sessionState.token
@@ -170,7 +170,7 @@
               newImage.listen('click', function(e) {
 
                 MED.Server.authXHR({
-                  url: '/api/mediaManagement/copyImage?name=' + e.target.getAttribute('data-image-name') + '&fileChange=' + itemId + '.png',
+                  url: '/api/media/copyImage?name=' + e.target.getAttribute('data-image-name') + '&fileChange=' + itemId + '.png',
                   type: 'GET'
                 }).done(function() {
                     var currentImage = WinJS.Utilities.query('.b-libraries-prev-current', element)[0];

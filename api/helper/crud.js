@@ -43,7 +43,7 @@ module.exports = function (service, customActions) {
   }, customActions);
 
   app.use(route.get('/', actions.index));
-  app.use(route.get('/:id', actions.show));
+  app.use(route.get('/:id(\\d+|library[0-9]+)', actions.show));
   app.use(route.put('/:id', actions.update));
   app.use(route.post('/', actions.create));
   app.use(route.delete('/', actions.destroyMultiple));

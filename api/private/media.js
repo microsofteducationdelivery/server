@@ -1,12 +1,13 @@
-var os = require('os');
-var path = require('path');
-var fs = require('co-fs');
-var parse = require('co-busboy');
-var saveTo = require('save-to');
-var service = require('../../service/media');
-var mime = require('mime');
+var os = require('os'),
+  path = require('path'),
+  fs = require('co-fs'),
+  parse = require('co-busboy'),
+  saveTo = require('save-to'),
+  service = require('../../service/media'),
+  mime = require('mime'),
+  route = require('koa-route');
 
-module.exports = require('../helper/crud')(service, {
+var app = require('../helper/crud')(service, {
   create: function* () {
     console.log('overridden');
     var parts = parse(this, {
@@ -20,7 +21,6 @@ module.exports = require('../helper/crud')(service, {
     } catch(e) {
       if ( e.code !== 'EEXIST' ) { throw e; }
     }
-
 
     // list of all the files
     // yield each part as a stream
@@ -50,3 +50,43 @@ module.exports = require('../helper/crud')(service, {
     }
   }
 });
+
+function* changeImage() {
+
+  var parts = parse(this, {
+      checkFile: function (fieldname, file, filename) {
+        if (path.extname(filename) !== '.png') {
+          var err = new Error('invalid png image');
+          err.status = 400;
+          return err;
+        }
+      }
+    }),
+    part,
+    me = this;
+  var bufs = [];
+
+  while (part = yield parts) {
+    if (!part.filename) {
+      return me.body = 'No file';
+    }
+
+    part.on('data', function (chank) {
+      bufs.push(chank);
+    });
+  }
+
+  yield fs.writeFile('public/preview/' + this.query.media + '.png', Buffer.concat(bufs));
+  this.body = '/preview/' + this.query.media + '.png';
+
+}
+
+function* copyImage() {
+  var copyFile = yield fs.readFile('public/preview/' + this.query.name);
+  yield fs.writeFile('public/preview/library' + this.query.fileChange, copyFile);
+}
+
+app.use(route.post('/changeImage', changeImage));
+app.use(route.get('/copyImage', copyImage));
+
+module.exports = app;
