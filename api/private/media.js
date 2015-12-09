@@ -77,13 +77,13 @@ function* changeImage() {
   }
 
   yield fs.writeFile('public/preview/' + this.query.media + '.png', Buffer.concat(bufs));
-  this.body = '/preview/' + this.query.media + '.png';
+  this.body = '//preview/' + this.query.media + '.png';
 
 }
 
 function* copyImage() {
   var copyFile = yield fs.readFile('public/preview/' + this.query.name);
-  yield fs.writeFile('public/preview/library' + this.query.fileChange, copyFile);
+  yield fs.writeFile('public/preview/' + this.query.fileChange, copyFile);
 }
 
 app.use(route.post('/changeImage', changeImage));
