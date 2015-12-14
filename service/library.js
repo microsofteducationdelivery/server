@@ -86,7 +86,7 @@ module.exports = {
 
     var library = yield table.find(data.id.substr(7));
     yield library.updateAttributes({
-      name: data.name
+      name: data.name,
     });
   }
 };
