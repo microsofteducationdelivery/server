@@ -61,7 +61,7 @@ module.exports = function (app) {
       return;
     }
 
-    var mobileRe = /\/mobile\/(data|comments(\/[0-9]+)?|media\/[0-9]+|changePassword\/[0-9]*)$/;
+    var mobileRe = /\/mobile\/(data|comments(\/[0-9]+)?|media\/[0-9]+|changePassword\/[0-9]*)/;
     if (this.user.userAccess === 'mobile' && !mobileRe.test(this.req.url)) {
       this.status = 403;
       return;
