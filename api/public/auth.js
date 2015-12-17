@@ -40,7 +40,7 @@ function *login() {
   var data = yield parse(this);
   var user = yield usersService.findByCredentials(data);
 
-  if (user && user.type === 'mobile') {
+  if (user) {
     if(user.singleDevice && data.deviceId && user.deviceId !== data.deviceId) {
       throw new errors.DeviceError('Device is incorrect');
     } else if(!user.singleDevice && data.deviceId && data.deviceId !== '') {
