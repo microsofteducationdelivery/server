@@ -68,7 +68,7 @@ function* changeImage() {
 
   while (part = yield parts) {
     if (!part.filename) {
-      return me.body = 'No file';
+      continue;
     }
 
     part.on('data', function (chank) {
@@ -76,7 +76,7 @@ function* changeImage() {
     });
   }
 
-  yield fs.writeFile('public/preview/' + this.query.media + '.png', Buffer.concat(bufs));
+  yield fs.writeFile('./public/preview/' + this.query.media + '.png', Buffer.concat(bufs));
   this.body = '//preview/' + this.query.media + '.png';
 
 }

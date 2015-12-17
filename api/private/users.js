@@ -4,7 +4,8 @@ var service = require('../../service/user'),
   fs = require('co-fs'),
   excel = require('../../service/createExcelExport'),
   user = require('../../service/user'),
-  send = require('koa-send')
+  send = require('koa-send'),
+  db = require('../../db')
   ;
 
 function* isLastAdmin () {
