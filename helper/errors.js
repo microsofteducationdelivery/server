@@ -4,5 +4,6 @@ module.exports = {
   ValidationError: errorFactory('ValidationError', [ 'message', 'errors' ]),
   DuplicateError: errorFactory('DuplicateError'),
   AccessDeniedError: errorFactory('AccessDeniedError'),
-  DeviceError: errorFactory('DeviceIsIncorrect')
+  DeviceError: errorFactory('DeviceIsIncorrect'),
+  isLastAdmin: errorFactory('LastAdminError', ['message'])
 };

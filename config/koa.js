@@ -31,10 +31,13 @@ module.exports = function (app) {
 
   app.use(function* (next) {
     try {
-      yield next;
+        yield next;
     } catch (e) {
       if (e instanceof errors.AccessDeniedError) {
         this.status = 403;
+      } else if(e instanceof errors.isLastAdmin) {
+        this.status = 401;
+        this.body = JSON.stringify({message: e.message});
       } else {
         throw e;
       }

@@ -116,6 +116,11 @@ isPermitted: function (action, data, author) {
   update: function* (id, data, author) {
     var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
     var allAdminUser = yield table.findAll({where: {type: 'admin', CompanyId: author.CompanyId}});
+    if(user.type === 'admin' && data.type !== 'admin' && allAdminUser.length === 1) {
+      if (allAdminUser.length === 1) {
+        throw errors.isLastAdmin('You are last admin');
+      }
+    }
     var mailMessage = {};
     var arrayFields = ['name', 'login', 'password', 'email', 'phone', 'type'];
 
@@ -151,13 +156,6 @@ isPermitted: function (action, data, author) {
       user.singleDevice = false;
       data.singleDevice = false;
       data.deviceId = user.deviceId;
-    }
-
-    if(user.type === 'admin' && data.type !== 'admin' && allAdminUser.length === 1) {
-      if (user.id === allAdminUser[0].dataValues.id) {
-        //Ask it
-        throw new Error('It is last admin for company.');
-      }
     }
 
     try {
