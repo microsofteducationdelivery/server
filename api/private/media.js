@@ -6,7 +6,7 @@ var os = require('os'),
   service = require('../../service/media'),
   mime = require('mime'),
   route = require('koa-route'),
-  errors = require('../helper/errors');
+  errors = require('../../helper/errors');
 
 var app = require('../helper/crud')(service, {
   create: function* () {

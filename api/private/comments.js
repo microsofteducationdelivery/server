@@ -5,7 +5,7 @@ var route = require('koa-route'),
   send = require('koa-send'),
   parse = require('co-body'),
   app = require('../helper/crud')(comment),
-  errors = require('../helper/errors');
+  errors = require('../../helper/errors');
 
 function* commentsExport () {
   var resArray = [];
