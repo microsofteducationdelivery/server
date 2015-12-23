@@ -184,11 +184,11 @@ isPermitted: function (action, data, author) {
       part,
       me = reqBody,
       allData,
-      errors = [];
+      errorsFile = [];
 
     while (part = yield parts) {
       if (!part.filename) {
-        return me.body = 'No file';
+        errors.noFile('No file');
       }
 
       var bufs = [];
@@ -203,7 +203,7 @@ isPermitted: function (action, data, author) {
 
         } catch (err) {
           console.log(err);
-          return me.body = 'Invalid file';
+          errors.invalidFile('File type is incorrect');
         }
       });
     }
@@ -220,14 +220,14 @@ isPermitted: function (action, data, author) {
         allData[i].password = passwordSave;
         allData[i].line = i;
         allData[i].error = err.message;
-        errors.push(allData[i]);
+        errorsFile.push(allData[i]);
       }
     }
 
-    if(errors.length > 0) {
+    if(errorsFile.length > 0) {
       var allFields = 'line|name|login|type|password|email|telephone|error';
       return {
-        errors: errors,
+        errors: errorsFile,
         fields: allFields
       };
     } else {

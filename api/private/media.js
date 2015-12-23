@@ -5,7 +5,8 @@ var os = require('os'),
   saveTo = require('save-to'),
   service = require('../../service/media'),
   mime = require('mime'),
-  route = require('koa-route');
+  route = require('koa-route'),
+  errors = require('../helper/errors');
 
 var app = require('../helper/crud')(service, {
   create: function* () {
@@ -56,9 +57,7 @@ function* changeImage() {
   var parts = parse(this, {
       checkFile: function (fieldname, file, filename) {
         if (path.extname(filename) !== '.png') {
-          var err = new Error('invalid png image');
-          err.status = 400;
-          return err;
+          errors.invalidFile('File type is incorrect');
         }
       }
     }),

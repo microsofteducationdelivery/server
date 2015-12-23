@@ -4,7 +4,8 @@ var route = require('koa-route'),
   media = require('../../service/media'),
   send = require('koa-send'),
   parse = require('co-body'),
-  app = require('../helper/crud')(comment);
+  app = require('../helper/crud')(comment),
+  errors = require('../helper/errors');
 
 function* commentsExport () {
   var resArray = [];
@@ -25,10 +26,10 @@ function* commentsExport () {
       yield send(this, path);
       yield fs.unlink(path);
     } else {
-      this.body = 404;
+      errors.noFile('We can not get file');
     }
   } else {
-    this.body = 500;
+    errors.errorExport('Wrong data for export');
   }
 
 }

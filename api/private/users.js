@@ -18,6 +18,7 @@ function* userImport () {
     yield fs.unlink(path);
   } else {
     this.body = 'ok';
+    this.status = 200;
   }
   return this;
 }
