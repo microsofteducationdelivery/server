@@ -35,6 +35,7 @@ module.exports = function (app) {
     } catch (e) {
       if (e instanceof errors.AccessDeniedError) {
         this.status = 403;
+        this.body = JSON.stringify({message: e.message});
       } else if(e instanceof errors.isLastAdmin) {
         this.status = 401;
         this.body = JSON.stringify({message: e.message});
@@ -69,21 +70,18 @@ module.exports = function (app) {
     }
 
     if (!this.user || !this.user.id) {
-      this.status = 403;
-      return;
+      throw new errors.AccessDeniedError('Access denied');
     }
 
     var mobileRe = /\/mobile\/(data|comments(\/[0-9]+)?|media\/[0-9]+|changePassword\/[0-9]*)/;
     if (this.user.userAccess === 'mobile' && !mobileRe.test(this.req.url)) {
-      this.status = 403;
-      return;
+      throw new errors.AccessDeniedError('Access denied');
     }
 
     this.user = yield userService.findById(this.user.id);
 
     if (!this.user) {
-      this.status = 403;
-      return;
+      throw new errors.AccessDeniedError('Access denied');
     }
     yield next;
     if (this.request.type === 'application/json' && !this.body) {
