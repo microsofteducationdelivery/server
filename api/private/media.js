@@ -47,7 +47,7 @@ var app = require('../helper/crud')(service, {
       this.status = 201;
     } else {
       yield(fs.unlink(path));
-      this.status = 400;
+      throw new errors.noFile('It is not current type');
     }
   }
 });
