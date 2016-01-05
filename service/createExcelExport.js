@@ -2,13 +2,14 @@ var
   excelbuilder = require('msexcel-builder'),
   thunkify = require('co-thunkify'),
   fs = require('co-fs'),
-  _ = require('underscore')
+  _ = require('underscore'),
+  os = require('os')
   ;
 
 module.exports = {
 
   createExcelFile: function* (data, tableName, type, companyId) {
-    var tmpdir = __dirname + '/../public/tmpExcelDir';
+    var tmpdir = os.tmpdir();
 
     var fileName = companyId + type + '.xlsx';
     var arrayName = tableName.split('|');

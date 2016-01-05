@@ -7,7 +7,8 @@ var
   C = require('../helper/constants'),
   fs = require('co-fs'),
   excelbuilder = require('msexcel-builder'),
-  thunkify = require('co-thunkify')
+  thunkify = require('co-thunkify'),
+  os = require('os')
   ;
 
 module.exports = {
@@ -62,8 +63,7 @@ module.exports = {
 
   commentsExport: function* (resArray, company) {
 
-    var tmpdir = __dirname + '/../public/tmpExcelDir';
-
+    var tmpdir = os.tmpdir();
 
     if(yield fs.exists(tmpdir + '/' + company.id + 'exportComments.xlsx')) {
       yield fs.unlink(tmpdir + '/' + company.id + 'exportComments.xlsx');
