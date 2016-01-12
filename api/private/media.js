@@ -26,7 +26,10 @@ var app = require('../helper/crud')(service, {
     // list of all the files
     // yield each part as a stream
     var part = yield parts;
-    var file = path.join(tmpdir, Math.random().toString() + part.filename);
+    var fakeUrl = (Math.floor(Math.random() * (10000000 - 1000000 + 1)) + 1000000).toString(15) + new Date().getTime();
+
+    var startExtension = part.filename.lastIndexOf('.');
+    var file = path.join(tmpdir, fakeUrl + part.filename.substring(startExtension));
     yield saveTo(part, file);
     var data = { file: file };
     parts.fields.forEach(function (field) {
@@ -41,8 +44,10 @@ var app = require('../helper/crud')(service, {
     } else if (mimeType === 'text/plain') {
       type = 'text';
     }
+
     if (type !== 'unknown') {
       data.type = type;
+      data.fakeUrl = file;
       yield service.add(data);
       this.status = 201;
     } else {

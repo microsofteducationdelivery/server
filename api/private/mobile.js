@@ -92,7 +92,7 @@ function *getDetails(id) {
   var media = yield mediaService.findById(id, this.user);
   yield media.increment('downloads', 1);
   this.body = {
-    id: media.id,
+    id: media.fakeUrl,
     title: media.name,
     description: media.description,
     links: media.links.split('\n'),
