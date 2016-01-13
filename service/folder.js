@@ -58,7 +58,7 @@ module.exports = {
       }),
       media.map(function (media) {
         return {
-          id: media.fakeUrl,
+          id: media.id,
           name: media.name,
           type: 'media',
           picture: media.status === 'converted' ? config.app.baseUrl + '/preview/' + media.id + '.png' : null };
