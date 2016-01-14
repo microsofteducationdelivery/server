@@ -69,16 +69,16 @@ module.exports = {
       yield fs.unlink(tmpdir + '/' + company.id + 'exportComments.xlsx');
     }
 
-    var countCommentaries = 2;
+    var countCommentaries = 4;
 
     for(var j = 0; j < resArray.length; j++) {
-      countCommentaries += resArray[j].length;
+      countCommentaries += resArray[j].length + 1;
     }
 
     var workbook = excelbuilder.createWorkbook(tmpdir, company.id + 'exportComments.xlsx');
 
 
-    var comments = workbook.createSheet('Comments', countCommentaries, 20);
+    var comments = workbook.createSheet('Comments', 20, countCommentaries);
 
     comments.set(2, 2, 'Media name');
     comments.set(3, 2, 'author');

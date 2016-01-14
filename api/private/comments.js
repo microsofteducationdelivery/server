@@ -9,11 +9,11 @@ var route = require('koa-route'),
 
 function* commentsExport () {
   var resArray = [];
-  var res = yield media.list(this.user);
+  var resMedia = yield media.list(this.user);
 
-  for(var i = 0; res.length > i; i++) {
-    var oneComment = yield comment.findById(res[i].id);
-    oneComment.media = res[i].name;
+  for(var i = 0; resMedia.length > i; i++) {
+    var oneComment = yield comment.findById(resMedia[i].id);
+    oneComment.media = resMedia[i].name;
     resArray.push(oneComment);
   }
 
