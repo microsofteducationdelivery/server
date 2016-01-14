@@ -57,7 +57,7 @@ function* getFolderContent (id, cache) {
 
   items = items.concat(media.map(function (media) {
       return {
-        id: media.fakeUrl,
+        id: media.fakeId,
         views: media.views,
         downloads: media.downloads,
         type: 'media',

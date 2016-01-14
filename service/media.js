@@ -49,8 +49,8 @@ module.exports = {
     return yield table.find({ where: {id: id}});
   },
 
-  findByFakeUrl: function* (fakeUrl, author) {
-    return yield table.find({where: {fakeUrl: fakeUrl}});
+  findByFakeId: function* (fakeId, author) {
+    return yield table.find({where: {fakeId: fakeId}});
   },
 
   update: function* (id, data, author) {

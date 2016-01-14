@@ -26,10 +26,10 @@ var app = require('../helper/crud')(service, {
     // list of all the files
     // yield each part as a stream
     var part = yield parts;
-    var fakeUrl = (Math.floor(Math.random() * (10000000 - 1000000 + 1)) + 1000000).toString(15) + new Date().getTime();
+    var fakeId = (Math.floor(Math.random() * (10000000 - 1000000 + 1)) + 1000000).toString(15) + new Date().getTime();
 
     var startExtension = part.filename.lastIndexOf('.');
-    var file = path.join(tmpdir, fakeUrl + part.filename.substring(startExtension));
+    var file = path.join(tmpdir, fakeId + part.filename.substring(startExtension));
     yield saveTo(part, file);
     var data = { file: file };
     parts.fields.forEach(function (field) {
@@ -47,7 +47,7 @@ var app = require('../helper/crud')(service, {
 
     if (type !== 'unknown') {
       data.type = type;
-      data.fakeUrl = file;
+      data.fakeId = file;
       yield service.add(data);
       this.status = 201;
     } else {
