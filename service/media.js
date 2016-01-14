@@ -49,6 +49,10 @@ module.exports = {
     return yield table.find({ where: {id: id}});
   },
 
+  findByFakeUrl: function* (fakeUrl, author) {
+    return yield table.find({where: {fakeUrl: fakeUrl}});
+  },
+
   update: function* (id, data, author) {
     if (!this.isPermitted(C.UPDATE, {}, author)) {
       throw new errors.AccessDeniedError('Access denied');
