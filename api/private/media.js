@@ -29,8 +29,7 @@ var app = require('../helper/crud')(service, {
     var fakeUrl = (Math.floor(Math.random() * (10000000 - 1000000 + 1)) + 1000000).toString(15) + new Date().getTime();
 
     var startExtension = part.filename.lastIndexOf('.');
-    //var file = path.join(tmpdir, fakeUrl + part.filename.substring(startExtension));
-    var file = path.join(tmpdir, fakeUrl + part.filename);
+    var file = path.join(tmpdir, fakeUrl + part.filename.substring(startExtension));
     yield saveTo(part, file);
     var data = { file: file };
     parts.fields.forEach(function (field) {
