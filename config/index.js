@@ -20,12 +20,13 @@ var baseConfig = {
       'Welcome to Microsoft Education Delivery.',
       'Microsoft Education Delivery carries high quality educational material to mobile devices. This makes access to education possible for anyone, anytime!',
       '',
-      'Your user name and password are:',
-      '',
-      '<user> <password>',
+      'Your login is <user>. Your password will be sent in a subsequent email.',
       '',
       'Regards'
     ].join('\n'),
+    credentialsText: [
+      'Hello, your password for Microsoft Education Delivery account is <password>.'
+    ],
     changeSubject: 'Your profile was updated',
     changeUserText: [
       'Hi',

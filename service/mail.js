@@ -7,9 +7,8 @@ var
 
 
 module.exports = {
-  sendWelcomeEmail: function (user, password, email) {
-    var message = config.mail.welcomeText
-      .replace('<user>', user)
+  sendRegPassword: function (password, email) {
+    var message = config.mail.credentialsText
       .replace('<password>', password)
     ;
 
@@ -24,6 +23,20 @@ module.exports = {
       console.log(result);
     });
 
+  },
+  sendWelcomeEmail: function (user, email) {
+    var message = config.mail.welcomeText
+       .replace('<user>', user);
+    mandrillClient.messages.send({
+      message: {
+        from_email: config.mail.from,
+        subject: config.mail.welcomeSubject,
+        text: message,
+        to: [{email: email}]
+      }
+    }, function (result) {
+      console.log(result);
+    });
   },
   sendRecoveryPasswordLink: function (userName, link, email) {
     var message = config.mail.recoveryText
