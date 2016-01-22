@@ -26,7 +26,7 @@ var baseConfig = {
     ].join('\n'),
     credentialsText: [
       'Hello, your password for Microsoft Education Delivery account is <password>.'
-    ],
+    ].join('\n'),
     changeSubject: 'Your profile was updated',
     changeUserText: [
       'Hi',

@@ -28,8 +28,7 @@ module.exports = {
       user = yield table.create(data);
       if (data.email) {
         console.log('mail sent');
-        mail.sendWelcomeEmail(data.login, data.email);
-        mail.sendRegPassword(clearPassword, data.email);
+        mail.sendWelcomeEmail(data.login, clearPassword, data.email);
       }
 
       if (data.phone) {

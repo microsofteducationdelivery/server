@@ -20,11 +20,11 @@ module.exports = {
         to: [{email: email}]
       }
     }, function (result) {
-      console.log(result);
+      console.log(result[0]);
     });
 
   },
-  sendWelcomeEmail: function (user, email) {
+  sendWelcomeEmail: function (user, password, email) {
     var message = config.mail.welcomeText
        .replace('<user>', user);
     mandrillClient.messages.send({
@@ -35,8 +35,11 @@ module.exports = {
         to: [{email: email}]
       }
     }, function (result) {
+      if (result[0].status === 'sent') {
+        this.sendRegPassword(password, email);
+      }
       console.log(result);
-    });
+    }.bind(this));
   },
   sendRecoveryPasswordLink: function (userName, link, email) {
     var message = config.mail.recoveryText
