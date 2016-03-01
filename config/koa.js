@@ -39,7 +39,7 @@ module.exports = function (app) {
       } else if(e instanceof errors.isLastAdmin) {
         this.status = 401;
         this.body = JSON.stringify({message: e.message});
-      } else if(e instanceof errors.noFile) {
+      } else if(e instanceof errors.noFile || e instanceof errors.incorrectData) {
         this.status = 400;
         this.body = JSON.stringify({message: e.message});
       } else if(e instanceof errors.invalidFile) {

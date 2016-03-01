@@ -107,6 +107,10 @@ module.exports = {
     }
 
     var folder = yield table.find(id);
+
+    if (!folder) {
+      throw new errors.incorrectData('Incorrect id');
+    }
     yield folder.updateAttributes({
       name: data.name
     });
