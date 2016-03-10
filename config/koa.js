@@ -73,8 +73,7 @@ module.exports = function (app) {
       throw new errors.AccessDeniedError('Access denied');
     }
 
-    var mobileRe = /\/mobile\/(data|comments(\/[0-9]+)?|media\/[0-9]+|changePassword\/[0-9]*)/;
-    if (this.user.userAccess === 'mobile' && !mobileRe.test(this.req.url)) {
+    if (this.user.userAccess === 'mobile' && this.req.url.indexOf('mobile') === -1) {
       throw new errors.AccessDeniedError('Access denied');
     }
 
