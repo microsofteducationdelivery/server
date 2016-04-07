@@ -16,7 +16,7 @@ module.exports = {
       message: {
         from_email: config.mail.from,
         subject: config.mail.welcomeSubject,
-        text: message,
+        html: message,
         to: [{email: email}]
       }
     }, function (result) {
@@ -31,7 +31,7 @@ module.exports = {
       message: {
         from_email: config.mail.from,
         subject: config.mail.welcomeSubject,
-        text: message,
+        html: message,
         to: [{email: email}]
       }
     }, function (result) {

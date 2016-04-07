@@ -14,19 +14,23 @@ var baseConfig = {
       'Follow this <a href="<link>">link </a>' +
       'to change your password. \n',
     welcomeSubject: 'Welcome to Microsoft Education Delivery',
-    welcomeText: [
-      'Hi',
-      '',
-      'Welcome to Microsoft Education Delivery.',
-      'Microsoft Education Delivery carries high quality educational material to mobile devices. This makes access to education possible for anyone, anytime!',
-      '',
-      'Your login is <user>. Your password will be sent in a subsequent email.',
-      '',
-      'Regards'
-    ].join('\n'),
-    credentialsText: [
-      'Hello, your password for Microsoft Education Delivery account is <password>.'
-    ].join('\n'),
+    welcomeText:
+      'Hi <br>' +
+      '<br>' +
+      'Welcome to Microsoft Education Delivery. <br>' +
+      'Microsoft Education Delivery carries high quality educational material to mobile devices. This makes access to education possible for anyone, anytime! <br>' +
+      '<br>' +
+      'Your login is <user>. Your password will be sent in a subsequent email. <br>' +
+      '<br>' +
+      'Regards <br>'+
+      'Microsoft respects your privacy. To learn more, please read our Privacy Statement <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Microsoft Corporation </a> <br>' +
+      'One Microsoft Way <br>' +
+      'Redmond, WA 98052',
+    credentialsText:
+      'Hello, your password for Microsoft Education Delivery account is <password>. <br>' +
+      'Microsoft respects your privacy. To learn more, please read our Privacy Statement <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Microsoft Corporation </a> <br>' +
+      'One Microsoft Way <br>' +
+      'Redmond, WA 98052',
     changeSubject: 'Your profile was updated',
     changeUserText: [
       'Hi',
@@ -67,7 +71,7 @@ var platformConfig = {
 
   test: {
     app: {
-      port: 3001
+      port: 3000
     }
   },
 
