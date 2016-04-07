@@ -71,7 +71,7 @@ var platformConfig = {
 
   test: {
     app: {
-      port: 3000
+      port: 3001
     }
   },
 
