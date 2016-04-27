@@ -1,7 +1,7 @@
 var
   config = require('../config'),
-  mandrill = require('mandrill-api/mandrill'),
-  mandrillClient = new mandrill.Mandrill(config.mail.key),
+  SparkPost = require('sparkpost'),
+  Sparky = new SparkPost(config.mail.key),
   _ = require('lodash')
 ;
 
@@ -12,34 +12,40 @@ module.exports = {
       .replace('<password>', password)
     ;
 
-    mandrillClient.messages.send({
-      message: {
-        from_email: config.mail.from,
-        subject: config.mail.welcomeSubject,
-        html: message,
-        to: [{email: email}]
+    Sparky.transmissions.send({
+      transmissionBody: {
+        content: {
+          from: config.mail.from,
+          subject: config.mail.welcomeSubject,
+          html: message
+        },
+        recipients: [
+          {address: email}
+        ]
       }
-    }, function (result) {
-      console.log(result[0]);
+    }, function (err, result) {
+      (err) ? console.log(err) : console.log(result);
     });
 
   },
   sendWelcomeEmail: function (user, password, email) {
     var message = config.mail.welcomeText
        .replace('<user>', user);
-    mandrillClient.messages.send({
-      message: {
-        from_email: config.mail.from,
-        subject: config.mail.welcomeSubject,
-        html: message,
-        to: [{email: email}]
+
+    Sparky.transmissions.send({
+      transmissionBody: {
+        content: {
+          from: config.mail.from,
+          subject: config.mail.welcomeSubject,
+          html: message
+        },
+        recipients: [
+          { address: email }
+        ]
       }
-    }, function (result) {
-      if (result[0].status === 'sent') {
-        this.sendRegPassword(password, email);
-      }
-      console.log(result);
-    }.bind(this));
+    }, function (err, result) {
+      (err) ? console.log(err) : this.sendRegPassword(password, email);
+    }).bind(this);
   },
   sendRecoveryPasswordLink: function (userName, link, email) {
     var message = config.mail.recoveryText
@@ -47,15 +53,19 @@ module.exports = {
         .replace('<link>', link)
       ;
 
-    mandrillClient.messages.send({
-      message: {
-        from_email: config.mail.from,
-        subject: config.mail.recoverySubject,
-        html: message,
-        to: [{email: email}]
+    Sparky.transmissions.send({
+      transmissionBody: {
+        content: {
+          from: config.mail.from,
+          subject: config.mail.recoverySubject,
+          html: message
+        },
+        recipients: [
+          { address: email }
+        ]
       }
-    }, function (result) {
-      console.log(result);
+    }, function (err, result) {
+      (err) ? console.log(err) : console.log(result);
     });
   },
   sendUpdateUserProfile: function(data, email) {
@@ -67,15 +77,19 @@ module.exports = {
 
     messageText = messageText + '\n Regards';
 
-    mandrillClient.messages.send({
-      message: {
-        from_email: config.mail.from,
-        subject: config.mail.changeSubject,
-        text: messageText,
-        to: [{email: email}]
+    Sparky.transmissions.send({
+      transmissionBody: {
+        content: {
+          from: config.mail.from,
+          subject: config.mail.changeSubject,
+          text: messageText
+        },
+        recipients: [
+          { address: email }
+        ]
       }
-    }, function (result) {
-      console.log(result);
+    }, function (err, result) {
+      (err) ? console.log(err) : console.log(result);
     });
   }
 };
