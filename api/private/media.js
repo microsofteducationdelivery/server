@@ -47,7 +47,7 @@ var app = require('../helper/crud')(service, {
 
     if (type !== 'unknown') {
       data.type = type;
-      data.fakeId = file;
+      data.fakeId = fakeId;
       yield service.add(data);
       this.status = 201;
     } else {
