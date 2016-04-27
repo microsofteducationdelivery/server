@@ -9,31 +9,90 @@ var app = require('koa')(),
   generatePassword = require('password-generator'),
   config = require('../../config'),
   usersService = require('../../service/user'),
-  errors = require('../../helper/errors')
-;
+  errors = require('../../helper/errors'),
+  request = require('request'),
+  thunkify = require('co-thunkify'),
+  fs = require('co-fs');
+  ;
 
-function *liveIdLogin () {
-  var data = yield parse(this);
-  var user = yield usersService.findBy(data);
-  if (!user) {
-    data.login = data.email;
-    data.password = generatePassword();
 
-    console.log(data.password);
-    data.type = 'admin';
-    try {
-      yield usersService.createUser(data);
-      user = yield usersService.findBy(data);
-    } catch (e) {
-      this.status = 400;
-      this.body = e.errors;
-      
-      return;
+const clientId = process.env.CLIENT_ID || 'f9c692c6-d3c0-402f-9c45-651858e73e8e';
+const clientSecret = process.env.CLIENT_SECRET || 'Y1m3qckEJa4ojmpUbW2yuBN';
+const redirectURL = process.env.REDIRECT_URL || 'http://localhost:3000/api/auth/login-with-live-id';
+const webAppURL = process.env.WEB_APP_URL || 'http://localhost:3001';
+
+function LoginWithLiveId (code, cb) {
+  request.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', {
+    formData: {
+      grant_type: 'authorization_code',
+      code: code,
+      client_id: clientId,
+      client_secret: clientSecret,
+      redirect_uri: redirectURL,
     }
-  }
+  }, function (err, httpResponse, body) {
+    if (err) {
+      cb(err, null);
+    }
+    cb(null, JSON.parse(body));
 
-  var token = jwt.sign({id: user.id, issueTime: Date.now()}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
-  this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
+  });
+}
+
+function getLiveUserInfo (token, cb) {
+  request({
+    url: 'https://graph.microsoft.com/v1.0/me?redirect_uri=' + redirectURL,
+    headers: {
+      'Authorization': 'Bearer ' + token + '-access-token',
+    }
+  }, function (err, httpResponse, body) {
+    if (err) {
+      cb(err, null);
+    }
+    cb(null, JSON.parse(body));
+  });
+}
+function *getErrorHtml(errorMsg) {
+  const errorTpl = '${errorMsg}';
+  const locationTpl = '${url}';
+  const url = webAppURL;
+  const html = yield fs.readFile('./public/error.html', 'utf8');
+
+  return html.replace(errorTpl, errorMsg).replace(locationTpl, url);
+}
+function *liveIdLogin () {
+  const code = this.request.query.code;
+
+  try {
+    const loginResponse = yield thunkify(LoginWithLiveId)(code);
+
+    if (!loginResponse.access_token) {
+      this.body = yield getErrorHtml('no access token');
+    }
+
+    const userData = yield thunkify(getLiveUserInfo)(loginResponse.access_token);
+
+    var user = yield usersService.findBy({login: userData.userPrincipalName});
+
+    if (!user) {
+      user = yield usersService.add({
+        login: userData.userPrincipalName,
+        password: generatePassword(),
+        type: 'admin',
+        email: userData.userPrincipalName,
+        name: userData.userPrincipalName,
+      });
+    }
+
+    const token = jwt.sign({
+      id: user.id, issueTime: Date.now(), userAccess: 'desktop'
+    }, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
+    const userString = JSON.stringify(_.pick(user, ['id', 'name', 'type']));
+    this.redirect(webAppURL + '/#getStarted?token=' + token + '&user=' + userString + '&serverId=server' + config.app.serverId);
+
+  } catch (err) {
+    this.body = yield getErrorHtml(err._message);
+  }
 }
 
 function *login() {
@@ -123,7 +182,7 @@ function* recoverPassword () {
 }
 app.use(route.post('/login', login));
 app.use(route.post('/desktopLogin', desktopLogin));
-app.use(route.post('/loginWithLiveID', liveIdLogin));
+app.use(route.get('/login-with-live-id', liveIdLogin));
 app.use(route.post('/register', register));
 app.use(route.post('/passwordRecovery/', recoverPassword));
 app.use(route.put('/passwordRecovery/:email', getRecover));
