@@ -92,7 +92,7 @@ isPermitted: function (action, data, author) {
   },
 
   add: function* (data, author) {
-    yield this.createUser(data, author);
+    return yield this.createUser(data, author);
   },
 
   list: function* (author) {
