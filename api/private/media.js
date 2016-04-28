@@ -6,6 +6,7 @@ var os = require('os'),
   service = require('../../service/media'),
   mime = require('mime'),
   route = require('koa-route'),
+  mediaService = require('../../service/media'),
   errors = require('../../helper/errors');
 
 var app = require('../helper/crud')(service, {
@@ -80,13 +81,16 @@ function* changeImage() {
     });
   }
 
-  yield fs.writeFile('./public/preview/' + this.query.media + '.png', Buffer.concat(bufs));
-  this.body = '//preview/' + this.query.media + '.png';
+  var media = yield mediaService.findById(this.query.media, this.user);
+
+  yield fs.writeFile('./public/preview/' + media.dataValues.fakeId + '.png', Buffer.concat(bufs));
+  this.body = '//preview/' + media.dataValues.fakeId + '.png';
 
 }
 
 function* copyImage() {
-  var copyFile = yield fs.readFile('public/preview/' + this.query.name);
+  var media = yield mediaService.findById(this.query.media, this.user);
+  var copyFile = yield fs.readFile('public/preview/' + media.dataValues.fakeId);
   yield fs.writeFile('public/preview/' + this.query.fileChange, copyFile);
 }
 

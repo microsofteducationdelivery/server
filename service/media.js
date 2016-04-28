@@ -36,7 +36,7 @@ module.exports = {
       var path;
       path = item.folder ? yield folders.getPath(item.folder.dataValues.id ) : item.library.dataValues.name;
 
-      return _(item).pick(['id', 'name', 'type', 'like', 'unlike', 'FolderId', 'LibraryId']).merge({
+      return _(item).pick(['id', 'name', 'type', 'like', 'unlike', 'FolderId', 'LibraryId', 'fakeId']).merge({
         path: path,
         amount: item.comments.length,
         date: _.last(item.comments).createdAt
@@ -46,7 +46,10 @@ module.exports = {
   },
   findById: function* (id, author) {
     //FIXME: Security exploit here
-    return yield table.find({ where: {id: id}});
+    var currentMedia = yield table.find({ where: {id: id}});
+    currentMedia.dataValues.picture = currentMedia.dataValues.status === 'converted' ?
+       config.app.baseUrl + '/preview/' + currentMedia.dataValues.fakeId + '.png' : null;
+    return currentMedia;
   },
 
   findByFakeId: function* (fakeId, author) {
@@ -85,11 +88,21 @@ module.exports = {
       include: [db.Company]
     });
 
-    return yield table.findAll({
+    var searchMedia = yield table.findAll({
       where: ['name like ? AND LibraryId in ( ? )', '%' + search + '%', libraries.map(function(item) {
         return item.dataValues.id;
       })],
-      attributes: ['id', 'name', 'type', 'FolderId', 'LibraryId']
+      attributes: ['id', 'name', 'type', 'FolderId', 'LibraryId', 'fakeId']
+    });
+
+    return searchMedia.map(function (media) {
+      return {
+        id: media.id,
+        name: media.name,
+        type: 'media',
+        FolderId: media.FolderId,
+        LibraryId: media.LibraryId,
+        picture: media.status === 'converted' ? config.app.baseUrl + '/preview/' + media.fakeId + '.png' : null };
     });
   }
 };
