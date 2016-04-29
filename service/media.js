@@ -8,7 +8,8 @@ var
   library = db.Library,
   errors = require('../helper/errors'),
   C = require('../helper/constants'),
-  folders = require('../service/folder')
+  folders = require('../service/folder'),
+  config = require('../config')
   ;
 
 module.exports = {
