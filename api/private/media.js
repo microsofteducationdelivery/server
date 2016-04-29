@@ -84,7 +84,7 @@ function* changeImage() {
   var media = yield mediaService.findById(this.query.media, this.user);
 
   yield fs.writeFile('./public/preview/' + media.dataValues.fakeId + '.png', Buffer.concat(bufs));
-  this.body = '//preview/' + media.dataValues.fakeId + '.png';
+  this.body = media.dataValues.fakeId;
 
 }
 
