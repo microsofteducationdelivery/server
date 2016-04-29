@@ -92,7 +92,7 @@ module.exports = {
       where: ['name like ? AND LibraryId in ( ? )', '%' + search + '%', libraries.map(function(item) {
         return item.dataValues.id;
       })],
-      attributes: ['id', 'name', 'type', 'FolderId', 'LibraryId', 'fakeId']
+      attributes: ['id', 'name', 'type', 'FolderId', 'LibraryId', 'fakeId', 'status']
     });
 
     return searchMedia.map(function (media) {
