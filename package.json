@@ -32,6 +32,8 @@
     "mime": "^1.2.11",
     "msexcel-builder": "0.0.2",
     "mysql": "^2.5.0",
+    "nodemailer": "^2.4.1",
+    "nodemailer-direct-transport": "^3.1.0",
     "passport": "~0.2.2",
     "passport-auth0": "~0.3.0",
     "password-generator": "^0.2.2",
