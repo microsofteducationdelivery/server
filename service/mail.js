@@ -1,17 +1,25 @@
 var
   config = require('../config'),
-  directTransport = require('nodemailer-direct-transport'),
   nodemailer = require('nodemailer'),
+  sgTransport = require('nodemailer-sendgrid-transport'),
   _ = require('lodash')
 ;
 
+var options = {
+  auth: {
+    api_user: config.mail.user,
+    api_key:  config.mail.key
+
+  }
+};
+
+var mailTransport = nodemailer.createTransport(sgTransport(options));
 
 module.exports = {
   sendRegPassword: function (password, email) {
     var message = config.mail.credentialsText
       .replace('<password>', password)
     ;
-    var mailTransport = nodemailer.createTransport(directTransport({}));
 
     mailTransport.sendMail({
       from: config.mail.from,
@@ -21,23 +29,19 @@ module.exports = {
       html: message
     }, function(err) {
       console.log('err', err);
-      mailTransport.close();
     });
   },
   sendWelcomeEmail: function (user, password, email) {
     var message = config.mail.welcomeText
        .replace('<user>', user);
-    var mailTransport = nodemailer.createTransport(directTransport({}));
     var resultFunction = function(err) {
       (err) ? console.log(err) : this.sendRegPassword(password, email);
-      mailTransport.close();
     };
 
     mailTransport.sendMail({
       from: config.mail.from,
       to: email,
       subject: config.mail.welcomeSubject,
-      generateTextFromHTML: true,
       html: message
     }, resultFunction.bind(this));
   },
@@ -47,8 +51,6 @@ module.exports = {
         .replace('<link>', link)
       ;
 
-    var mailTransport = nodemailer.createTransport(directTransport({}));
-
     mailTransport.sendMail({
       from: config.mail.from,
       to: email,
@@ -57,7 +59,6 @@ module.exports = {
       html: message
     }, function(err) {
       console.log('err', err);
-      mailTransport.close();
     });
   },
   sendUpdateUserProfile: function(data, email) {
@@ -69,8 +70,6 @@ module.exports = {
 
     messageText = messageText + '\n Regards';
 
-    var mailTransport = nodemailer.createTransport(directTransport({}));
-
     mailTransport.sendMail({
       from: config.mail.from,
       to: email,
@@ -79,7 +78,6 @@ module.exports = {
       html: messageText
     }, function(err) {
       console.log('err', err);
-      mailTransport.close();
     });
   }
 };

@@ -3,7 +3,8 @@ var path = require('path'),
 
 var baseConfig = {
   mail: {
-    key: process.env.MAIL_KEY || 'pPSw8KIDRM86OYtpe6ABIQ',
+    user: process.env.USER_NAME || 'azure_c977eff422ca2fc5e77f9fa174cc30a2@azure.com',
+    key: process.env.MAIL_KEY || 'q1w2e3r4',
     from: 'noreply@microsofteducationdelivery.net',
     recoverySubject: 'Microsoft Education Delivery password recovery',
     recoveryText: 'Hello' +
