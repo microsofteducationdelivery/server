@@ -5,6 +5,7 @@ var
   errors = require('../helper/errors'),
   C = require('../helper/constants'),
   koa = require('koa'),
+  mail = require('./mail'),
   app = koa(),
   route = require('koa-route')
 ;
@@ -44,7 +45,6 @@ module.exports = {
 
     var sql = db.client;
     var lookupTable = {};
-    //var folders = yield db.Folder.count({ group: 'LibraryId', attributes: ['LibraryId'] });
     var folders = yield db.Folder.findAll({
       attributes: ['LibraryId', [sequelize.fn('count', sequelize.col('LibraryId')), 'count']],
       group: ['LibraryId']
@@ -53,24 +53,48 @@ module.exports = {
       lookupTable[record.dataValues.LibraryId] = record.dataValues.count;
     });
 
-    return (yield table.findAll({
-        where: {CompanyId: author.CompanyId},
-        attributes: [
-          'id',
-          'name',
-          [sql.fn('COUNT', sql.col('Media.id')), 'mediaCount'],
-          [sql.fn('SUM', sql.col('Media.views')), 'mediaViews']
-        ],
-        include: [db.Media],
-        group: ['id']
-      })).map(function (library) {
+    var allLibraries = yield db.shareLibrariesCompany.findAll({
+      where: { CompanyId: author.CompanyId }
+    });
+
+
+    var currentQuery = allLibraries.length ? 'CompanyId=? OR Libraries.id in ( ? )' : 'CompanyId=?';
+
+    var query = table.findAll({
+      where: [currentQuery, author.CompanyId, allLibraries.length ? allLibraries.map(function(item) {
+        return item.dataValues.LibraryId;
+      }) : null],
+      attributes: [
+        'id',
+        'name',
+        'CompanyId',
+        [sql.fn('COUNT', sql.col('Media.id')), 'mediaCount'],
+        [sql.fn('SUM', sql.col('Media.views')), 'mediaViews']
+      ],
+      include: [db.Media],
+      group: ['id']
+    });
+
+    var result = (yield query).map(function (library) {
       return {
         id: 'library' + library.id,
         name: library.name,
         folder: lookupTable[library.id] || 0,
         media: library.dataValues.mediaCount || 0,
-        views: library.dataValues.mediaViews || 0
+        views: library.dataValues.mediaViews || 0,
+        companyId: library.dataValues.CompanyId
       };
+    });
+
+    return result.map(function(item) {
+      var currentPosition = allLibraries.find(function(elem) {
+        return elem.LibraryId.toString() === item.id.substr(7);
+      });
+      if (currentPosition) {
+        item.isShare = true;
+        item.allow = currentPosition.dataValues.allow;
+      }
+        return item;
     });
   },
   removeMultiple: function (ids, author) {
@@ -88,5 +112,31 @@ module.exports = {
     yield library.updateAttributes({
       name: data.name,
     });
+  },
+
+  shareLibrary: function*(data) {
+    var allFindUsers = yield db.User.findAll({
+      where: {
+        email: data.emails
+      }
+    });
+    var library = yield table.find(data.libraryId.substr(7));
+    for(var i = 0; allFindUsers.length > i; i++) {
+      db.shareLibrariesCompany.findOrCreate({
+        CompanyId: allFindUsers[i].dataValues.CompanyId,
+        LibraryId: data.libraryId.substr(7)
+      });
+      mail.sendShareEmail(allFindUsers[i].name, library.name, allFindUsers[i].email);
+    }
+  },
+
+  canselInvite: function*(libId, userId) {
+    var currentInvite = yield db.shareLibrariesCompany.find({
+      where: {
+        LibraryId: libId,
+        CompanyId: userId
+      }
+    });
+    currentInvite.destroy();
   }
 };

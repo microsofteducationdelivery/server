@@ -14,6 +14,13 @@ var baseConfig = {
       'You are receiving this email because you, or someone else was using it for password recovery procedure. ' +
       'Follow this <a href="<link>">link </a>' +
       'to change your password. \n',
+    shareSubject: 'Microsoft Education Delivery share library',
+    shareText: 'Hello, <br>' +
+      ' <who> has shared <library> with you.<br>' +
+      'Regards <br>'+
+      'Microsoft respects your privacy. To learn more, please read our Privacy Statement <a href="https://go.microsoft.com/fwlink/?LinkId=521839">Microsoft Corporation </a> <br>' +
+      'One Microsoft Way <br>' +
+      'Redmond, WA 98052',
     welcomeSubject: 'Welcome to Microsoft Education Delivery',
     welcomeText:
       'Hi <br>' +

@@ -106,7 +106,7 @@ function *login() {
       yield user.updateAttributes({deviceId: data.deviceId});
     }
     var token = jwt.sign({id: user.id, issueTime: Date.now(), userAccess: 'mobile'}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
-    this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
+    this.body = { token: token, user: _.pick(user, ['id', 'name', 'type', 'CompanyId']), serverId: config.app.serverId };
   } else {
     this.status = 400;
   }
@@ -118,7 +118,7 @@ function *desktopLogin() {
 
   if (user && user.type !== 'mobile') {
     var token = jwt.sign({id: user.id, issueTime: Date.now(), userAccess: 'desktop'}, config.app.secret, { expiresInMinutes: 60 * 24 * 60 });
-    this.body = { token: token, user: _.pick(user, ['id', 'name', 'type']), serverId: config.app.serverId };
+    this.body = { token: token, user: _.pick(user, ['id', 'name', 'type', 'CompanyId']), serverId: config.app.serverId };
   } else {
     this.status = 400;
   }
@@ -128,7 +128,6 @@ function *register() {
   var data = yield parse(this);
   data.login = data.email;
   data.password = generatePassword();
-  console.log(data.password);
   data.type = 'admin';
   try {
     yield usersService.add(data);

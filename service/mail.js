@@ -79,5 +79,22 @@ module.exports = {
     }, function(err) {
       console.log('err', err);
     });
+  },
+  sendShareEmail: function(who, library, email) {
+    var message = config.mail.shareText
+        .replace('<who>', who)
+        .replace('<library>', library)
+      ;
+
+    mailTransport.sendMail({
+      from: config.mail.from,
+      to: email,
+      subject: config.mail.shareSubject,
+      generateTextFromHTML: true,
+      html: message
+    }, function(err) {
+      console.log('err', err);
+    });
+
   }
 };

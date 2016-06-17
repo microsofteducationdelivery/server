@@ -36,7 +36,7 @@ module.exports = {
     return path;
   },
   findById: function* (id, author) {
-    var root, folders, media, path, items = [];
+    var root, company, folders, media, path, items = [];
 
     if (id.substr(0,7) === 'library') {
       id = id.substr(7);
@@ -44,9 +44,11 @@ module.exports = {
       folders = yield table.findAll({where: {LibraryId: id, parentId: null}});
       media = yield db.Media.findAll({where: {LibraryId: id, FolderId: null}});
       path = [];
+      company = root;
       //TODO: add media items;
     } else {
       root = yield table.find(id);
+      company = yield libraryTable.find(root.dataValues.LibraryId);
       folders = yield root.getChildren();
       media = yield root.getMedia();
       path = yield this.getPath(id);
@@ -69,7 +71,8 @@ module.exports = {
     return {
       name: root.name,
       data: items,
-      path: path
+      path: path,
+      companyId: company.dataValues.CompanyId
     };
   },
 
@@ -125,6 +128,7 @@ module.exports = {
       return {
         id: 'library' + library.id,
         name: library.name,
+        companyId: author.dataValues.CompanyId,
         //FIXME: stubs
         folder: 10,
         media: 10,
