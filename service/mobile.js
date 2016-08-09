@@ -63,7 +63,7 @@ function* getFolderContent (id, cache) {
         type: 'media',
         subtype: typeToExtension[media.type],
         title: media.name,
-        preview: datauri('public/preview/' + media.fakeId + '.png')
+        preview: (new datauri('public/preview/' + media.fakeId + '.png')).content
       };
     })
   );

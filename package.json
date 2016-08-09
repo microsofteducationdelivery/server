@@ -17,7 +17,7 @@
     "co-busboy": "^1.2.0",
     "co-fs": "^1.2.0",
     "co-thunkify": "0.0.1",
-    "datauri": "^0.5.5",
+    "datauri": "^1.0.4",
     "error-factory": "^0.1.4",
     "koa": "^0.11.0",
     "koa-cors": "0.0.16",
