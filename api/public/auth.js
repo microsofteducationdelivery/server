@@ -167,7 +167,7 @@ function* recoverPassword () {
     user;
 
   user = yield db.User.find({
-      where: {recoveryToken: item.token.substr(6)}
+      where: {recoveryToken: item.token.substr(17)}
   });
 
   var newPass = bcrypt.hashSync(item.newPass);
