@@ -34,7 +34,7 @@
 
           exportButton.listen('click', function() {
             MED.Server.authXHR({
-              url: '/api/commentsManagement/commentsExport',
+              url: '/api/comments/commentsExport',
               type: 'GET',
               responseType: 'arraybuffer',
               headers: {

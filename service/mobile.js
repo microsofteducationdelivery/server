@@ -57,13 +57,13 @@ function* getFolderContent (id, cache) {
 
   items = items.concat(media.map(function (media) {
       return {
-        id: media.id,
+        id: media.fakeId,
         views: media.views,
         downloads: media.downloads,
         type: 'media',
         subtype: typeToExtension[media.type],
         title: media.name,
-        preview: datauri('public/preview/' + media.id + '.png')
+        preview: datauri('public/preview/' + media.fakeId + '.png')
       };
     })
   );
@@ -81,9 +81,24 @@ module.exports = {
     var company = yield user.getCompany();
     //FIXME: respect shares
 
+    var allLibraries = yield db.shareLibrariesCompany.findAll({
+      where: { CompanyId: user.CompanyId }
+    });
 
     var libraries = yield db.Library.findAll({
-      where: [{CompanyId: user.CompanyId}, {'Users.id': id}],
+      where: [{'Users.id': id}],
+      $or: [
+        {
+          LibraryId: {
+            $in: allLibraries.map(function(item) {
+              return item.dataValues.LibraryId;
+            })
+          }
+        },
+        {
+          CompanyId: user.CompanyId
+        }
+      ],
       attributes: [
         'id',
         'name',

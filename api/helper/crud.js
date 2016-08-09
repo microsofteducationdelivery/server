@@ -5,7 +5,7 @@ var
   _ = require('lodash');
 
 module.exports = function (service, customActions) {
-  customActions = customActions || {}
+  customActions = customActions || {};
   var app = koa();
   var actions = _.assign({
     index: function* () {
@@ -37,13 +37,13 @@ module.exports = function (service, customActions) {
     },
 
     destroyMultiple: function* () {
-      yield service.removeMultiple(yield parse(this), this.user);
-      this.status = 204;
+        yield service.removeMultiple(yield parse(this), this.user);
+        this.status = 204;
     }
   }, customActions);
 
   app.use(route.get('/', actions.index));
-  app.use(route.get('/:id', actions.show));
+  app.use(route.get('/:id(\\d+|library[0-9]+)', actions.show));
   app.use(route.put('/:id', actions.update));
   app.use(route.post('/', actions.create));
   app.use(route.delete('/', actions.destroyMultiple));

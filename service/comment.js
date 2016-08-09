@@ -7,7 +7,8 @@ var
   C = require('../helper/constants'),
   fs = require('co-fs'),
   excelbuilder = require('msexcel-builder'),
-  thunkify = require('co-thunkify')
+  thunkify = require('co-thunkify'),
+  os = require('os')
   ;
 
 module.exports = {
@@ -42,11 +43,10 @@ module.exports = {
 
   },
   findById: function* (id) {
-    var commentList = yield table.findAll({
+    return yield table.findAll({
       where: {MediumId: id},
       attributes: ['text', 'author', 'date', 'id', 'parentId', 'createdAt']
     });
-    return commentList;
   },
   update: function* (id, config) {
     var comment = yield table.find(id);
@@ -61,25 +61,24 @@ module.exports = {
     return table.destroy({ id: ids});
   },
 
-  commentsExport: function* (resArray, companyId) {
+  commentsExport: function* (resArray, company) {
 
-    var tmpdir = __dirname + '/../public/tmpExcelDir';
+    var tmpdir = os.tmpdir();
 
-
-    if(yield fs.exists(tmpdir + '/' + companyId.id + 'exportComments.xlsx')) {
-      yield fs.unlink(tmpdir + '/' + companyId.id + 'exportComments.xlsx');
+    if(yield fs.exists(tmpdir + '/' + company.id + 'exportComments.xlsx')) {
+      yield fs.unlink(tmpdir + '/' + company.id + 'exportComments.xlsx');
     }
 
-    var countCommentaries = 2;
+    var countCommentaries = 4;
 
     for(var j = 0; j < resArray.length; j++) {
-      countCommentaries += resArray[j].length;
+      countCommentaries += resArray[j].length + 1;
     }
 
-    var workbook = excelbuilder.createWorkbook(tmpdir, companyId.id + 'exportComments.xlsx');
+    var workbook = excelbuilder.createWorkbook(tmpdir, company.id + 'exportComments.xlsx');
 
 
-    var comments = workbook.createSheet('Comments', countCommentaries, 20);
+    var comments = workbook.createSheet('Comments', 20, countCommentaries);
 
     comments.set(2, 2, 'Media name');
     comments.set(3, 2, 'author');

@@ -10,6 +10,9 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       defaultValue: 0
     },
+    fakeId: {
+      type: DataTypes.STRING
+    },
     like: {
       type: DataTypes.INTEGER,
       defaultValue: 0

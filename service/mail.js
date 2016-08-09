@@ -1,28 +1,49 @@
 var
   config = require('../config'),
-  mandrill = require('mandrill-api/mandrill'),
-  mandrillClient = new mandrill.Mandrill(config.mail.key)
+  nodemailer = require('nodemailer'),
+  sgTransport = require('nodemailer-sendgrid-transport'),
+  _ = require('lodash')
 ;
 
+var options = {
+  auth: {
+    api_user: config.mail.user,
+    api_key:  config.mail.key
+
+  }
+};
+
+var mailTransport = nodemailer.createTransport(sgTransport(options));
 
 module.exports = {
-  sendWelcomeEmail: function (user, password, email) {
-    var message = config.mail.welcomeText
-      .replace('<user>', user)
+  sendRegPassword: function (password, email) {
+    var message = config.mail.credentialsText
       .replace('<password>', password)
     ;
 
-    mandrillClient.messages.send({
-      message: {
-        from_email: config.mail.from,
-        subject: config.mail.welcomeSubject,
-        text: message,
-        to: [{email: email}]
-      }
-    }, function (result) {
-      console.log(result);
+    mailTransport.sendMail({
+      from: config.mail.from,
+      to: email,
+      subject: config.mail.from,
+      generateTextFromHTML: true,
+      html: message
+    }, function(err) {
+      console.log('err', err);
     });
+  },
+  sendWelcomeEmail: function (user, password, email) {
+    var message = config.mail.welcomeText
+       .replace('<user>', user);
+    var resultFunction = function(err) {
+      (err) ? console.log(err) : this.sendRegPassword(password, email);
+    };
 
+    mailTransport.sendMail({
+      from: config.mail.from,
+      to: email,
+      subject: config.mail.welcomeSubject,
+      html: message
+    }, resultFunction.bind(this));
   },
   sendRecoveryPasswordLink: function (userName, link, email) {
     var message = config.mail.recoveryText
@@ -30,35 +51,50 @@ module.exports = {
         .replace('<link>', link)
       ;
 
-    mandrillClient.messages.send({
-      message: {
-        from_email: config.mail.from,
-        subject: config.mail.recoverySubject,
-        html: message,
-        to: [{email: email}]
-      }
-    }, function (result) {
-      console.log(result);
+    mailTransport.sendMail({
+      from: config.mail.from,
+      to: email,
+      subject: config.mail.recoverySubject,
+      generateTextFromHTML: true,
+      html: message
+    }, function(err) {
+      console.log('err', err);
     });
   },
   sendUpdateUserProfile: function(data, email) {
-    var message = config.mail.changeUserText.replace('<user>', data.login)
-      .replace('<login>', data.login)
-      .replace('<email>', data.email)
-      .replace('<password>', data.newPassword)
-      .replace('<type>', data.type)
-      .replace('<singleDevice>', data.singleDevice)
-      .replace('<deviceId>', data.deviceId);
+    var messageText = config.mail.changeUserText;
 
-    mandrillClient.messages.send({
-      message: {
-        from_email: config.mail.from,
-        subject: config.mail.changeSubject,
-        text: message,
-        to: [{email: email}]
-      }
-    }, function (result) {
-      console.log(result);
+    _.forIn(data, function(value, key) {
+      messageText += key + ':' + value + '\n';
     });
+
+    messageText = messageText + '\n Regards';
+
+    mailTransport.sendMail({
+      from: config.mail.from,
+      to: email,
+      subject: config.mail.changeSubject,
+      generateTextFromHTML: true,
+      html: messageText
+    }, function(err) {
+      console.log('err', err);
+    });
+  },
+  sendShareEmail: function(who, library, email) {
+    var message = config.mail.shareText
+        .replace('<who>', who)
+        .replace('<library>', library)
+      ;
+
+    mailTransport.sendMail({
+      from: config.mail.from,
+      to: email,
+      subject: config.mail.shareSubject,
+      generateTextFromHTML: true,
+      html: message
+    }, function(err) {
+      console.log('err', err);
+    });
+
   }
 };

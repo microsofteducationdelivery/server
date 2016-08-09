@@ -92,17 +92,10 @@ isPermitted: function (action, data, author) {
   },
 
   add: function* (data, author) {
-    yield this.createUser(data, author);
+    return yield this.createUser(data, author);
   },
 
   list: function* (author) {
-
-    var res = yield table.findAll({
-      where: { CompanyId: author.CompanyId },
-      attributes: ['id', 'login', 'type', 'name'],
-      include: [db.Library]
-    });
-
     return yield table.findAll({
       where: { CompanyId: author.CompanyId },
       attributes: ['id', 'login', 'type', 'name'],
@@ -121,8 +114,26 @@ isPermitted: function (action, data, author) {
   },
 
   update: function* (id, data, author) {
-    var numberForSms;
     var user = yield table.find({ where: { id: id, CompanyId: author.CompanyId }});
+    var allAdminUser = yield table.findAll({where: {type: 'admin', CompanyId: author.CompanyId}});
+    if(user.type === 'admin' && data.type !== 'admin' && allAdminUser.length === 1) {
+      if (allAdminUser.length === 1) {
+        throw errors.isLastAdmin('You are last admin');
+      }
+    }
+    var mailMessage = {};
+    var arrayFields = ['name', 'login', 'password', 'email', 'phone', 'type'];
+
+    for(var i = 0; i < arrayFields.length; i++) {
+      if(data[arrayFields[i]] && user.dataValues[arrayFields[i]] !== data[arrayFields[i]] && arrayFields[i] !== 'password') {
+        mailMessage[arrayFields[i]] = data[arrayFields[i]];
+      } else if(arrayFields[i] === 'password') {
+        if(data.password && !bcrypt.compareSync(data.password, user.dataValues.password)) {
+          mailMessage.password = data.password;
+        }
+      }
+    }
+
     if (data.password) {
       data.newPassword = data.password;
       data.password = bcrypt.hashSync(data.password);
@@ -141,15 +152,10 @@ isPermitted: function (action, data, author) {
     user.email = data.email;
     user.phone = data.phone;
 
-
     if(!data.singleDevice) {
       user.singleDevice = false;
       data.singleDevice = false;
       data.deviceId = user.deviceId;
-    }
-
-    if(!data.password) {
-      data.newPassword = 'Password was not changed';
     }
 
     try {
@@ -162,12 +168,10 @@ isPermitted: function (action, data, author) {
       }
     }
 
-    mail.sendUpdateUserProfile(data, user.email);
+    mail.sendUpdateUserProfile(mailMessage, user.email);
 
   },
   removeMultiple: function (ids, author) {
-    console.log(ids);
-    console.log(author.id);
     if (ids.indexOf(author.id.toString()) !== -1) {
       throw new errors.AccessDeniedError('Access denied');
     }
@@ -180,11 +184,11 @@ isPermitted: function (action, data, author) {
       part,
       me = reqBody,
       allData,
-      errors = [];
+      errorsFile = [];
 
     while (part = yield parts) {
       if (!part.filename) {
-        return me.body = 'No file';
+        errors.noFile('No file');
       }
 
       var bufs = [];
@@ -199,7 +203,7 @@ isPermitted: function (action, data, author) {
 
         } catch (err) {
           console.log(err);
-          return me.body = 'Invalid file';
+          errors.invalidFile('File type is incorrect');
         }
       });
     }
@@ -216,14 +220,14 @@ isPermitted: function (action, data, author) {
         allData[i].password = passwordSave;
         allData[i].line = i;
         allData[i].error = err.message;
-        errors.push(allData[i]);
+        errorsFile.push(allData[i]);
       }
     }
 
-    if(errors.length > 0) {
+    if(errorsFile.length > 0) {
       var allFields = 'line|name|login|type|password|email|telephone|error';
       return {
-        errors: errors,
+        errors: errorsFile,
         fields: allFields
       };
     } else {
@@ -234,7 +238,7 @@ isPermitted: function (action, data, author) {
 
   searchUser: function* (search, user) {
     return yield table.findAll({
-      where:  ['name like ?', '%' + search + '%', 'CompanyId:', user.dataValues.id],
+      where:  ['name like ? AND CompanyId=' + user.dataValues.CompanyId + '', '%' + search + '%'],
       attributes: ['id', 'name', 'CompanyId']
     });
   }

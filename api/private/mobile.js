@@ -13,7 +13,7 @@ function *incrementStat (stats) {
   var media;
 
   for (var i in stats) {
-    media = yield mediaService.findById(i, this.user);
+    media = yield mediaService.findByFakeId(i, this.user);
     if (media) {
       yield media.increment('views', stats[i]);
     }
@@ -33,7 +33,7 @@ function *data() {
 }
 
 function *getComments(id) {
-  var media = yield mediaService.findById(id, this.user),
+  var media = yield mediaService.findByFakeId(id, this.user),
     parentList = [],
     parentId,
     childList = [],
@@ -89,10 +89,10 @@ function *getDetails(id) {
     text: 'txt'
   };
 
-  var media = yield mediaService.findById(id, this.user);
+  var media = yield mediaService.findByFakeId(id, this.user);
   yield media.increment('downloads', 1);
   this.body = {
-    id: media.id,
+    id: media.fakeId,
     title: media.name,
     description: media.description,
     links: media.links.split('\n'),
@@ -102,7 +102,7 @@ function *getDetails(id) {
 
 function *postComments() {
   var data = yield parse(this);
-  var media = yield mediaService.findById(data.id, this.user);
+  var media = yield mediaService.findByFakeId(data.id, this.user);
   if (!media) {
     this.status = 403;
     return;
