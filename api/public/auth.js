@@ -157,7 +157,7 @@ function* getRecover (email) {
     this.status = 403;
   } else {
     yield user.updateAttributes({recoveryToken: token}, {fields: ['recoveryToken']});
-    link += '#token=' + token;
+    link += '#passwordRecovery=' + token;
     mail.sendRecoveryPasswordLink(user.name, link, email);
     this.status = 200;
   }
