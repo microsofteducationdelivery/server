@@ -1,7 +1,7 @@
 {
   "name": "MED",
   "description": "Microsoft Education Delivery",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "main": "app.js",
   "engines": {
     "node": "0.12.x"
@@ -48,9 +48,5 @@
   "directories": {
     "test": "tests"
   },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git@git.wookieelabs.com:med.git"
-  }
+  "devDependencies": {}
 }

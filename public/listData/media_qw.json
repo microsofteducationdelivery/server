@@ -1,8 +1,0 @@
-{
-    "name": "test media",
-    "file": "sometest.mp4",
-    "type": "video",
-    "description": "some test media.",
-    "links": "http://www.wikipedia.org",
-    "id": "media-1"
-}
